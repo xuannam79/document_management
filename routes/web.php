@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace('Index')->group(function(){
+    Route::get('/', 'Dashboard@index');
+    // Route::resource('topic', 'Topics');
+});
+
+Route::namespace('SystemAdmin')->group(function(){
+    Route::resource('department', 'Department');
 });
