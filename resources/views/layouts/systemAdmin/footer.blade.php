@@ -67,7 +67,7 @@
 <script src="/layouts/systemAdmin/js/Chart.min.js"></script>
 <script src="/layouts/systemAdmin/js/zingcharts.min.js"></script>
 <script src="/layouts/systemAdmin/js/hightcharts.js"></script>
-
+<script src="/layouts/systemAdmin/js/adminjs.js"></script>
 <script src="/layouts/systemAdmin/js/line-chart.js"></script>
 <script src="/layouts/systemAdmin/js/pie-chart.js"></script>
 <script src="/layouts/systemAdmin/js/plugins.js"></script>

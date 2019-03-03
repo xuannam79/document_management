@@ -13,6 +13,10 @@ class DepartmentUser extends Model
      *
      * @var array
      */
+    protected $table = 'department_users';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
     protected $fillable = [
         'department_id', 
         'user_id',
