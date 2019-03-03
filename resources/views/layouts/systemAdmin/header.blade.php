@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/layouts/systemAdmin/css/slicknav.min.css">
     <link rel="stylesheet" href="/layouts/systemAdmin/css/export.css" type="text/css" media="all" />
 
-    {{-- data table --}}
     <link rel="stylesheet" href="/layouts/systemAdmin/css/jquery.dataTables.css" type="text/css"/>
     <link rel="stylesheet" href="/layouts/systemAdmin/css/dataTables.bootstrap4.min.css" type="text/css"/>
     <link rel="stylesheet" href="/layouts/systemAdmin/css/responsive.bootstrap.min.css" type="text/css"/>
@@ -104,10 +103,6 @@
                 <div class="col-sm-6">
                     <div class="breadcrumbs-area clearfix">
                         <h4 class="page-title pull-left">@yield('title')</h4>
-                        <ul class="breadcrumbs pull-left">
-                            <li><a href="/">Trang chủ</a></li>
-                            <li><span>@yield('title')</span></li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-sm-6 clearfix">

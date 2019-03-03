@@ -2827,4 +2827,15 @@ table.dataTable thead td {
     color: #555;
 }
 
+.img-preview {
+    width: 155px;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+.img-preview2 {
+    width: 125px;
+    height: 90px;
+    margin-bottom: 10px;
+}
 /*-------------------- END Offset Sidebar ------------------- */

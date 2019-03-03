@@ -12,6 +12,10 @@ class Position extends Model
      *
      * @var array
      */
+    protected $table = 'positions';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
     protected $fillable = [
         'name', 
     ];
