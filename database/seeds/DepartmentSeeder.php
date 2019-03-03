@@ -12,10 +12,10 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         DB::table('departments')->insert([
-            'name_department' => 'Khoa đào tạo quốc tế'
+            'name' => 'Khoa đào tạo quốc tế'
         ]);
         DB::table('departments')->insert([
-            'name_department' => 'Khoa giao thông vận tải'
+            'name' => 'Khoa giao thông vận tải'
         ]);
     }
 }

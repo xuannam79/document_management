@@ -12,13 +12,13 @@ class RoleSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'name_role' => 'Admin hệ thống'
+            'name' => 'Admin hệ thống'
         ]);
         DB::table('roles')->insert([
-            'name_role' => 'Admin đơn vị'
+            'name' => 'Admin đơn vị'
         ]);
         DB::table('roles')->insert([
-            'name_role' => 'Nhân viên'
+            'name' => 'Nhân viên'
         ]);
     }
 }
