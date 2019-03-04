@@ -11,10 +11,10 @@ class DepartmentAdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('departmentadmins')->insert([
-            'name_departmentadmins' => 'Phan Đặng Hải Vũ',
-            'id_department' => 1,
-            'id_user' => 1
+        DB::table('department_admins')->insert([
+            'name' => 'Phan Đặng Hải Vũ',
+            'department_id' => 1,
+            'user_id' => 1
         ]);
     }
 }
