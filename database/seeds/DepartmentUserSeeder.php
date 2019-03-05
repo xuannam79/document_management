@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DepartmentPersonSeeder extends Seeder
+class DepartmentUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class DepartmentPersonSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('department_persons')->insert([
+        DB::table('department_users')->insert([
             'department_id' => 1,
             'person_id' => 1,
             'position_id' => 1,

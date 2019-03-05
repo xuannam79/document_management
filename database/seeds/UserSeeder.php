@@ -13,10 +13,12 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'email' => 'phandanghaivu@gmail.com',
-            'email_verified_at' => now(),
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'role_id' => 1,
-            'remember_token' => str_random(10)
+            'name' => 'Vu Phan',
+            'birth_date' => '1997/03/28',
+            'gender' => 'Nam',
+            'address' => '08 Ha Van Tinh, Da Nang',
+            'phone' => '0354525110',
         ]);
     }
 }
