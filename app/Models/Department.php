@@ -20,4 +20,5 @@ class Department extends Model
     {
         $this->hasMany(DepartmentUser::class);
     }
+
 }

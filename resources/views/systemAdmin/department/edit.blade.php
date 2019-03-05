@@ -10,15 +10,21 @@
                 <div class="col-12 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <form>
-                                <label for="exampleInputEmail1">Tên phòng ban</label>
+                            {!! Form::open([
+                                        'method'=>'PUT',
+                                        'route'=>['department.update', $department->id]
+                                        ]) !!}
+                                {!! Form::label('nameDepartment', 'Tên phòng ban') !!}
                                 <div class="form-group row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Nhập tên phòng ban">
+                                        {!! Form::text('name', $department->name, [
+                                            'class'=>'form-control',
+                                            'placeholder'=>'Nhập tên phòng ban']) !!}
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Sửa</button>
-                            </form>
+                                {!! Form::submit('Sửa phòng ban', [
+                                    'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
