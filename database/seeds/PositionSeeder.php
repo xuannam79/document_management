@@ -18,6 +18,9 @@ class PositionSeeder extends Seeder
             'name' => 'Phó đơn vị'
         ]);
         DB::table('positions')->insert([
+            'name' => 'Thư kí'
+        ]);
+        DB::table('positions')->insert([
             'name' => 'Giảng viên'
         ]);
     }
