@@ -4,9 +4,17 @@ namespace App\Http\Controllers\SystemAdmin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Department\DepartmentRepositoryInterface;
 
 class Department extends Controller
 {
+
+    protected $departmentRepository;
+
+    public function __construct(DepartmentRepositoryInterface $departmentRepository)
+    {
+        $this->departmentRepository = $departmentRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class Department extends Controller
      */
     public function index()
     {
-        return view('systemAdmin.department.index');
+        $departments = $this->departmentRepository->all();
+
+        return view('systemAdmin.department.index', compact('departments'));
     }
 
     /**
@@ -24,6 +34,7 @@ class Department extends Controller
      */
     public function create()
     {
+
         return view('systemAdmin.department.add');
     }
 
@@ -35,7 +46,15 @@ class Department extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $input = $request->only('name');
+            $this->departmentRepository->create($input);
+        } catch(Exception $e) {
+
+            return redirect(route('department.create'))->with('alert', 'Thêm thất bại');
+        }
+
+        return redirect(route('department.index'))->with('alert', 'Thêm thành công');
     }
 
     /**
@@ -57,7 +76,9 @@ class Department extends Controller
      */
     public function edit($id)
     {
-        return view('systemAdmin.department.edit');
+        $department = $this->departmentRepository->find($id);
+
+        return view('systemAdmin.department.edit', compact('department'));
     }
 
     /**
@@ -69,7 +90,21 @@ class Department extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $department = $this->departmentRepository->find($id);
+
+        try {
+            $dataUpdate = $request->only('name');
+            $result = $this->departmentRepository->update($dataUpdate, $id);
+
+            if ($result) {
+
+                return redirect(route('department.index'))->with('alert', 'Sửa thành công');
+            }
+
+        } catch(Exception $e) {
+
+            return redirect(route('department.edit'))->with('alert', 'Sửa thất bại');
+        }
     }
 
     /**
