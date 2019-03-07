@@ -18,4 +18,5 @@ Route::namespace('Index')->group(function(){
 
 Route::namespace('SystemAdmin')->group(function(){
     Route::resource('department', 'Department');
+    Route::resource('users', 'ManageUser');
 });
