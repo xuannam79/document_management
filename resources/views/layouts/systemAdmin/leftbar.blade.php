@@ -13,6 +13,7 @@
                         <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-sitemap"></i><span>Quản lý</span></a>
                         <ul class="collapse">
                         <li><a href="{{ route('department.index') }}">Phòng ban</a></li>
+                        <li><a href="{{ route('department-admin.index') }}">Admin Phòng ban</a></li>
                         </ul>
                     </li>
                 </ul>

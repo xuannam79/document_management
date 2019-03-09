@@ -1,6 +1,6 @@
 @extends('layouts.systemAdmin.master')
 @section('title')
-    Quản lý phòng ban
+    Thêm phòng ban
 @endsection
 @section('content')
 <div class="main-content-inner">

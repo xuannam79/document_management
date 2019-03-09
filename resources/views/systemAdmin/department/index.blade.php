@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">Progress Table</h4>
-                <a href="{{ route('department.create') }}" class="btn btn-primary">Thêm</a>
+                    <a href="{{ route('department.create') }}" class="btn btn-primary">Thêm</a>
                     <div class="single-table">
                         <div class="table-responsive">
                             <table class="table table-hover progress-table text-center">
