@@ -15,6 +15,13 @@
     <link rel="stylesheet" href="/layouts/systemAdmin/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/layouts/systemAdmin/css/slicknav.min.css">
     <link rel="stylesheet" href="/layouts/systemAdmin/css/export.css" type="text/css" media="all" />
+
+    {{-- data table --}}
+    <link rel="stylesheet" href="/layouts/systemAdmin/css/jquery.dataTables.css" type="text/css"/>
+    <link rel="stylesheet" href="/layouts/systemAdmin/css/dataTables.bootstrap4.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/layouts/systemAdmin/css/responsive.bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/layouts/systemAdmin/css/responsive.jqueryui.min.css" type="text/css"/>
+
     <link rel="stylesheet" href="/layouts/systemAdmin/css/typography.css">
     <link rel="stylesheet" href="/layouts/systemAdmin/css/default-css.css">
     <link rel="stylesheet" href="/layouts/systemAdmin/css/styles.css">
