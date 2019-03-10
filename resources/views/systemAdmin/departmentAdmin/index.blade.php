@@ -4,12 +4,11 @@
 @endsection
 @section('content')
 <div class="main-content-inner">
-    <div class="rơ">
+    <div class="row">
         <!-- Dark table start -->
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title">Admin Phòng Ban</h4>
                     <a href="{{ route('department-admin.create') }}" class="btn btn-primary">Thêm</a><br><br>
                     <div class="dât-tables datatable-dark">
                         <table id="dataTable3" class="tẽt-center">

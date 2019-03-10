@@ -104,10 +104,6 @@
                 <div class="col-sm-6">
                     <div class="breadcrumbs-area clearfix">
                         <h4 class="page-title pull-left">@yield('title')</h4>
-                        <ul class="breadcrumbs pull-left">
-                            <li><a href="/">Trang chủ</a></li>
-                            <li><span>@yield('title')</span></li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-sm-6 clearfix">

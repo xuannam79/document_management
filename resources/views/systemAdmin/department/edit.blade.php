@@ -15,14 +15,12 @@
                                         'route'=>['department.update', $department->id]
                                         ]) !!}
                                 {!! Form::label('nameDepartment', 'Tên phòng ban') !!}
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
+                                <div class="form-group">
                                         {!! Form::text('name', $department->name, [
                                             'class'=>'form-control',
                                             'placeholder'=>'Nhập tên phòng ban']) !!}
-                                    </div>
                                 </div>
-                                {!! Form::submit('Sửa phòng ban', [
+                                {!! Form::submit('Sửa', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
                             {!! Form::close() !!}
                         </div>
