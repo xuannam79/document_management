@@ -15,12 +15,10 @@
                                         'route'=>'department.store'
                                         ]) !!}
                                 {!! Form::label('nameDepartment', 'Tên phòng ban') !!}
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
+                                <div class="form-group">
                                         {!! Form::text('name', '', [
                                             'class'=>'form-control',
                                             'placeholder'=>'Nhập tên phòng ban']) !!}
-                                    </div>
                                 </div>
                                 {!! Form::submit('Thêm', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
