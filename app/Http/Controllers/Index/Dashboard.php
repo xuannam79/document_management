@@ -9,6 +9,6 @@ class Dashboard extends Controller
 {
     public function index()
     {
-        return view('systemAdmin.dashboard.index');
+        return view('system_admin.dashboard.index');
     }
 }

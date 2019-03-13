@@ -20,7 +20,7 @@ class ManageUser extends Controller
         $position = Position::pluck('name', 'id');
         $department = Department::pluck('name', 'id');
 
-        return view('systemAdmin.users.index', compact( 'position', 'department', 'depuser'));
+        return view('system_admin.users.index', compact( 'position', 'department', 'depuser'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ManageUser extends Controller
      */
     public function create()
     {
-        return view('systemAdmin.users.add');
+        return view('system_admin.users.add');
     }
 
     /**
@@ -94,7 +94,7 @@ class ManageUser extends Controller
         {
             $user = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')->where('user_id',$id)->first();
 
-            return view('systemAdmin.users.edit', compact('user'));
+            return view('system_admin.users.edit', compact('user'));
         }
         catch (Exception $exception)
         {

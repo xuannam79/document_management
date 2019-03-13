@@ -24,7 +24,7 @@ class Department extends Controller
     {
         $departments = $this->departmentRepository->all();
 
-        return view('systemAdmin.department.index', compact('departments'));
+        return view('system_admin.department.index', compact('departments'));
     }
 
     /**
@@ -35,7 +35,7 @@ class Department extends Controller
     public function create()
     {
 
-        return view('systemAdmin.department.add');
+        return view('system_admin.department.add');
     }
 
     /**
@@ -78,7 +78,7 @@ class Department extends Controller
     {
         $department = $this->departmentRepository->find($id);
 
-        return view('systemAdmin.department.edit', compact('department'));
+        return view('system_admin.department.edit', compact('department'));
     }
 
     /**

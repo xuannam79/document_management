@@ -1,7 +1,7 @@
 <div class="sidebar-menu">
     <div class="sidebar-header">
         <div class="logo">
-            <a href="index.html"><img src="/layouts/systemAdmin/images/icon/logo.png" alt="logo"></a>
+            <a href="index.html"><img src="/layouts/system_admin/images/icon/logo.png" alt="logo"></a>
         </div>
     </div>
     <div class="main-menu">
@@ -14,7 +14,7 @@
                         <ul class="collapse">
                             <li><a href="{{ route('department.index') }}">Phòng ban</a></li>
                             <li><a href="{{ route('department-admin.index') }}">Admin Phòng ban</a></li>
-                            <li><a href="{{ route('users.index') }}">Quản Lý Thành Viên</a></li>
+                            <li><a href="{{ route('users.index') }}">Thành Viên</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -14,7 +14,7 @@ class DepartmentAdmin extends Controller
      */
     public function index()
     {
-        return view('systemAdmin.departmentAdmin.index');
+        return view('system_admin.department_admin.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class DepartmentAdmin extends Controller
      */
     public function create()
     {
-        return view('systemAdmin.departmentAdmin.add');
+        return view('system_admin.department_admin.add');
     }
 
     /**
@@ -57,7 +57,7 @@ class DepartmentAdmin extends Controller
      */
     public function edit($id)
     {
-        return view('systemAdmin.departmentAdmin.edit');
+        return view('system_admin.department_admin.edit');
     }
 
     /**
