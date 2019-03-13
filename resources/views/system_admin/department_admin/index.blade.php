@@ -1,4 +1,4 @@
-@extends('layouts.systemAdmin.master')
+@extends('layouts.system_admin.master')
 @section('title')
     Quản lý admin phòng ban
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.systemAdmin.master')
+@extends('layouts.system_admin.master')
 @section('title')
     Quản lý phòng ban
 @endsection
@@ -29,7 +29,7 @@
                                     <td>{{ $department->name }}</td>
                                     <td>{{ $department->created_at }}</td>
                                         <td><span class="status-p bg-primary">pending</span></td>
-                                    
+
                                     <td>
                                         <ul class="d-flex justify-content-center">
                                             <li class="mr-3"><a href="{{ route('department.edit', $department->id) }}" class="text-secondary"><i class="fa fa-edit"></i></a></li>

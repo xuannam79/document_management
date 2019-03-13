@@ -1,4 +1,4 @@
-@extends('layouts.systemAdmin.master')
+@extends('layouts.system_admin.master')
 @section('title')
     Thêm admin phòng ban
 @endsection

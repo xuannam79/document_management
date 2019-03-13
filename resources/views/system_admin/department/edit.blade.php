@@ -1,6 +1,6 @@
-@extends('layouts.systemAdmin.master')
+@extends('layouts.system_admin.master')
 @section('title')
-    Thêm phòng ban
+    Sửa phòng ban
 @endsection
 @section('content')
 <div class="main-content-inner">
@@ -11,16 +11,16 @@
                     <div class="card">
                         <div class="card-body">
                             {!! Form::open([
-                                        'method'=>'POST',
-                                        'route'=>'department.store'
+                                        'method'=>'PUT',
+                                        'route'=>['department.update', $department->id]
                                         ]) !!}
                                 {!! Form::label('nameDepartment', 'Tên phòng ban') !!}
                                 <div class="form-group">
-                                        {!! Form::text('name', '', [
+                                        {!! Form::text('name', $department->name, [
                                             'class'=>'form-control',
                                             'placeholder'=>'Nhập tên phòng ban']) !!}
                                 </div>
-                                {!! Form::submit('Thêm', [
+                                {!! Form::submit('Sửa', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
                             {!! Form::close() !!}
                         </div>
