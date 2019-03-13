@@ -12,6 +12,10 @@ class Department extends Model
      *
      * @var array
      */
+    protected $table = 'departments';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
     protected $fillable = [
         'name', 
     ];

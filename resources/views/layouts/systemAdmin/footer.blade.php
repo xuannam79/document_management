@@ -1,11 +1,11 @@
+</div>
+<footer>
+    <div class="footer-area">
+        <p>© Copyright 2019 <a href="http://truongnoivu.edu.vn/">Đại học Nội Vụ, Hà Nội</a>.</p>
     </div>
-    <footer>
-        <div class="footer-area">
-            <p>© Copyright 2019 <a href="http://truongnoivu.edu.vn/">Đại học Nội Vụ, Hà Nội</a>.</p>
-        </div>
-    </footer>
-    </div>
-    <div class="offset-area">
+</footer>
+</div>
+<div class="offset-area">
     <div class="offset-close"><i class="ti-close"></i></div>
     <ul class="nav offset-menu-tab">
         <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
@@ -70,16 +70,13 @@
 <script src="/layouts/systemAdmin/js/adminjs.js"></script>
 <script src="/layouts/systemAdmin/js/line-chart.js"></script>
 <script src="/layouts/systemAdmin/js/pie-chart.js"></script>
-
-{{-- data table --}}
 <script src="/layouts/systemAdmin/js/jquery.dataTables.js"></script>
 <script src="/layouts/systemAdmin/js/jquery.dataTables.min.js"></script>
 <script src="/layouts/systemAdmin/js/dataTables.bootstrap4.min.js"></script>
 <script src="/layouts/systemAdmin/js/dataTables.responsive.min.js"></script>
 <script src="/layouts/systemAdmin/js/responsive.bootstrap.min.js"></script>
-
 <script src="/layouts/systemAdmin/js/plugins.js"></script>
 <script src="/layouts/systemAdmin/js/scripts.js"></script>
+<script src="/layouts/systemAdmin/js/validate.js"></script>
 </body>
-
 </html>
