@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/layouts
+/v8-compile-cache-0
 /storage/*.key
 /vendor
 .env
