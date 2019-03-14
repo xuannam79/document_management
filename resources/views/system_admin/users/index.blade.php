@@ -9,11 +9,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Danh Sách Thành Viên</h4>
+                        @include('common.errors')
                         <a href="{{ route('users.create') }}" class="btn btn-primary">Thêm</a>
-                        <div class="single-table">
-                            <div class="table-responsive">
-                                <table class="table table-hover progress-table text-center">
-                                    <thead class="text-uppercase">
+                        <div class="data-tables datatable-dark">
+                                <table  id="dataTable3" class="text-center">
+                                    <thead class="text-capitalize">
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Tên Đầy Đủ</th>
@@ -30,7 +30,7 @@
                                         <th scope="row">{{ $key->user_id }}</th>
                                         <td>{{ $key->name }}</td>
                                         <td>{{ ($key->gender == 1)? "Nam":"Nữ" }}</td>
-                                        <td><img src="images/avatar/{{ $key->avatar }}" class="img-preview2"></td>
+                                        <td><img src="layouts/system_admin/images/avatar/{{ $key->avatar }}" class="img-preview2"></td>
 
 
                                         <td>
@@ -46,7 +46,7 @@
                                         <td>
                                             <ul class="d-flex justify-content-center">
                                                 <li class="mr-3" style="margin-top: 10px;"><a href="{{ route('users.show',$key->user_id) }}" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                <li style="margin-top: 10px;"><a href="javascript:void(0)" class="text-danger"  data-confirm="Ban Co Muon Xoa Ko?" onclick="deleteUser({{$key->user_id}})"><i class="ti-trash"></i></a>
+                                                <li style="margin-top: 10px;"><a href="javascript:void(0)" class="text-danger"  onclick="deleteUser({{$key->user_id}})"><i class="ti-trash"></i></a>
                                                     {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy',$key->user_id], 'id' => "delete-form".$key->user_id]) !!}
                                                     {!! Form::close() !!}
                                                 </li>
@@ -56,7 +56,6 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -10,9 +10,9 @@
             <div class="card">
                 <div class="card-body">
                     <a href="{{ route('department-admin.create') }}" class="btn btn-primary">Thêm</a><br><br>
-                    <div class="dât-tables datatable-dark">
-                        <table id="dataTable3" class="tẽt-center">
-                            <thead class="tẽt-capitalize">
+                    <div class="data-tables datatable-dark">
+                        <table id="dataTable3" class="text-center">
+                            <thead class="text-capitalize">
                                 <tr>
                                     <th>Tên</th>
                                     <th>Email</th>
