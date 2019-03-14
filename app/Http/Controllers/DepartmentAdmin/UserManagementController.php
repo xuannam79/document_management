@@ -18,12 +18,12 @@ class UserManagementController extends Controller
 {
     public function index()
     {
-        $depuser = User::with('departmentUser')->where('actived',1)->get();
+        $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.is_active'))->get();
 //        dd($depuser);
         $position = Position::pluck('name', 'id');
         $department = Department::pluck('name', 'id');
 
-        return view('department_admin.users.index', compact( 'position', 'department', 'depuser'));
+        return view('department_admin.users.index', compact( 'position', 'department', 'departmentUser'));
     }
 
     /**
@@ -45,7 +45,7 @@ class UserManagementController extends Controller
     public function store(UserManagementRequest $request)
     {
         $input = $request->all();
-        $input['avatar'] = $this->save_picture($input);
+        $input['avatar'] = $this->savePicture($input);
         User::create($input);
         $id = User::select('id')->where('email', $input['email'])->first();
         DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(),'end_date' => $input['end_date']]);
@@ -93,7 +93,31 @@ class UserManagementController extends Controller
         }
     }
 
-    public function save_picture($input){
+    public function archiveIndex(){
+        $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.no_active'))->get();
+        $position = Position::pluck('name', 'id');
+        $department = Department::pluck('name', 'id');
+
+        return view('department_admin.users.archive', compact( 'position', 'department', 'departmentUser'));
+    }
+
+    public function restore($id){
+        DB::beginTransaction();
+        try
+        {
+            User::find($id)->update(['is_active' => config('setting.active.is_active')]);
+            DB::commit();
+
+            return redirect()->route('users.archive')->with('messageSuccess', 'Hoàn Tác Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('users.archive')->with('messageFail', 'Hoàn Tác Thất Bại');
+        }
+    }
+
+    public function savePicture($input){
         if(isset($input['avatar']))
         {
             $file = $input['avatar'];
@@ -102,10 +126,6 @@ class UserManagementController extends Controller
             $path = resource_path('templates/admin/img/avatar');
             $input['avatar'] = $newName;
             $file->move($path, $newName);
-            return $newName;
-        }
-        else {
-            $newName = 'noimg.png';
             return $newName;
         }
     }
@@ -135,8 +155,8 @@ class UserManagementController extends Controller
 
     }
 
-    public function ajaxemail(){
-        $user = User::where('actived',1)->where('status',1)->get();
+    public function ajaxEmail(){
+        $user = User::where('is_active',config('setting.active.is_active'))->where('status',config('setting.lock.no_lock'))->get();
         return response()->json($user);
     }
     /**
@@ -149,11 +169,27 @@ class UserManagementController extends Controller
     public function update(UserManagementRequest $request, $id)
     {
         $input = $request->all();
-        $input['avatar'] = $this->save_picture($input);
-        User::find($id)->update($input);
-        DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
+        DB::beginTransaction();
+        try
+        {
+            if(!isset($input['avatar'])){
+                User::find($id)->update(['email' => $input['email'], 'password' => $input['password'], 'name' => $input['name'], 'birth_date' => $input['birth_date']]);
+                DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
+            }
+            else {
+                $input['avatar'] = $this->savePicture($input);
+                User::find($id)->update($input);
+                DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
+            }
+            DB::commit();
 
-        return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+            return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('users.index')->with('messageFail', 'Cập Nhật Thất Bại');
+        }
     }
 
     /**
@@ -169,7 +205,7 @@ class UserManagementController extends Controller
         {
             $user = User::findOrFail($id);
             File::delete(public_path().'/templates/admin/img/avatar/'.$user->avatar);
-            $user->update(['actived' => 0]);
+            $user->update(['is_active' => config('setting.active.no_active')]);
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Xóa Thành Công');
