@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <div class="main-content-inner">
+    @include('common.errors')
     <div class="row">
         <div class="col-lg-6 col-ml-12">
             <div class="row">
@@ -18,7 +19,8 @@
                                 <div class="form-group">
                                         {!! Form::text('name', $department->name, [
                                             'class'=>'form-control',
-                                            'placeholder'=>'Nhập tên phòng ban']) !!}
+                                            'placeholder'=>'Nhập tên phòng ban',
+                                            'required']) !!}
                                 </div>
                                 {!! Form::submit('Sửa', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}

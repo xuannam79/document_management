@@ -15,4 +15,9 @@
         </ul>
     </div>
 @endif
+@if (session('alert'))
+    <script type="text/javascript" charset="utf-8">
+        alert("{{ session('alert') }}");
+    </script>
+@endif
 

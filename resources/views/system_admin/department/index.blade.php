@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <div class="main-content-inner">
+    @include('common.errors')
     <div class="row">
         <!-- Dark table start -->
         <div class="col-12 mt-5">

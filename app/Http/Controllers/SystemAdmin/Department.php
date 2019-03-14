@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SystemAdmin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SystemAdmin\DepartmentRequest;
 use App\Repositories\Department\DepartmentRepositoryInterface;
 
 class Department extends Controller
@@ -23,7 +24,7 @@ class Department extends Controller
     public function index()
     {
         $departments = $this->departmentRepository->all();
-
+        
         return view('system_admin.department.index', compact('departments'));
     }
 
@@ -44,7 +45,7 @@ class Department extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         try{
             $input = $request->only('name');
@@ -88,10 +89,8 @@ class Department extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DepartmentRequest $request, $id)
     {
-        $department = $this->departmentRepository->find($id);
-
         try {
             $dataUpdate = $request->only('name');
             $result = $this->departmentRepository->update($dataUpdate, $id);
