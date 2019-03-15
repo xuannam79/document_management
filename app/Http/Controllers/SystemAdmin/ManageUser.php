@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\SystemAdmin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Users;
+use App\Models\Department;
 use App\Models\DepartmentUser;
 use App\Models\Position;
 use App\Models\User;
-use App\Models\Department;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users;
 
 class ManageUser extends Controller
 {
@@ -20,7 +20,7 @@ class ManageUser extends Controller
         $position = Position::pluck('name', 'id');
         $department = Department::pluck('name', 'id');
 
-        return view('system_admin.users.index', compact( 'position', 'department', 'depuser'));
+        return view('system_admin.users.index', compact('position', 'department', 'depuser'));
     }
 
     /**
@@ -45,7 +45,7 @@ class ManageUser extends Controller
         $input['avatar'] = $this->save_picture($input);
         User::create($input);
         $id = DB::table('users')->select('id')->where('email', $input['email'])->first();
-        DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(),'end_date' => $input['end_date']]);
+        DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date']]);
 
         return redirect()->route('users.index');
     }
@@ -56,7 +56,8 @@ class ManageUser extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ajaxdp(Request $request, $id_dp){
+    public function ajaxdp(Request $request, $id_dp)
+    {
         $input = $request->all();
         //dd($input);
         DB::table('department_users')->where('user_id', $id_dp)->update(['department_id' => $input['depart']]);
@@ -64,25 +65,25 @@ class ManageUser extends Controller
         return redirect()->route('users.index');
     }
 
-    public function ajaxps(Request $request, $id_dp){
+    public function ajaxps(Request $request, $id_dp)
+    {
         $input = $request->all();
         DB::table('department_users')->where('user_id', $id_dp)->update(['position_id' => $input['positions']]);
 
         return redirect()->route('users.index');
     }
 
-    public function save_picture($input){
-        if(isset($input['avatar']))
-        {
+    public function save_picture($input)
+    {
+        if (isset($input['avatar'])) {
             $file = $input['avatar'];
             $fileex = $input['avatar']->getClientOriginalExtension();
-            $namenew = 'avatar-'.time().'.'.$fileex;
+            $namenew = 'avatar-' . time() . '.' . $fileex;
             $path = public_path('images/avatar');
             $input['avatar'] = $namenew;
             $file->move($path, $namenew);
             return $namenew;
-        }
-        else {
+        } else {
             $namenew = 'noimg.png';
             return $namenew;
         }
@@ -92,12 +93,10 @@ class ManageUser extends Controller
     {
         try
         {
-            $user = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')->where('user_id',$id)->first();
+            $user = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')->where('user_id', $id)->first();
 
             return view('system_admin.users.edit', compact('user'));
-        }
-        catch (Exception $exception)
-        {
+        } catch (Exception $exception) {
             return redirect()->back()->with('msgFail', "loi nhap");
         }
     }
@@ -113,7 +112,8 @@ class ManageUser extends Controller
 
     }
 
-    public function ajaxemail(){
+    public function ajaxemail()
+    {
         $user = User::all();
         return response()->json($user);
     }
@@ -129,7 +129,7 @@ class ManageUser extends Controller
         $input = $request->all();
         $input['avatar'] = $this->save_picture($input);
         User::find($id)->update($input);
-        DB::table('department_users')->where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
+        DB::table('department_users')->where('user_id', $id)->update(['start_date' => Carbon::now(), 'end_date' => $input['end_date']]);
 
         return redirect()->route('users.index');
     }
@@ -145,13 +145,11 @@ class ManageUser extends Controller
         try
         {
             $user = User::findOrFail($id);
-            DepartmentUser::where('user_id',$user->id)->delete();
+            DepartmentUser::where('user_id', $user->id)->delete();
             $user->delete();
 
             return redirect()->route('users.index')->with('messageD', 'Xoa Thanh Cong');
-        }
-        catch (Exception $exception)
-        {
+        } catch (Exception $exception) {
             return redirect()->back()->with('messageD', 'Xoa That Bai');
         }
     }

@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 use App\Repositories\Department\DepartmentRepository;
 use App\Repositories\Department\DepartmentRepositoryInterface;
+use App\Repositories\DocumentType\DocumentTypeRepository;
+use App\Repositories\DocumentType\DocumentTypeRepositoryInterface;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         App::bind(DepartmentRepositoryInterface::class, DepartmentRepository::class);
+        App::bind(DocumentTypeRepositoryInterface::class, DocumentTypeRepository::class);
     }
 }

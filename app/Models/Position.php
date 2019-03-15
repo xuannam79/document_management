@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\DepartmentUser;
+use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
@@ -17,7 +17,7 @@ class Position extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 
+        'name',
     ];
 
     public function departmentUser()

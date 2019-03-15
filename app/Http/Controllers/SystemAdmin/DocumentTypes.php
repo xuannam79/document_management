@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\SystemAdmin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Department\DepartmentRepositoryInterface;
+use App\Repositories\DocumentType\DocumentTypeRepositoryInterface;
 use Illuminate\Http\Request;
 
-class Department extends Controller
+class DocumentTypes extends Controller
 {
 
-    protected $departmentRepository;
+    protected $documentTypeRepository;
 
-    public function __construct(DepartmentRepositoryInterface $departmentRepository)
+    public function __construct(DocumentTypeRepositoryInterface $documentTypeRepository)
     {
-        $this->departmentRepository = $departmentRepository;
+        $this->documentTypeRepository = $documentTypeRepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +22,9 @@ class Department extends Controller
      */
     public function index()
     {
-        $departments = $this->departmentRepository->all();
-
-        return view('system_admin.department.index', compact('departments'));
+        $documentTypes = $this->documentTypeRepository->all();
+        var_dump($documentTypes);
+        //return view('system_admin.documenttype.index', compact('documentTypes'));
     }
 
     /**
@@ -34,8 +34,7 @@ class Department extends Controller
      */
     public function create()
     {
-
-        return view('system_admin.department.add');
+        //return view('system_admin.document_type.add');
     }
 
     /**
@@ -48,13 +47,13 @@ class Department extends Controller
     {
         try {
             $input = $request->only('name');
-            $this->departmentRepository->create($input);
+            $this->documentTypeRepository->create($input);
         } catch (Exception $e) {
 
-            return redirect(route('department.create'))->with('alert', 'Thêm thất bại');
+            return redirect(route('document-type.create'))->with('alert', 'Thêm thất bại');
         }
 
-        return redirect(route('department.index'))->with('alert', 'Thêm thành công');
+        return redirect(route('document-type.index'))->with('alert', 'Thêm thành công');
     }
 
     /**
@@ -76,9 +75,9 @@ class Department extends Controller
      */
     public function edit($id)
     {
-        $department = $this->departmentRepository->find($id);
+        $documentType = $this->documentTypeRepository->find($id);
 
-        return view('system_admin.department.edit', compact('department'));
+        return view('system_admin.document_type.edit', compact('documentType'));
     }
 
     /**
@@ -90,20 +89,20 @@ class Department extends Controller
      */
     public function update(Request $request, $id)
     {
-        $department = $this->departmentRepository->find($id);
+        $documentType = $this->documentTypeRepository->find($id);
 
         try {
             $dataUpdate = $request->only('name');
-            $result = $this->departmentRepository->update($dataUpdate, $id);
+            $result = $this->documentTypeRepository->update($dataUpdate, $id);
 
             if ($result) {
 
-                return redirect(route('department.index'))->with('alert', 'Sửa thành công');
+                return redirect(route('document-type.index'))->with('alert', 'Sửa thành công');
             }
 
         } catch (Exception $e) {
 
-            return redirect(route('department.edit'))->with('alert', 'Sửa thất bại');
+            return redirect(route('document-type.edit'))->with('alert', 'Sửa thất bại');
         }
     }
 
@@ -115,6 +114,18 @@ class Department extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        try {
+            $result = $this->documentTypeRepository->delete($id);
+
+            if ($result) {
+
+                return redirect(route('document-type.index'))->with('alert', 'Xóa thành công');
+            }
+
+        } catch (Exception $e) {
+
+            return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
+        }
     }
 }

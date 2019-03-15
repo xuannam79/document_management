@@ -2,9 +2,8 @@
 
 namespace App\Repositories\Department;
 
-use App\Repositories\BaseRepository;
-use App\Repositories\BaseInterface;
 use App\Models\Department;
+use App\Repositories\BaseRepository;
 
 class DepartmentRepository extends BaseRepository implements DepartmentRepositoryInterface
 {
@@ -18,7 +17,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentRepositor
 
     public function all()
     {
-        
+
         return $this->model->all();
     }
 }
