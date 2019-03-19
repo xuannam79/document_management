@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
-   .copyDirectory('resources/layouts', 'public/layouts');
+   .copyDirectory('resources/templates', 'public/templates');
 
 // mix.copy('resources/layouts/system_admin/css/bootstrap.min.css', 'public/layouts/system_admin/css/bootstrap.min.css')
 //    .copy('resources/layouts/system_admin/css/font-awesome.min.css', 'public/layouts/system_admin/css/font-awesome.min.css')

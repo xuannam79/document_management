@@ -11,9 +11,7 @@
 |
 */
 
-Route::namespace('Index')->group(function(){
-    Route::get('/', 'Dashboard@index');
-});
+Route::get('/', 'HomeAdminController@index');
 
 Route::namespace('SystemAdmin')->group(function(){
     Route::resource('department', 'Department');
