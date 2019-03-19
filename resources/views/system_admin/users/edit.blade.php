@@ -45,7 +45,7 @@
                                     {!! Form::label('avatar', "Ảnh Đại Diện") !!}
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <img class="img-preview" id="img-preview"/>
+                                            <img src="layouts/system_admin/images/avatar/{{ $user->avatar }}" class="img-preview" id="img-preview"/>
                                             {!! Form::file('avatar',['class' => 'form-control-file', 'id' => 'avatar'])  !!}
                                         </div>
                                     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\SystemAdmin;
+namespace App\Http\Controllers\DepartmentAdmin;
 
 use App\Http\Requests\SystemAdmin\UserRequest;
 use App\Models\DepartmentUser;
@@ -11,9 +11,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SystemAdmin\Users;
+use App\Http\Requests\DepartmentAdmin\UserManagementRequest;
+use File;
 
-class ManageUser extends Controller
+class UserManagement extends Controller
 {
     public function index()
     {
@@ -40,7 +41,7 @@ class ManageUser extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserManagementRequest $request)
     {
         $input = $request->all();
         $input['avatar'] = $this->save_picture($input);
@@ -48,7 +49,7 @@ class ManageUser extends Controller
         $id = DB::table('users')->select('id')->where('email', $input['email'])->first();
         DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(),'end_date' => $input['end_date']]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
     }
 
     /**
@@ -57,35 +58,54 @@ class ManageUser extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ajaxdp(Request $request, $id_dp){
+    public function ajaxdp(Request $request, $id){
         $input = $request->all();
-        //dd($input);
-        DB::table('department_users')->where('user_id', $id_dp)->update(['department_id' => $input['depart']]);
+        DB::beginTransaction();
+        try
+        {
+            DB::table('department_users')->where('user_id', $id)->update(['department_id' => $input['depart']]);
+            DB::commit();
 
-        return redirect()->route('users.index');
+            return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('users.index')->with('messageFail', 'Cập Nhật Thất Bại');
+        }
     }
 
-    public function ajaxps(Request $request, $id_dp){
+    public function ajaxps(Request $request, $id){
         $input = $request->all();
-        DB::table('department_users')->where('user_id', $id_dp)->update(['position_id' => $input['positions']]);
+        DB::beginTransaction();
+        try
+        {
+            DB::table('department_users')->where('user_id', $id)->update(['position_id' => $input['positions']]);
+            DB::commit();
 
-        return redirect()->route('users.index');
+            return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('users.index')->with('messageFail', 'Cập Nhật Thất Bại');
+        }
     }
 
     public function save_picture($input){
         if(isset($input['avatar']))
         {
             $file = $input['avatar'];
-            $fileex = $input['avatar']->getClientOriginalExtension();
-            $namenew = 'avatar-'.time().'.'.$fileex;
-            $path = public_path('images/avatar');
-            $input['avatar'] = $namenew;
-            $file->move($path, $namenew);
-            return $namenew;
+            $fileExtension = $input['avatar']->getClientOriginalExtension();
+            $newName = 'avatar-'.time().'.'.$fileExtension;
+            $path = resource_path('layouts/system_admin/images/avatar');
+            $input['avatar'] = $newName;
+            $file->move($path, $newName);
+            return $newName;
         }
         else {
-            $namenew = 'noimg.png';
-            return $namenew;
+            $newName = 'noimg.png';
+            return $newName;
         }
     }
 
@@ -99,7 +119,7 @@ class ManageUser extends Controller
         }
         catch (Exception $exception)
         {
-            return redirect()->back()->with('msgFail', "loi nhap");
+            return redirect()->back()->with('messageFail', "Lỗi Hệ Thống");
         }
     }
 
@@ -125,14 +145,14 @@ class ManageUser extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserManagementRequest $request, $id)
     {
         $input = $request->all();
         $input['avatar'] = $this->save_picture($input);
         User::find($id)->update($input);
-        DB::table('department_users')->where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
+        DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
     }
 
     /**
@@ -143,17 +163,21 @@ class ManageUser extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
         try
         {
             $user = User::findOrFail($id);
             DepartmentUser::where('user_id',$user->id)->delete();
+            File::delete(public_path().'/layouts/system_admim/images/avatar/'.$user->avatar);
             $user->delete();
+            DB::commit();
 
-            return redirect()->route('users.index')->with('messageD', 'Xoa Thanh Cong');
+            return redirect()->route('users.index')->with('messageSuccess', 'Xóa Thành Công');
         }
         catch (Exception $exception)
         {
-            return redirect()->back()->with('messageD', 'Xoa That Bai');
+            DB::rollBack();
+            return redirect()->back()->with('messageFail', 'Xóa Thất Bại');
         }
     }
 }

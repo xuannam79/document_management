@@ -9,27 +9,33 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
- */
+*/
 
-Route::namespace ('Index')->group(function () {
+Route::namespace('Index')->group(function(){
     Route::get('/', 'Dashboard@index');
 });
 
-Route::namespace ('SystemAdmin')->group(function () {
+Route::namespace('SystemAdmin')->group(function(){
     Route::resource('department', 'Department');
-    Route::resource('users', 'ManageUser');
-    Route::post('/ajaxdp/{id}', [
-        'as' => 'users.ajaxdp',
-        'uses' => 'ManageUser@ajaxdp',
-    ]);
-    Route::post('/ajaxps/{id}', [
-        'as' => 'users.ajaxps',
-        'uses' => 'ManageUser@ajaxps',
-    ]);
-    Route::get('/ajax-email', [
-        'uses' => 'ManageUser@ajaxemail',
-        'as' => 'ajax.email',
-    ]);
     Route::resource('department-admin', 'DepartmentAdmin');
     Route::resource('document-type', 'DocumentTypes');
 });
+
+Route::namespace('DepartmentAdmin')->group(function(){
+    Route::resource('users', 'UserManagement');
+    Route::post('/ajaxdp/{id}',[
+        'as' => 'users.ajaxdp',
+        'uses' => 'UserManagement@ajaxdp'
+    ]);
+    Route::post('/ajaxps/{id}',[
+        'as' => 'users.ajaxps',
+        'uses' => 'UserManagement@ajaxps'
+    ]);
+    Route::get('/ajax-email', [
+        'uses' => 'UserManagement@ajaxemail',
+        'as' => 'ajax.email',
+    ]);
+});
+
+
+
