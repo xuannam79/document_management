@@ -1,7 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
-/public/layouts
+/public/templates
+/public/css
+/public/js
 /v8-compile-cache-0
 /storage/*.key
 /vendor
