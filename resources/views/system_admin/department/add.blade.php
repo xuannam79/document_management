@@ -1,9 +1,9 @@
-@extends('layouts.system_admin.master')
+@extends('layouts.admin.master')
 @section('title')
     Thêm phòng ban
 @endsection
 @section('content')
-<div class="main-content-inner">
+<div class="container-fluid">
     <div class="row">
         <div class="col-lg-6 col-ml-12">
         @include('common.errors')
