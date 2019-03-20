@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers\SystemAdmin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\SystemAdmin\DepartmentRequest;
-use App\Repositories\Department\DepartmentRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Http\Requests\SystemAdmin\DepartmentRequest;
 
-class Department extends Controller
+class DepartmentController extends Controller
 {
-
-    protected $departmentRepository;
-
-    public function __construct(DepartmentRepositoryInterface $departmentRepository)
-    {
-        $this->departmentRepository = $departmentRepository;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +16,8 @@ class Department extends Controller
      */
     public function index()
     {
-        $departments = $this->departmentRepository->all();
-        
+        $departments = Department::where('is_active', config('setting.active.is_active'))->get();
+
         return view('system_admin.department.index', compact('departments'));
     }
 
@@ -49,7 +42,8 @@ class Department extends Controller
     {
         try {
             $input = $request->only('name');
-            $this->departmentRepository->create($input);
+            $input['is_active'] = config('setting.active.is_active');
+            Department::create($input);
         } catch (Exception $e) {
 
             return redirect(route('department.create'))->with('alert', 'Thêm thất bại');
@@ -77,7 +71,7 @@ class Department extends Controller
      */
     public function edit($id)
     {
-        $department = $this->departmentRepository->find($id);
+        $department = Department::findOrFail($id);
 
         return view('system_admin.department.edit', compact('department'));
     }
@@ -93,7 +87,7 @@ class Department extends Controller
     {
         try {
             $dataUpdate = $request->only('name');
-            $result = $this->departmentRepository->update($dataUpdate, $id);
+            $result = Department::whereId($id)->update($dataUpdate);
 
             if ($result) {
 
@@ -114,6 +108,26 @@ class Department extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $dataActive = config('setting.active.no_active');
+            $result = Department::whereId($id)->update($dataActive);
+            dd($result);
+
+            if ($result) {
+
+                return redirect(route('department.index'))->with('alert', 'Xóa thành công');
+            }
+
+        } catch (Exception $e) {
+
+            return redirect(route('department.index'))->with('alert', 'Xóa thất bại');
+        }
+    }
+
+    public function archive()
+    {
+        $departments = Department::where('is_active', config('setting.active.no_active'))->get();
+
+        return view('system_admin.department.archive', compact('departments'));        
     }
 }

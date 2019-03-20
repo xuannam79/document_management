@@ -24,7 +24,7 @@ class DepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:150|unique:departments',
+            'name' => 'required|max:255|unique:departments',
         ];
     }
 
@@ -32,7 +32,7 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name.required' => 'Vui lòng nhập tên phòng ban',
-            'name.max' => 'Chỉ được nhập tối đa 150 ký tự',
+            'name.max' => 'Chỉ được nhập tối đa 255 ký tự',
             'name.unique' => 'Đã có tên phòng ban này, vui lòng nhập tên khác'           
         ];
     }
