@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-white text-dark sidebar accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -37,6 +37,7 @@
                 <h6 class="collapse-header">Thực hiện:</h6>
                 <a class="collapse-item" href="{{ route('department.index') }}">Danh sách phòng ban</a>
                 <a class="collapse-item" href="{{ route('department.create') }}">Thêm phòng ban</a>
+                <a class="collapse-item" href="{{ route('department-archived') }}">Phòng ban đã xóa</a>
             </div>
         </div>
     </li>

@@ -29,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind(DepartmentRepositoryInterface::class, DepartmentRepository::class);
-        App::bind(DocumentTypeRepositoryInterface::class, DocumentTypeRepository::class);
+        
     }
 }

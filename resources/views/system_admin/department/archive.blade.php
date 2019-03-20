@@ -40,7 +40,7 @@
                             <td>{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
                             <td>{{ $department->created_at }}</td>
-                            <td style="text-align: center;"><span class="badge badge-pill badge-success">Hoạt động</span></td>
+                            <td style="text-align: center;"><span class="badge badge-pill badge-danger">Đã lưu trữ</span></td>
                             <td style="text-align: center;">
                                 <a href="{{ route('department.edit', $department->id) }}" class="text-warning" style="margin-right: 8px;">
                                     <i class="fa fa-edit"></i>
