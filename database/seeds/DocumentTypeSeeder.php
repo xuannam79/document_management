@@ -12,94 +12,124 @@ class DocumentTypeSeeder extends Seeder
     public function run()
     {
         DB::table('document_types')->insert([
-            'name' => 'Nghị quyết (cá biệt)'
+            'name' => 'Nghị quyết (cá biệt)',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Quyết định (cá biệt)'
+            'name' => 'Quyết định (cá biệt)',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Chỉ thị (cá biệt)'
+            'name' => 'Chỉ thị (cá biệt)',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Quy chế'
+            'name' => 'Quy chế',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Quy định'
+            'name' => 'Quy định',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Thông cáo'
+            'name' => 'Thông cáo',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Thông báo'
+            'name' => 'Thông báo',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Hướng dẫn'
+            'name' => 'Hướng dẫn',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Chương trình'
+            'name' => 'Chương trình',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Kế hoạch'
+            'name' => 'Kế hoạch',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Phương án'
+            'name' => 'Phương án',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Báo cáo'
+            'name' => 'Báo cáo',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Biên bản'
+            'name' => 'Biên bản',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Tờ trình'
+            'name' => 'Tờ trình',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Hợp đồng'
+            'name' => 'Hợp đồng',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Công văn'
+            'name' => 'Công văn',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Công điện'
+            'name' => 'Công điện',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Bản ghi nhớ'
+            'name' => 'Bản ghi nhớ',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Bản cam kết'
+            'name' => 'Bản cam kết',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Bản thỏa thuận'
+            'name' => 'Bản thỏa thuận',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy chứng nhận'
+            'name' => 'Giấy chứng nhận',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy ủy quyền'
+            'name' => 'Giấy ủy quyền',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy mời'
+            'name' => 'Giấy mời',
+            'is_active' => 1,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy giới thiệu'
+            'name' => 'Giấy giới thiệu',
+            'is_active' => 0,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy nghỉ phép'
+            'name' => 'Giấy nghỉ phép',
+            'is_active' => 0,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy đi đường'
+            'name' => 'Giấy đi đường',
+            'is_active' => 0,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Giấy biên nhận hồ sơ'
+            'name' => 'Giấy biên nhận hồ sơ',
+            'is_active' => 0,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Phiếu gửi'
+            'name' => 'Phiếu gửi',
+            'is_active' => 0,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Phiếu chuyển'
+            'name' => 'Phiếu chuyển',
+            'is_active' => 0,
         ]);
         DB::table('document_types')->insert([
-            'name' => 'Thư công'
+            'name' => 'Thư công',
+            'is_active' => 0,
         ]);
     }
 }
