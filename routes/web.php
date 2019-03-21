@@ -21,7 +21,15 @@ Route::namespace('SystemAdmin')->group(function(){
         'uses' => 'DepartmentController@archive'
     ]);
     Route::resource('department-admin', 'DepartmentAdmin');
-    Route::resource('document-type', 'DocumentTypes');
+    Route::resource('document-type', 'DocumentTypeController');
+    Route::get('/document-type-archived', [
+        'as' => 'document-type-archived',
+        'uses' => 'DocumentTypeController@archive'
+    ]);
+    Route::put('/document-type-restore/{id}', [
+        'as' => 'document-type-restore',
+        'uses' => 'DocumentTypeController@restore'
+    ]);
 
 });
 

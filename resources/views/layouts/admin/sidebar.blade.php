@@ -74,10 +74,11 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Thực hiện:</h6>
-                <a class="collapse-item" href="login.html">Tạo mới loại văn bản</a>
+                <a class="collapse-item" href="{{ route('document-type.create') }}">Tạo mới loại văn bản</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Tác vụ khác:</h6>
-                <a class="collapse-item" href="404.html">Danh sách loại văn bản</a>
+                <a class="collapse-item" href="{{ route('document-type.index') }}">Danh sách loại văn bản</a>
+                <a class="collapse-item" href="{{ route('document-type-archived') }}">Loại văn bản đã xóa</a>
             </div>
         </div>
     </li>
