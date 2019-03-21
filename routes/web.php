@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'HomeAdminController@index');
+Route::get('/admin', 'HomeAdminController@index');
+Route::get('/', 'HomeController@index');
 
 Route::namespace('SystemAdmin')->group(function(){
 
