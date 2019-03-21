@@ -16,16 +16,26 @@ Route::get('/', 'HomeAdminController@index');
 Route::namespace('SystemAdmin')->group(function(){
 
     Route::resource('department', 'DepartmentController');
+
     Route::get('/deparment-archived', [
         'as' => 'department-archived',
         'uses' => 'DepartmentController@archive'
     ]);
+
+    Route::put('/department-restore/{id}', [
+        'as' => 'department-restore',
+        'uses' => 'DepartmentController@restore'
+    ]);
+
     Route::resource('department-admin', 'DepartmentAdmin');
+
     Route::resource('document-type', 'DocumentTypeController');
+
     Route::get('/document-type-archived', [
         'as' => 'document-type-archived',
         'uses' => 'DocumentTypeController@archive'
     ]);
+
     Route::put('/document-type-restore/{id}', [
         'as' => 'document-type-restore',
         'uses' => 'DocumentTypeController@restore'
@@ -36,14 +46,17 @@ Route::namespace('SystemAdmin')->group(function(){
 Route::namespace('DepartmentAdmin')->group(function(){
 
     Route::resource('users', 'UserManagement');
+
     Route::post('/ajaxdp/{id}',[
         'as' => 'users.ajaxdp',
         'uses' => 'UserManagement@ajaxdp'
     ]);
+
     Route::post('/ajaxps/{id}',[
         'as' => 'users.ajaxps',
         'uses' => 'UserManagement@ajaxps'
     ]);
+    
     Route::get('/ajax-email', [
         'uses' => 'UserManagement@ajaxemail',
         'as' => 'ajax.email',

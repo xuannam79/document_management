@@ -15,7 +15,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead style="text-align: center;">
+                    <thead class="frm-align">
                         <tr>
                             <th>ID</th>
                             <th>Tên loại văn bản</th>
@@ -24,7 +24,7 @@
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    <tfoot class="frm-align">
                         <tr>
                             <th>ID</th>
                             <th>Tên loại văn bản</th>
@@ -36,13 +36,13 @@
                     <tbody>
                         @foreach($documentTypes as $documentType)
                         <tr>
-                            <td>{{ $documentType->id }}</td>
+                            <td class="frm-align">{{ $documentType->id }}</td>
                             <td>{{ $documentType->name }}</td>
-                            <td>{{ $documentType->created_at }}</td>
-                            <td style="text-align: center;"><span class="badge badge-pill badge-danger">Đã lưu trữ</span></td>
-                            <td style="text-align: center;">
-                                {!!Form::open(["method" => "PUT", "route" => ["document-type-restore", $documentType->id ], "id" => "document-type-restore"])!!}
-                                <a href="javascript:void(0)" class="text-success data-delete" style="margin-left: 8px" onclick="restoreArchivedData('document-type-restore')" title="Khôi phục">
+                            <td class="frm-align">{{ $documentType->created_at }}</td>
+                            <td class="frm-align"><span class="badge badge-pill badge-danger">Đã lưu trữ</span></td>
+                            <td class="frm-align">
+                                {!!Form::open(["method" => "PUT", "route" => ["document-type-restore", $documentType->id ], "id" => "document-type-restore".$documentType->id])!!}
+                                <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('document-type-restore'+{{$documentType->id}})" title="Khôi phục">
                                     <i class="fa fa-trash-restore"></i>
                                 </a>
                                 {!!Form::close()!!}
@@ -55,12 +55,4 @@
         </div>
     </div>
 </div>
-<script>
-    function restoreArchivedData(id){
-        const flag = confirm("Bạn có muốn khôi phục dữ liệu này?");
-        if(flag === true){
-            document.getElementById(id).submit();
-        }
-    }
-</script>
 @endsection

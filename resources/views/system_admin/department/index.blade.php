@@ -16,16 +16,16 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead style="text-align: center;">
+                    <thead class="frm-align">
                         <tr>
                             <th>ID</th>
-                            <th style="text-align: left;">Tên bộ phận</th>
+                            <th>Tên bộ phận</th>
                             <th>Ngày tạo</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    <tfoot class="frm-align">
                         <tr>
                             <th>ID</th>
                             <th>Tên bộ phận</th>
@@ -37,17 +37,19 @@
                     <tbody>
                         @foreach($departments as $department)
                         <tr>
-                            <td>{{ $department->id }}</td>
+                            <td class="frm-align">{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
-                            <td>{{ $department->created_at }}</td>
-                            <td style="text-align: center;"><span class="badge badge-pill badge-success">Hoạt động</span></td>
-                            <td style="text-align: center;">
-                                <a href="{{ route('department.edit', $department->id) }}" class="text-warning" style="margin-right: 8px;">
+                            <td class="frm-align">{{ $department->created_at }}</td>
+                            <td class="frm-align"><span class="badge badge-pill badge-success">Khả dụng</span></td>
+                            <td class="frm-align">
+                                <a href="{{ route('department.edit', $department->id) }}" class="text-warning frm-margin-right-8">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="{{ route('department.destroy', $department->id) }}" class="text-danger data-delete" style="margin-left: 8px" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
+                                {!!Form::open(['method'=>'DELETE', 'id'=>'delete-department'.$department->id, 'route'=>['department.destroy', $department->id], 'style'=>'display:inline'])!!}
+                                <a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8" onclick='submitForm("delete-department" + {{$department->id}});'>
                                     <i class="fa fa-trash"></i>
                                 </a>
+                                {!!Form::close()!!}
                             </td>
                         </tr>
                         @endforeach

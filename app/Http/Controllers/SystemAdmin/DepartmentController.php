@@ -92,7 +92,11 @@ class DepartmentController extends Controller
             if ($result) {
 
                 return redirect(route('department.index'))->with('alert', 'Sửa thành công');
-            }
+            } else{
+
+                return redirect(route('department.index'))->with('alert', 'Dữ liệu không được sửa đổi');
+            } 
+
 
         } catch (Exception $e) {
 
@@ -110,12 +114,14 @@ class DepartmentController extends Controller
     {
         try {
             $dataActive = config('setting.active.no_active');
-            $result = Department::whereId($id)->update($dataActive);
-            dd($result);
+            $result = Department::whereId($id)->update(['is_active' => $dataActive]);
 
             if ($result) {
 
                 return redirect(route('department.index'))->with('alert', 'Xóa thành công');
+            } else {
+
+                return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
             }
 
         } catch (Exception $e) {
@@ -129,5 +135,25 @@ class DepartmentController extends Controller
         $departments = Department::where('is_active', config('setting.active.no_active'))->get();
 
         return view('system_admin.department.archive', compact('departments'));        
+    }
+
+    public function restore($id)
+    {
+        try {
+            $active = config('setting.active.is_active');
+            $result = Department::whereId($id)->update(['is_active' => $active]);
+
+            if ($result) {
+
+                return redirect(route('department-archived'))->with('alert', 'Khôi phục thành công');
+            } else {
+
+                return redirect(route('department-archived'))->with('alert', 'Không tìm thấy id');
+            }
+
+        } catch (Exception $e) {
+
+            return redirect(route('department-archived'))->with('alert', 'Khôi phục thất bại');
+        }
     }
 }

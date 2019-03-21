@@ -16,7 +16,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        $documentTypes = DocumentType::where("is_active", 1)->get();
+        $documentTypes = DocumentType::where('is_active', config('setting.active.is_active'))->get();
 
         return view('system_admin.document_type.index', compact('documentTypes'));
     }
@@ -113,12 +113,15 @@ class DocumentTypeController extends Controller
     public function destroy($id)
     {
         try {
-            $active = config('setting.active.no_active');
-            $result = DocumentType::whereId($id)->update(['is_active' => $active]);
+            $deactive = config('setting.active.no_active');
+            $result = DocumentType::whereId($id)->update(['is_active' => $deactive]);
 
             if ($result) {
 
                 return redirect(route('document-type.index'))->with('alert', 'Xóa thành công');
+            } else {
+
+                return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
             }
 
         } catch (Exception $e) {
@@ -143,6 +146,9 @@ class DocumentTypeController extends Controller
             if ($result) {
 
                 return redirect(route('document-type-archived'))->with('alert', 'Khôi phục thành công');
+            } else {
+
+                return redirect(route('document-type-archived'))->with('alert', 'Không tìm thấy id');
             }
 
         } catch (Exception $e) {
