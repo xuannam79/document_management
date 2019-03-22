@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('avatar')->default("default.png");
+            $table->integer('status')->default(1);
+            $table->integer('actived')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

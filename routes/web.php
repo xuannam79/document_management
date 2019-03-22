@@ -57,22 +57,22 @@ Route::namespace ('SystemAdmin')->group(function () {
     ]);
 });
 
-Route::namespace ('DepartmentAdmin')->group(function () {
+Route::namespace('DepartmentAdmin')->group(function(){
 
-    Route::resource('users', 'UserManagement');
+    Route::resource('users', 'UserManagementController');
 
     Route::post('/ajaxdp/{id}',[
         'as' => 'users.ajaxdp',
-        'uses' => 'UserManagement@ajaxdp',
+        'uses' => 'UserManagementController@ajaxdp'
     ]);
 
     Route::post('/ajaxps/{id}',[
         'as' => 'users.ajaxps',
-        'uses' => 'UserManagement@ajaxps',
+        'uses' => 'UserManagementController@ajaxps'
     ]);
 
     Route::get('/ajax-email', [
-        'uses' => 'UserManagement@ajaxemail',
+        'uses' => 'UserManagementController@ajaxemail',
         'as' => 'ajax.email',
     ]);
 

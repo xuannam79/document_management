@@ -27,16 +27,16 @@ class DepartmentUser extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function position()
     {
-        $this->belongsTo(Position::class);
+        return $this->belongsTo(Position::class);
     }
 
     public function department()
     {
-        $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class);
     }
 }

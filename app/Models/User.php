@@ -29,6 +29,8 @@ class User extends Authenticatable
         'address',
         'phone',
         'avatar',
+        'status',
+        'actived',
     ];
 
     /**
@@ -43,6 +45,6 @@ class User extends Authenticatable
 
     public function departmentUser()
     {
-        $this->hasMany(DepartmentUser::class);
+        return $this->hasMany(DepartmentUser::class);
     }
 }
