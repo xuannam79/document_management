@@ -15,6 +15,7 @@
     {{ Html::style(asset('/templates/admin/css/sb-admin-2.min.css')) }}
     {{ Html::style(asset('/templates/admin/vendor/fontawesome-free/css/css.css')) }}
     {{ Html::style(asset('/templates/admin/vendor/datatables/dataTables.bootstrap4.min.css')) }}
+    {{ Html::style(asset('/css/all.css')) }}
 
 </head>
 
@@ -40,5 +41,6 @@
     {{ Html::script(asset('/templates/admin/vendor/datatables/jquery.dataTables.min.js')) }}
     {{ Html::script(asset('/templates/admin/vendor/datatables/dataTables.bootstrap4.min.js')) }}
     {{ Html::script(asset('/templates/admin/js/demo/datatables-demo.js')) }}
+    {{ Html::script(asset('/js/all.js')) }}
 
 </html>
