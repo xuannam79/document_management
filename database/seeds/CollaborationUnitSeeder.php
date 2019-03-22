@@ -17,6 +17,7 @@ class CollaborationUnitSeeder extends Seeder
             'email' => 'contact@dtu.com',
             'address' => 'Đà Nẵng',
             'description' => 'Mô tả ngắn',
+            'is_active' => config('setting.active.is_active'),
         ]);
     }
 }
