@@ -12,7 +12,7 @@
                         <div class="card">
                             <div class="card-body">
                                 @include('common.errors')
-                                {!! Form::open(['method'=>'PUT', 'files' => true, 'route'=>['infrastructure.update',$infrastructure->id]]) !!}
+                                {!! Form::open(['method'=>'PUT', 'files' => true, 'route'=>['infrastructure.update', $infrastructure->id]]) !!}
                                 {!! Form::label('name', "Tên Tài Sản") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">

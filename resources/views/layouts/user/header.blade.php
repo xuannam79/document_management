@@ -1,7 +1,7 @@
 <header class="header text-center">
 	<div class="container">
 		<div class="tagline">
-			<p>Cơ sở trường đại học nội vụ tại miền Trung</p>
+			<p>Phân hiệu Trường Đại Học Nội Vụ Hà Nội tại tỉnh Quảng Nam</p>
 		</div>
 		<div class="branding">
 			<h1 class="logo">
@@ -17,11 +17,11 @@
 					<a class="nav-link" href="#">Trang chủ </a>
 				</li>
 				<li class="nav-item cool-link">
-					<a class="nav-link" href="#">Thằng nam khóc</a>
+					<a class="nav-link" href="#">Văn bản</a>
 				</li>
 				<li class="nav-item cool-link dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Dropdown 
+					Dropdown
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="#">Action</a>

@@ -121,7 +121,7 @@ class DepartmentController extends Controller
                 return redirect(route('department.index'))->with('alert', 'Xóa thành công');
             } else {
 
-                return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
+                return redirect(route('department.index'))->with('alert', 'Xóa thất bại');
             }
 
         } catch (Exception $e) {

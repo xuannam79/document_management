@@ -49,8 +49,9 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="utilities-color.html">Danh sách trưởng đơn vị</a>
-                <a class="collapse-item" href="utilities-border.html">Thêm trưởng đơn vị</a>
+                <a class="collapse-item" href="{{ route('department-admin.index') }}">Danh sách trưởng đơn vị</a>
+                <a class="collapse-item" href="{{ route('department-admin.create') }}">Thêm trưởng đơn vị</a>
+                <a class="collapse-item" href="{{ route('department-admin-archived') }}">Trưởng đơn vị đã xóa</a>
             </div>
         </div>
     </li>
@@ -103,7 +104,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('document-type.create') }}">Tạo mới loại văn bản</a>
                 <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Tác vụ khác:</h6>
                 <a class="collapse-item" href="{{ route('document-type.index') }}">Danh sách loại văn bản</a>
                 <a class="collapse-item" href="{{ route('document-type-archived') }}">Loại văn bản đã xóa</a>
             </div>
@@ -127,18 +127,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('collaboration-unit.create') }}">Tạo mới đơn vị liên kết</a>
                 <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Tác vụ khác:</h6>
                 <a class="collapse-item" href="{{ route('collaboration-unit.index') }}">Danh sách đơn vị liên kết</a>
                 <a class="collapse-item" href="{{ route('collaboration-unit-archived') }}">Đơn vị liên kết đã xóa</a>
             </div>
         </div>
-    </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Đã nhúng sẵn Datatables, chỉ cần gọi là ra, mấy đứa sửa lại</span></a>
     </li>
 
     <!-- Divider -->

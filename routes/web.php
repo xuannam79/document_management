@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@index');
 
 Route::namespace ('SystemAdmin')->group(function () {
 
+    //department
     Route::resource('department', 'DepartmentController');
 
     Route::get('/deparment-archived', [
@@ -28,7 +29,18 @@ Route::namespace ('SystemAdmin')->group(function () {
         'uses' => 'DepartmentController@restore'
     ]);
 
-    Route::resource('department-admin', 'DepartmentAdmin');
+    //department admin
+    Route::resource('department-admin', 'DepartmentAdminController');
+
+    Route::get('/deparment-admin-archived', [
+        'as' => 'department-admin-archived',
+        'uses' => 'DepartmentAdminController@archive',
+    ]);
+
+    Route::put('/department-admin-restore/{id}', [
+        'as' => 'department-admin-restore',
+        'uses' => 'DepartmentAdminController@restore'
+    ]);
 
     //document-type
     Route::resource('document-type', 'DocumentTypeController');
@@ -56,6 +68,7 @@ Route::namespace ('SystemAdmin')->group(function () {
         'uses' => 'CollaborationUnitController@restore',
     ]);
 
+    //infrastructure
     Route::post('/infrastructure-department/{id}', [
         'uses' => 'InfrastructureManagementController@changeDepartment',
         'as' => 'infrastructure.department',
