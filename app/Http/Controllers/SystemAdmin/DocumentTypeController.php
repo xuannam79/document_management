@@ -126,7 +126,7 @@ class DocumentTypeController extends Controller
 
         } catch (Exception $e) {
 
-            return redirect(route('document-type.edit'))->with('alert', 'Xóa thất bại');
+            return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
         }
     }
 
@@ -148,7 +148,7 @@ class DocumentTypeController extends Controller
                 return redirect(route('document-type-archived'))->with('alert', 'Khôi phục thành công');
             } else {
 
-                return redirect(route('document-type-archived'))->with('alert', 'Không tìm thấy id');
+                return redirect(route('document-type-archived'))->with('alert', 'Khôi phục thất bại');
             }
 
         } catch (Exception $e) {

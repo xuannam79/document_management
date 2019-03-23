@@ -90,6 +90,24 @@
             <span>Chuyển cá nhân/ đơn vị</span></a>
     </li>
 
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#don-vi-lien-ket" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-user-friends"></i>
+            <span>Đơn vị liên kết</span>
+        </a>
+        <div id="don-vi-lien-ket" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Thực hiện:</h6>
+                <a class="collapse-item" href="{{ route('collaboration-unit.create') }}">Tạo mới đơn vị liên kết</a>
+                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">Tác vụ khác:</h6>
+                <a class="collapse-item" href="{{ route('collaboration-unit.index') }}">Danh sách đơn vị liên kết</a>
+                <a class="collapse-item" href="{{ route('collaboration-unit-archived') }}">Đơn vị liên kết đã xóa</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="">

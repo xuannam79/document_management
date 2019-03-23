@@ -95,7 +95,7 @@ class DepartmentController extends Controller
             } else{
 
                 return redirect(route('department.index'))->with('alert', 'Dữ liệu không được sửa đổi');
-            } 
+            }
 
 
         } catch (Exception $e) {
@@ -128,13 +128,13 @@ class DepartmentController extends Controller
 
             return redirect(route('department.index'))->with('alert', 'Xóa thất bại');
         }
-    }
+    }   
 
     public function archive()
     {
         $departments = Department::where('is_active', config('setting.active.no_active'))->get();
 
-        return view('system_admin.department.archive', compact('departments'));        
+        return view('system_admin.department.archive', compact('departments'));
     }
 
     public function restore($id)
