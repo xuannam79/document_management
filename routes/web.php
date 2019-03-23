@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', 'HomeAdminController@index');
+Route::get('/admin', 'HomeAdminController@index');
+Route::get('/', 'HomeController@index');
 
-Route::namespace('SystemAdmin')->group(function(){
+Route::namespace('Document')->group(function(){
 
     Route::resource('department', 'DepartmentController');
     Route::get('/deparment-archived', [
@@ -49,4 +50,9 @@ Route::namespace('DepartmentAdmin')->group(function(){
         'as' => 'ajax.email',
     ]);
 
+});
+
+
+Route::namespace('Document')->group(function(){
+    Route::resource('document', 'DocumentController');
 });
