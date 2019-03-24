@@ -28,4 +28,3 @@
         alert("{{ session('alert') }}");
     </script>
 @endif
-
