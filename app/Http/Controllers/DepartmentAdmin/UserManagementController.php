@@ -14,15 +14,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentAdmin\UserManagementRequest;
 use File;
 
-class UserManagement extends Controller
+class UserManagementController extends Controller
 {
     public function index()
     {
-        $depuser = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')->get();
+        $depuser = User::with('departmentUser')->where('actived',1)->get();
+//        dd($depuser);
         $position = Position::pluck('name', 'id');
         $department = Department::pluck('name', 'id');
 
-        return view('system_admin.users.index', compact( 'position', 'department', 'depuser'));
+        return view('department_admin.users.index', compact( 'position', 'department', 'depuser'));
     }
 
     /**
@@ -32,7 +33,7 @@ class UserManagement extends Controller
      */
     public function create()
     {
-        return view('system_admin.users.add');
+        return view('department_admin.users.add');
     }
 
     /**
@@ -46,7 +47,7 @@ class UserManagement extends Controller
         $input = $request->all();
         $input['avatar'] = $this->save_picture($input);
         User::create($input);
-        $id = DB::table('users')->select('id')->where('email', $input['email'])->first();
+        $id = User::select('id')->where('email', $input['email'])->first();
         DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(),'end_date' => $input['end_date']]);
 
         return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
@@ -63,7 +64,7 @@ class UserManagement extends Controller
         DB::beginTransaction();
         try
         {
-            DB::table('department_users')->where('user_id', $id)->update(['department_id' => $input['depart']]);
+            DepartmentUser::where('user_id', $id)->update(['department_id' => $input['depart']]);
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
@@ -80,7 +81,7 @@ class UserManagement extends Controller
         DB::beginTransaction();
         try
         {
-            DB::table('department_users')->where('user_id', $id)->update(['position_id' => $input['positions']]);
+            DepartmentUser::where('user_id', $id)->update(['position_id' => $input['positions']]);
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
@@ -98,7 +99,7 @@ class UserManagement extends Controller
             $file = $input['avatar'];
             $fileExtension = $input['avatar']->getClientOriginalExtension();
             $newName = 'avatar-'.time().'.'.$fileExtension;
-            $path = resource_path('layouts/system_admin/images/avatar');
+            $path = resource_path('templates/admin/img/avatar');
             $input['avatar'] = $newName;
             $file->move($path, $newName);
             return $newName;
@@ -113,9 +114,9 @@ class UserManagement extends Controller
     {
         try
         {
-            $user = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')->where('user_id',$id)->first();
+            $user = User::with('departmentUser')->where('users.id',$id)->first() ;
 
-            return view('system_admin.users.edit', compact('user'));
+            return view('department_admin.users.edit', compact('user'));
         }
         catch (Exception $exception)
         {
@@ -135,7 +136,7 @@ class UserManagement extends Controller
     }
 
     public function ajaxemail(){
-        $user = User::all();
+        $user = User::where('actived',1)->where('status',1)->get();
         return response()->json($user);
     }
     /**
@@ -152,7 +153,7 @@ class UserManagement extends Controller
         User::find($id)->update($input);
         DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
 
-        return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
+        return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
     }
 
     /**
@@ -167,9 +168,8 @@ class UserManagement extends Controller
         try
         {
             $user = User::findOrFail($id);
-            DepartmentUser::where('user_id',$user->id)->delete();
-            File::delete(public_path().'/layouts/system_admim/images/avatar/'.$user->avatar);
-            $user->delete();
+            File::delete(public_path().'/templates/admin/img/avatar/'.$user->avatar);
+            $user->update(['actived' => 0]);
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Xóa Thành Công');
