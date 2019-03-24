@@ -45,8 +45,8 @@
                             <td>{{ $collaborationUnit->email }}</td>
                             <td>{{ $collaborationUnit->address }}</td>
                             <td>{{ str_limit($collaborationUnit->description, 100) }}</td>
-                            <td style="text-align: center;"><span class="badge badge-pill badge-danger">Đã lưu trữ</span></td>
-                            <td style="text-align: center;">
+                            <td class="frm-align"><span class="badge badge-pill badge-danger">Đã lưu trữ</span></td>
+                            <td class="frm-align">
                                 {!!Form::open(["method" => "PUT", "route" => ["collaboration-unit-restore", $collaborationUnit->id ], "id" => "collaboration-unit-restore".$collaborationUnit->id])!!}
                                 <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('collaboration-unit-restore'+{{$collaborationUnit->id}})" title="Khôi phục">
                                     <i class="fa fa-trash-restore"></i>

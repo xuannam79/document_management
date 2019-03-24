@@ -46,8 +46,8 @@
                             <td>{{ $collaborationUnit->email }}</td>
                             <td>{{ $collaborationUnit->address }}</td>
                             <td>{{ $collaborationUnit->description }}</td>
-                            <td style="text-align: center;"><span class="badge badge-pill badge-success">Hoạt động</span></td>
-                            <td style="text-align: center;">
+                            <td class="frm-align"><span class="badge badge-pill badge-success">Hoạt động</span></td>
+                            <td class="frm-align">
                                 <a href="{{ route('collaboration-unit.edit', $collaborationUnit->id) }}" class="text-warning" style="margin-right: 8px;">
                                     <i class="fa fa-edit"></i>
                                 </a>

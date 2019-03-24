@@ -19,8 +19,7 @@
                                 <div class="form-group">
                                         {!! Form::text('name', '', [
                                             'class'=>'form-control',
-                                            'placeholder'=>'Nhập tên loại văn bản',
-                                            'required']) !!}
+                                            'placeholder'=>'Nhập tên loại văn bản']) !!}
                                 </div>
                                 {!! Form::submit('Thêm', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}

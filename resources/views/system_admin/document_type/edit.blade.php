@@ -18,11 +18,12 @@
                             <div class="form-group">
                                     {!! Form::text('name', $documentType->name, [
                                         'class'=>'form-control',
-                                        'placeholder'=>'Tên loại văn bản',
-                                        'required']) !!}
+                                        'placeholder'=>'Tên loại văn bản']) !!}
                             </div>
                             {!! Form::submit('Sửa', [
                                 'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
+                            {!! Form::reset('Đặt lại', [
+                                'class'=>'btn btn-danger mt-4 pr-4 pl-4']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
