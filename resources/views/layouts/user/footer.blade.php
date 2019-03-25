@@ -1,8 +1,7 @@
 <footer class="footer text-center">
     <div class="container">
         <small class="copyright"
-            >zxc <i class="fas fa-heart"></i> by
-        <a href="#" target="_blank">xnam</a></small
+            >© Copyright 2019 <a href="http://truongnoivu.edu.vn/">Đại học Nội Vụ Hà Nội Phân Hiệu Quảng Nam</a></small
             >
     </div>
 </footer>

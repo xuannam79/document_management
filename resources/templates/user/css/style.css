@@ -1519,35 +1519,67 @@ you can use the generic selector below, but it's slower:
 .head-icon {
     color: #40babd !important;
 }
-.document-foot {
-    font-size: 20px;
-    margin-top: 20%;
+a.list-group-item.read {
+    color: #222;
+    background-color: #F3F3F3;
 }
-.list-document {
-    background-color: #fff !important;
-    border: 1px solid #f2f2f2 !important;
-    max-width: 12em !important;
-    margin: 0 10px 20px 20px !important;
+span.name {
+    min-width: 120px;
+    max-width: 120px;
+    display: inline-block;
+    float: left;
+    margin-right: 5%;
 }
-.list-document-detail {
-    margin: 5px 0px;
+.list-group {
+    width: 95%;
 }
-.list-document-detail h3 {
+.badge {
+    float: right;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px;
+}
+.list-group-item {
+    color: #222;
+    margin: 1px;
+    
+}
+.list-group-item:hover {
+    box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.45);
+    color: #222;
+}
+.text-muted {
     font-size: 14px !important;
 }
-.fa-download button {
-    max-width: 10em;
-    font-size: 10px;
+.dropdown-menu {
+    margin: 0px;
 }
-.btn:hover {
-    background-color: #d8d8d8;
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
-.fa:hover {
-    cursor: pointer;
+.dropdown-item {
+    color: #222 !important;
 }
-.icon-holder {
-    margin-top: 15px;
+.dropdown-item:hover {
+    color: #222 !important;
+    background-color: #dadada;
 }
-.setSize {
-    font-size: 35px;
+.collapse {
+    background-color: #e4e4e4;
+    font-size: 15px;
+    height: 55px;
+}
+.navbar {
+    padding: 0;
+}
+.navbar-nav {
+    padding-left: 10px;
 }

@@ -334,6 +334,7 @@ select {
 
 .header .container {
     position: relative;
+    padding-bottom: 10px;
 }
 
 .branding {
@@ -1552,106 +1553,6 @@ select {
     margin-left: 5%;
     min-width: 5em;
     width: 25%;
-}
-
-.nav {
-    margin-top: 40px;
-    transition: all 300ms ease-in-out;
-    background: #eee;
-    transform: scaleX(0);
-}
-.nav.open {
-    transform: scaleX(1);
-}
-
-.nav ul {
-    padding: 0;
-    margin: auto;
-    font-size: 20px;
-}
-.nav li {
-    display: inline-block;
-    color: #111;
-    font-family: sans-serif;
-    padding: 20px;
-}
-.navicon {
-    width: 40px;
-    height: 40px;
-    position: relative;
-    top: -48px;
-    background: #eee;
-    border-radius: 100%;
-    transition: 300ms all ease-in-out;
-}
-.navicon.open .bar:first-child {
-    transform: rotate(45deg);
-    top: 22px;
-}
-.navicon.open .bar:last-child {
-    transform: rotate(-45deg);
-    top: 12px;
-}
-.navicon.open .bar.middle {
-    opacity: 0;
-}
-.navicon.open {
-    top: -54px;
-}
-.navicon .bar {
-    background: #3d7788;
-    width: 30px;
-    height: 5px;
-    border-radius: 20px;
-    position: relative;
-    top: 4px;
-    transition: 300ms all ease-in-out;
-}
-.navicon .bar.first {
-    top: 6px;
-}
-.fixed {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    margin: 0px;
-}
-.navicon .bar.last {
-    top: 8px;
-}
-.navicon .bar.first {
-    top: 27px;
-}
-.content {
-    margin-top: 220px;
-    color: #eee;
-    font-family: sans-serif;
-}
-.navicon.open-top {
-    top: 104px !important;
-}
-.navicon.open-top .bar.middle {
-    opacity: 1;
-    transform: rotate(90deg);
-    top: 16px;
-}
-.navicon.open-top .bar.first {
-    width: 15px;
-    top: 12px;
-    left: 4px;
-    transform: rotate(45deg);
-}
-.navicon.open-top .bar.last {
-    width: 15px;
-    top: 2px;
-    left: -4px;
-    transform: rotate(-45deg);
-}
-
-.nav-bar {
-    height: 70px;
-    width: 100%;
 }
 
 .cool-link {
