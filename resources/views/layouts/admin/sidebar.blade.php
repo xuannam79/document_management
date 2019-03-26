@@ -34,7 +34,6 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Thực hiện:</h6>
                 <a class="collapse-item" href="{{ route('department.index') }}">Danh sách phòng ban</a>
                 <a class="collapse-item" href="{{ route('department.create') }}">Thêm phòng ban</a>
                 <a class="collapse-item" href="{{ route('department-archived') }}">Phòng ban đã xóa</a>
@@ -50,9 +49,38 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Thực hiện:</h6>
                 <a class="collapse-item" href="utilities-color.html">Danh sách trưởng đơn vị</a>
                 <a class="collapse-item" href="utilities-border.html">Thêm trưởng đơn vị</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#thanhvien" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Thành viên</span>
+        </a>
+        <div id="thanhvien" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('users.index') }}">Danh sách thành viên</a>
+                <a class="collapse-item" href="{{ route('users.create') }}">Thêm thành viên</a>
+                <a class="collapse-item" href="{{ route('users.archive') }}">Thành viên đã xóa</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#taisan" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Tài Sản</span>
+        </a>
+        <div id="taisan" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('infrastructure.index') }}">Danh sách tài sản</a>
+                <a class="collapse-item" href="{{ route('infrastructure.create') }}">Thêm tài sản</a>
+                <a class="collapse-item" href="{{ route('infrastructure.archive') }}">Tài sản đã xóa</a>
             </div>
         </div>
     </li>
@@ -73,7 +101,6 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Thực hiện:</h6>
                 <a class="collapse-item" href="{{ route('document-type.create') }}">Tạo mới loại văn bản</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Tác vụ khác:</h6>
@@ -98,7 +125,6 @@
         </a>
         <div id="don-vi-lien-ket" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Thực hiện:</h6>
                 <a class="collapse-item" href="{{ route('collaboration-unit.create') }}">Tạo mới đơn vị liên kết</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Tác vụ khác:</h6>

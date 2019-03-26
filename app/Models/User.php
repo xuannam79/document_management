@@ -30,7 +30,7 @@ class User extends Authenticatable
         'phone',
         'avatar',
         'status',
-        'actived',
+        'is_active',
     ];
 
     /**

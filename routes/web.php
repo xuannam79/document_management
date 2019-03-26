@@ -55,6 +55,22 @@ Route::namespace ('SystemAdmin')->group(function () {
         'as' => 'collaboration-unit-restore',
         'uses' => 'CollaborationUnitController@restore',
     ]);
+
+    Route::post('/infrastructure-department/{id}', [
+        'uses' => 'InfrastructureManagementController@changeDepartment',
+        'as' => 'infrastructure.department',
+    ]);
+
+    Route::resource('infrastructure', 'InfrastructureManagementController');
+
+    Route::get('/infrastructure-archive', [
+        'uses' => 'InfrastructureManagementController@archiveIndex',
+        'as' => 'infrastructure.archive',
+    ]);
+    Route::put('/infrastructure-archive-restore/{id}', [
+        'uses' => 'InfrastructureManagementController@restore',
+        'as' => 'infrastructure.archive.restore',
+    ]);
 });
 
 Route::namespace('DepartmentAdmin')->group(function(){
@@ -72,10 +88,19 @@ Route::namespace('DepartmentAdmin')->group(function(){
     ]);
 
     Route::get('/ajax-email', [
-        'uses' => 'UserManagementController@ajaxemail',
+        'uses' => 'UserManagementController@ajaxEmail',
         'as' => 'ajax.email',
     ]);
 
+    Route::get('/archive', [
+        'uses' => 'UserManagementController@archiveIndex',
+        'as' => 'users.archive',
+    ]);
+
+    Route::put('/archive-restore/{id}', [
+        'uses' => 'UserManagementController@restore',
+        'as' => 'users.archive.restore',
+    ]);
 });
 
 

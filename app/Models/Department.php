@@ -23,7 +23,12 @@ class Department extends Model
 
     public function departmentUser()
     {
-        $this->hasMany(DepartmentUser::class);
+        return $this->hasMany(DepartmentUser::class);
+    }
+
+    public function infrastucture()
+    {
+        return $this->hasMany(Infrastructure::class);
     }
 
 }

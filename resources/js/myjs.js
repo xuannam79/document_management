@@ -11,18 +11,20 @@ function restoreArchivedData(id){
         document.getElementById(id).submit();
     }
 }
-function dep(id){
+
+function changeDepartment(id){
     const flag = confirm("Bạn có muốn thay đổi phòng ban của id: "+id+" này không ?");
     if(flag === true){
-        $("#form-dep"+id).submit();
+        $("#changeDepartment"+id).submit();
     }
-};
-function pos(id) {
+}
+
+function changePosition(id) {
     const flag = confirm("Bạn có muốn thay đổi chức vụ của id "+id+" này không ?");
     if(flag === true){
-        $("#form-pos"+id).submit();
+        $("#changePosition"+id).submit();
     }
-};
+}
 
 $(document).on('click', '#btnAddUser', function () {
     $.ajax({
@@ -56,29 +58,25 @@ $(document).on('click', '#btnAddUser', function () {
 });
 
 $(document).ready(function () {
-function readURLPicTure(input) {
+    function readURLPicTure(input) {
 
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-        reader.onload = function(e) {
-            $('#img-preview').attr('src', e.target.result);
+            reader.onload = function (e) {
+                $('#img-preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
         }
-
-        reader.readAsDataURL(input.files[0]);
     }
-}
 
-$("#avatar").change(function() {
-    readURLPicTure(this);
-});
-
-$("#resetAdd").click(function() {
-    this.form.reset();
-    return false;
-});
-$('input:text').focus(
-    function(){
-        $(this).val('');
+    $("#avatar").change(function () {
+        readURLPicTure(this);
     });
+
+    $("#resetAdd").click(function () {
+        this.form.reset();
+        return false;
+    })
 });
