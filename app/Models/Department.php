@@ -14,7 +14,7 @@ class Department extends Model
      */
     protected $table = 'departments';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'name',

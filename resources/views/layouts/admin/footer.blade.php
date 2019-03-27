@@ -5,7 +5,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Sun-Asterisk 2019</span>
+            <span>Copyright &copy; ĐH Nội Vụ Hà Nội Phân Hiệu Quảng Nam 2019</span>
         </div>
     </div>
 </footer>

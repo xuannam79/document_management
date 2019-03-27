@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Position;
+use Carbon\Carbon;
 
 class DepartmentUser extends Model
 {
@@ -38,5 +39,15 @@ class DepartmentUser extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function getDateAttribute($value)
+    {
+        return Carbon::createFromFormat('mm/dd/yyyy', $value)->format('d/m/Y');
+    }
+
+    public function setDateAttribute($value)
+    {
+        $this->attributes['start_date'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
     }
 }

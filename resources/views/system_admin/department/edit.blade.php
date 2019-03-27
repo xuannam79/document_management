@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="main-content-inner">
-    <div class="col-lg-6 col-ml-12">
+    <div class="col-lg-12 col-ml-12">
         @include('common.errors')
         <div class="row">
             <div class="col-12 mt-5">
