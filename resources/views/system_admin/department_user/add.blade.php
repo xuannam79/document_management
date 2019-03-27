@@ -1,6 +1,6 @@
 @extends('layouts.admin.master')
 @section('title')
-    Thêm trưởng đơn vị
+    Thêm nhân sự - phòng ban
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -13,7 +13,7 @@
                         <div class="card-body">
                             {!! Form::open([
                                         'method'=>'POST',
-                                        'route'=>'department-admin.store'
+                                        'route'=>'department-user.store'
                                         ]) !!}
                                 {!! Form::label('nameAdminDepartment', 'Chọn trưởng đơn vị') !!}
                                 <div class="form-group">
@@ -28,11 +28,11 @@
                                             ['class' => 'selectpicker form-control',
                                             'data-live-search' => 'true']) !!}
                                 </div>
-                                {!! Form::label('namePosition', 'Chức vụ tiếp quản') !!}
+                                {!! Form::label('namePosition', 'Chọn chức vụ tiếp quản') !!}
                                 <div class="form-group">
-                                    {!! Form::text('position_id', $searchPosition->name, [
-                                        'class'=>'form-control',
-                                        'readonly']) !!}
+                                    {!! Form::select('position_id', $searchPosition, null,
+                                            ['class' => 'selectpicker form-control',
+                                            'data-live-search' => 'true']) !!}
                                 </div>
                                 {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
                                 <div class="form-group">

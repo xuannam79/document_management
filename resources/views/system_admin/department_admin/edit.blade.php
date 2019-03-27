@@ -28,11 +28,11 @@
                                             ['class' => 'selectpicker form-control',
                                             'data-live-search' => 'true']) !!}
                                 </div>
-                                {!! Form::label('idPosition', 'Chọn chức vụ tiếp quản') !!}
+                                {!! Form::label('idPosition', 'Chức vụ tiếp quản') !!}
                                 <div class="form-group">
-                                    {!! Form::select('position_id', $searchPosition, $depUsers->position_id,
-                                            ['class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true']) !!}
+                                    {!! Form::text('position_id', $searchPosition->name, [
+                                        'class'=>'form-control',
+                                        'readonly']) !!}
                                 </div>
                                 {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
                                 <div class="form-group">
