@@ -10,5 +10,11 @@ return [
     'status' => [
         'no_lock' => 1,
         'lock' => 0,
-    ]
+    ],
+    'position' => [
+        'admin_department' => 1,
+        'sub_admin' => 2,
+        'secretary' => 3,
+        'instructor' => 4,
+    ],
 ];

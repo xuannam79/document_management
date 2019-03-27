@@ -73,6 +73,21 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#department-user" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Nhân sự - phòng ban</span>
+        </a>
+        <div id="department-user" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('department-user.index') }}">Danh sách</a>
+                <a class="collapse-item" href="{{ route('department-user.create') }}">Chuyển đổi nhân sự</a>
+                <a class="collapse-item" href="{{ route('department-user-archived') }}">Nhân sự đã hết hạn</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#taisan" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Tài Sản</span>

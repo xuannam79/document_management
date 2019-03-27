@@ -42,6 +42,19 @@ Route::namespace ('SystemAdmin')->group(function () {
         'uses' => 'DepartmentAdminController@restore'
     ]);
 
+    //department user
+    Route::resource('department-user', 'DepartmentUserController');
+
+    Route::get('/deparment-user-archived', [
+        'as' => 'department-user-archived',
+        'uses' => 'DepartmentUserController@archive',
+    ]);
+
+    Route::put('/department-user-restore/{id}', [
+        'as' => 'department-user-restore',
+        'uses' => 'DepartmentUserController@restore'
+    ]);
+
     //document-type
     Route::resource('document-type', 'DocumentTypeController');
 
