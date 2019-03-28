@@ -67,7 +67,7 @@
                                         {{ Form::date('end_date', \Carbon\Carbon::now(), ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->format('Y-m-d')]) }}
                                     </div>
                                 </div>
-                                {!! Form::submit("Sửa", ['class' => 'btn btn-info mt-4 pr-4 pl-4']) !!}
+                                {!! Form::submit("Sửa", ['class' => 'btn btn-primary mt-4 pr-4 pl-4']) !!}
                                 {!! Form::close() !!}
                             </div>
                         </div>
