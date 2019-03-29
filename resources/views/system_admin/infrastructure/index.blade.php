@@ -40,8 +40,12 @@
                                 <td style="text-align: center">{{ $key->amount }}</td>
                                 <td>
                                     <ul class="d-flex" style="list-style-type: none;margin-left: -16px;">
-                                        <li class="mr-3"><a href="{{ route('infrastructure.show',$key->id) }}" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                        <li><a href="javascript:void(0)" class="text-danger"  onclick='submitForm("delete-department" + {{$key->id}});'><i class="fa fa-trash"></i></a>
+                                        <li class="mr-3">
+                                            <a href="{{ route('infrastructure.show',$key->id) }}" class="text-warning" style="margin-right: 8px;">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </li>
+                                        <li><a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8"  onclick='submitForm("delete-department" + {{$key->id}});'><i class="fa fa-trash"></i></a>
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['infrastructure.destroy',$key->id], 'id'=>'delete-department'.$key->id]) !!}
                                             {!! Form::close() !!}
                                         </li>
