@@ -10,20 +10,35 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-
-Route::get('/', 'HomeController@index');
-
 Route::resource('login', 'LoginController');
 Route::resource('forgot-password', 'ForgotPasswordController');
 
-Route::prefix('admin')->group(function () {
+Route::get('404', [
+    'as' => 'not-found',
+    'uses' =>  'ErrorController@notFound'
+]);
+
+Route::group(['middleware' => 'checkUser'], function() {
+    
+    Route::get('/', [
+        'as' => 'home-page',
+        'uses' =>  'HomeController@index'
+    ]);
+
+    Route::namespace('Document')->group(function() {
+
+        Route::resource('document', 'DocumentController');    
+    });
+});
+
+Route::prefix('admin')->middleware('checkIsAdmin')->group(function () {
 
     Route::get('/', [
         'as' => 'admin-index',
         'uses' => 'HomeAdminController@index',
     ]);
 
-    Route::namespace ('SystemAdmin')->group(function () {
+    Route::namespace('SystemAdmin')->middleware('checkSysAdmin')->group(function () {
 
         //department
         Route::resource('department', 'DepartmentController');
@@ -108,7 +123,7 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 
-    Route::namespace('DepartmentAdmin')->group(function(){
+    Route::namespace('DepartmentAdmin')->middleware('checkDepAdmin')->group(function() {
 
         Route::resource('users', 'UserManagementController');
 
@@ -137,9 +152,4 @@ Route::prefix('admin')->group(function () {
             'as' => 'users.archive.restore',
         ]);
     });
-});
-
-Route::namespace('Document')->group(function(){
-
-    Route::resource('document', 'DocumentController');    
 });
