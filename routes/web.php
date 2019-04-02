@@ -126,7 +126,7 @@ Route::prefix('admin')->middleware('checkIsAdmin')->group(function () {
     Route::namespace('DepartmentAdmin')->middleware('checkDepAdmin')->group(function() {
 
         Route::resource('users', 'UserManagementController');
-
+        Route::resource('forms', 'FormManagementController');
         Route::post('/ajaxdp/{id}',[
             'as' => 'users.ajaxdp',
             'uses' => 'UserManagementController@ajaxdp'
@@ -150,6 +150,21 @@ Route::prefix('admin')->middleware('checkIsAdmin')->group(function () {
         Route::put('/archive-restore/{id}', [
             'uses' => 'UserManagementController@restore',
             'as' => 'users.archive.restore',
+        ]);
+
+        Route::get('/download/{id}', [
+            'uses' => 'FormManagementController@download',
+            'as' => 'forms.download',
+        ]);
+
+        Route::get('/form-archive', [
+            'uses' => 'FormManagementController@archiveIndex',
+            'as' => 'forms.archive',
+        ]);
+
+        Route::put('/form-restore/{id}', [
+            'uses' => 'FormManagementController@restore',
+            'as' => 'forms.archive.restore',
         ]);
     });
 });
