@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -23,7 +25,10 @@ class LoginController extends Controller
      */
     public function create()
     {
-        //
+
+        Auth::logout();
+        
+        return redirect()->route('login.index');
     }
 
     /**
@@ -34,7 +39,22 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $email = $request->email;
+        $password = $request->password;
+        if(Auth::attempt(['email' => $email, 'password' => $password]))
+        {
+            if(auth()->user()->role == config('setting.roles.system_admin'))
+            {
+
+                return redirect()->route('admin-index');
+            } else {
+
+                return redirect()->route('home-page');
+            }
+        } else {
+            
+            return redirect()->route('login.index')->with('alert','Username or Password is invalid'); 
+        }
     }
 
     /**

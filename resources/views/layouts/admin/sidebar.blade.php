@@ -26,35 +26,67 @@
         Quản lý
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Phòng ban</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('department.index') }}">Danh sách phòng ban</a>
-                <a class="collapse-item" href="{{ route('department.create') }}">Thêm phòng ban</a>
-                <a class="collapse-item" href="{{ route('department-archived') }}">Phòng ban đã xóa</a>
+    @if(Auth::user()->role == config('setting.roles.system_admin'))
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Phòng ban</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('department.index') }}">Danh sách phòng ban</a>
+                    <a class="collapse-item" href="{{ route('department.create') }}">Thêm phòng ban</a>
+                    <a class="collapse-item" href="{{ route('department-archived') }}">Phòng ban đã xóa</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Trưởng đơn vị</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('department-admin.index') }}">Danh sách trưởng đơn vị</a>
-                <a class="collapse-item" href="{{ route('department-admin.create') }}">Thêm trưởng đơn vị</a>
-                <a class="collapse-item" href="{{ route('department-admin-archived') }}">Trưởng đơn vị đã xóa</a>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Trưởng đơn vị</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('department-admin.index') }}">Danh sách trưởng đơn vị</a>
+                    <a class="collapse-item" href="{{ route('department-admin.create') }}">Thêm trưởng đơn vị</a>
+                    <a class="collapse-item" href="{{ route('department-admin-archived') }}">Trưởng đơn vị đã xóa</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#department-user" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Nhân sự - phòng ban</span>
+            </a>
+            <div id="department-user" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('department-user.index') }}">Danh sách</a>
+                    <a class="collapse-item" href="{{ route('department-user.create') }}">Chuyển đổi nhân sự</a>
+                    <a class="collapse-item" href="{{ route('department-user-archived') }}">Nhân sự đã hết hạn</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#taisan" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Tài Sản</span>
+            </a>
+            <div id="taisan" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('infrastructure.index') }}">Danh sách tài sản</a>
+                    <a class="collapse-item" href="{{ route('infrastructure.create') }}">Thêm tài sản</a>
+                    <a class="collapse-item" href="{{ route('infrastructure.archive') }}">Tài sản đã xóa</a>
+                </div>
+            </div>
+        </li>
+    @endif
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
@@ -71,39 +103,8 @@
         </div>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#department-user" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Nhân sự - phòng ban</span>
-        </a>
-        <div id="department-user" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('department-user.index') }}">Danh sách</a>
-                <a class="collapse-item" href="{{ route('department-user.create') }}">Chuyển đổi nhân sự</a>
-                <a class="collapse-item" href="{{ route('department-user-archived') }}">Nhân sự đã hết hạn</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#taisan" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Tài Sản</span>
-        </a>
-        <div id="taisan" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('infrastructure.index') }}">Danh sách tài sản</a>
-                <a class="collapse-item" href="{{ route('infrastructure.create') }}">Thêm tài sản</a>
-                <a class="collapse-item" href="{{ route('infrastructure.archive') }}">Tài sản đã xóa</a>
-            </div>
-        </div>
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
-
     <!-- Heading -->
     <div class="sidebar-heading">
         Công văn/ Văn bản
@@ -125,13 +126,6 @@
         </div>
     </li>
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Chuyển cá nhân/ đơn vị</span></a>
-    </li>
-
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#don-vi-lien-ket" aria-expanded="true" aria-controls="collapsePages">
@@ -146,6 +140,13 @@
                 <a class="collapse-item" href="{{ route('collaboration-unit-archived') }}">Đơn vị liên kết đã xóa</a>
             </div>
         </div>
+    </li>
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('not-found') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Single menu</span></a>
     </li>
 
     <!-- Divider -->
