@@ -31,4 +31,9 @@ class Department extends Model
         return $this->hasMany(Infrastructure::class);
     }
 
+    public function form()
+    {
+        return $this->hasMany(Form::class);
+    }
+
 }
