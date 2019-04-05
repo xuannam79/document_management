@@ -14,7 +14,7 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
 				<li class="nav-item cool-link active">
-					<a class="nav-link" href="#">Trang chủ </a>
+					<a class="nav-link" href="/">Trang chủ </a>
 				</li>
 				<li class="nav-item cool-link">
 					<a class="nav-link" href="#">Văn bản</a>

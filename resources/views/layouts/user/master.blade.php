@@ -12,6 +12,7 @@
     {{ Html::style(asset('/templates/user/css/bootstrap.min.css')) }}
     {{ Html::style(asset('/templates/user/css/style.css')) }}
     {{ Html::style(asset('/templates/user/css/styles.css')) }}
+    {{ Html::style(asset('/templates/user/css/datepicker.css')) }}
     {{ Html::script(asset('/templates/user/js/jquery-3.2.1.slim.min.js')) }}
     {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
     </head>
@@ -28,5 +29,10 @@
     {{ Html::script(asset('/templates/user/js/bootstrap.min.js')) }}
     {{ Html::script(asset('/templates/user/js/stickyfill.min.js')) }}
     {{ Html::script(asset('/templates/user/js/main.js')) }}
+    {{ Html::script(asset('/templates/user/js/myStyle.js')) }}
+    {{ Html::script(asset('/templates/user/js/bootstrapdatepick.min.js')) }}
+    {{ Html::script(asset('/templates/user/js/bootstrap-datepicker.js')) }}
     </body>
 </html>
+
+
