@@ -12,7 +12,7 @@
                 </div>
                 <h3 class="title">Văn bản đến</h3>
                 <p class="intro">zxccczxc</p>
-                <a class="link" href="#"><span></span></a>
+            <a class="link" href="{{ route('document.index') }}"><span></span></a>
             </div>
         </div>
         <div class="item item-pink item-2 col-lg-4 col-6">
@@ -39,7 +39,7 @@
                 <p class="intro">
                     zxczxczxc
                 </p>
-                <a class="link" href="#"><span></span></a>
+                <a class="link" href="{{ route('document.create') }}"><span></span></a>
             </div>
         </div>
         <div class="item item-purple col-lg-4 col-6">
