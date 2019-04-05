@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentUserSeeder::class);
         $this->call(CollaborationUnitSeeder::class);
         $this->call(DocumentTypeSeeder::class);
+        $this->call(DocumentSeeder::class);
+        $this->call(DocumentUserSeeder::class);
+        $this->call(DocumentDepartmentSeeder::class);
     }
 }
