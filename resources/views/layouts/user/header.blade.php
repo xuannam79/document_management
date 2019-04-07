@@ -33,11 +33,11 @@
 				@if(Auth::check())
 				<li class="nav-item cool-link dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fa fa-user"></i> Tai Khoan Cua Toi
+						<i class="fa fa-user"></i> {{Auth::user()->name}}
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="{{ route('profile') }}">Thong tin ca nhan</a>
-						<a class="dropdown-item" href="#">Dang Xuat</a>
+						<a class="dropdown-item" href="{{ route('profile') }}">Thông tin cá nhân</a>
+						<a class="dropdown-item" href="#">Đăng xuất</a>
 					</div>
 				</li>
 				@endif

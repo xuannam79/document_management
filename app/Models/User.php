@@ -21,7 +21,7 @@ class User extends Authenticatable
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 
+        'name',
         'email',
         'password',
         'birth_date',
@@ -39,11 +39,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token',
     ];
 
-    public function departmentUser()
+    public function departmentUsers()
     {
         return $this->hasMany(DepartmentUser::class);
     }

@@ -3,17 +3,30 @@
 namespace App\Http\Controllers\Document;
 
 use App\Models\DepartmentUser;
-use App\Models\Document;
 use App\Models\DocumentUser;
 use App\Models\ReplyDocument;
-use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Array_;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Document\DocumentAddRequest;
+use App\Models\Department;
+use App\Models\Document;
+use App\Models\DocumentType;
+use App\Models\DocumentAttachment;
+use App\Models\DocumentDepartment;
+use App\Uploaders\Uploader;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Array_;
 
 class DocumentController extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index()
     {
         $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
@@ -23,13 +36,21 @@ class DocumentController extends Controller
             ->where('documents.department_id',$departmentID['department_id'])
             ->select('documents.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department' )
             ->get();
-//        dd($document);
         return view('document.index', compact('document'));
     }
 
     public function create()
     {
-        return view('document.create');
+        $departments = DB::table('users')
+            ->select('departments.id', 'departments.name')
+            ->join('department_users', 'users.id', '=', 'department_users.user_id')
+            ->join('departments', 'department_users.department_id', '=', 'departments.id')
+            ->where('users.id', Auth::user()->id)
+            ->pluck('name', 'id');
+        $documentTypes = DocumentType::pluck('name', 'id');
+        $first_key = key($departments->toArray());
+        $receivedDepartments = Department::where('id', '!=', $first_key)->pluck('name', 'id');
+        return view('document.create', compact('departments', 'documentTypes', 'receivedDepartments'));
     }
     public function checkUserSeen($id){
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
@@ -112,5 +133,46 @@ class DocumentController extends Controller
 
         return redirect()->route('document.show',$id);
 
+    }
+
+    public function store(DocumentAddRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $documentData = $request->except('departments', 'attachedFiles', 'search', '_token');
+            $documentData['department_id'] = 1;
+            $documentData['user_id'] = Auth::user()->id;
+            $departments = $request->only('departments');
+            $attachedFiles = $request->only('attachedFiles');
+            $documentId = Document::insertGetId($documentData);
+            foreach ($departments as $department) {
+                DocumentDepartment::create([
+                    'document_id' => $documentId,
+                    'department_id' => $department,
+                    'is_approved' => config('setting.document.approved'),
+                ]);
+            }
+            foreach ($attachedFiles["attachedFiles"] as $key => $file) {
+                DocumentAttachment::create([
+                    'document_id' => $documentId,
+                    'name' => $this->uploader->saveDocument($file),
+                ]);
+            }
+            DB::commit();
+
+            return redirect(route('document.create'))->with('alert', 'Công văn đã được đưa vào danh sách phê duyệt');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect(route('document.create'))->with('alert', 'Gửi công văn thất bại, vui lòng kiểm tra lại');
+        }
+    }
+
+    //ajax function
+    public function handleSelectDepartment($id){
+        $receivedDepartments = Department::where('id','!=',$id)->pluck('name', 'id');
+        foreach($receivedDepartments as $key => $value){
+            echo "<option value='$key'>$value</option>";
+        }
     }
 }

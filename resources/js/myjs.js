@@ -1,28 +1,28 @@
-function submitForm(id){
+function submitForm(id) {
     const flag = confirm("Bạn có chắc chắc chắn muốn xóa không? \nCác dữ liệu liên quan sẽ không bị ảnh hưởng.");
-    if(flag === true){
+    if (flag === true) {
         document.getElementById(id).submit();
     }
 }
 
-function restoreArchivedData(id){
+function restoreArchivedData(id) {
     const flag = confirm("Bạn có muốn khôi phục dữ liệu này?");
-    if(flag === true){
+    if (flag === true) {
         document.getElementById(id).submit();
     }
 }
 
-function changeDepartment(id){
-    const flag = confirm("Bạn có muốn thay đổi phòng ban của id: "+id+" này không ?");
-    if(flag === true){
-        $("#changeDepartment"+id).submit();
+function changeDepartment(id) {
+    const flag = confirm("Bạn có muốn thay đổi phòng ban của id: " + id + " này không ?");
+    if (flag === true) {
+        $("#changeDepartment" + id).submit();
     }
 }
 
 function changePosition(id) {
-    const flag = confirm("Bạn có muốn thay đổi chức vụ của id "+id+" này không ?");
-    if(flag === true){
-        $("#changePosition"+id).submit();
+    const flag = confirm("Bạn có muốn thay đổi chức vụ của id " + id + " này không ?");
+    if (flag === true) {
+        $("#changePosition" + id).submit();
     }
 }
 
@@ -31,33 +31,32 @@ $(document).on('click', '#btnAddUser', function () {
         method: "GET",
         async: false,
         url: "/ajax-email",
-    }).done(function(data) {
+    }).done(function (data) {
         var count = Object.keys(data).length;
-        function validateEmail(){
+        function validateEmail() {
             var email = document.getElementById("email");
-            for(var i = 0; i < count; i++){
+            for (var i = 0; i < count; i++) {
                 var obj = data[i];
-                if(obj.email == email.value)
-                {
+                if (obj.email == email.value) {
                     return true;
                 }
             }
             return false;
         }
-        if(validateEmail() == true){
+        if (validateEmail() == true) {
             email.onchange = validateEmail;
             email.onkeyup = validateEmail;
             email.setCustomValidity("Tài Khoản Email " + email.value + " Đã Tồn Tại Trong Hệ Thống");
             $('#email').focus();
         }
-        else
-        {
+        else {
             email.setCustomValidity("");
         }
     });
 });
 
 $(document).ready(function () {
+
     function readURLPicTure(input) {
 
         if (input.files && input.files[0]) {
