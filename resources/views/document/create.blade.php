@@ -6,58 +6,51 @@ Tạo mới văn bản
 <div class="container">
     <div id="cards-wrapper" class="cards-wrapper row">
         <div class="create-doc">
-            <form>
+            {!! Form::open() !!}
                 <div class="form-group" style="width: 45%;float: left;margin-right: 5%;margin-left: 2%">
-                    <label for="exampleInputEmail1">Số công văn</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập số công văn">
+                    {!! Form::label("document_number", "Số công văn", []) !!}
+                    {!! Form::text("document_number", "", ['class'=>'form-control', 'id'=>"document_number", 'placeholder'=>'Nhập số công văn...']) !!}
                 </div>
                 <div class="form-group" style="width: 45%;float:left">
-                    <label for="exampleFormControlSelect1">Loại văn bản</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option>1</option>
-                      <option>5</option>
-                    </select>
+                    {!! Form::label("document_type_id", "Loại văn bản", []) !!}
+                    {!! Form::select('document_type_id', ['1'=>'Van ban den', '2'=>'van ban di'], '1', ['class'=>'form-control', 'id'=>'document_type_id']) !!}
                 </div>
                 <div class="form-group" >
                     <label for="exampleInputEmail1">Ngày ban hành</label>
+                    {!! Form::label('publish_date', 'Ngày ban hành', []) !!}
                     <div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy">
-                        <input class="form-control" type="text" readonly />
+                        {!! Form::text('publish_date', '', ['class'=>'form-control', 'readonly']) !!}
                         <span style="background-color: #fff;width: 7%;" class="input-group-addon"><i class="fa fa-calendar" style="font-size: 20px;margin-top: 9px;"></i></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Trích yếu nội dung</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    {!! Form::label('content', 'Trích yếu nội dung', []) !!}
+                    {!! Form::textarea('content', '', ['class'=>'form-control', 'id'=>'content', 'rows'=>'3', 'placeholder'=>'Nhập trích yếu nội dung...']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">File đính kèm</label>
-                    <input type="file" class="form-control-file" multiple id="exampleFormControlFile1" style="width: 50%;margin-left: 33%;">
+                    {!! Form::label('attachedFiles', 'File đính kèm', []) !!}
+                    {!! Form::file('attachedFiles', ['class'=>'form-control-file', 'multiple', 'id'=>'attachedFiles', 'style'=>'width: 50%;margin-left: 33%']) !!}
                 </div>
                 <div class="form-group" style="width: 35%;margin-left: 2%">
-                    <input type="email" class="form-control live-search-box" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Tìm kiếm đơn vị...">
+                    {!! Form::text('search', '', ['class'=>'form-control live-search-box', 'placeholder'=>' Tìm kiếm đơn vị... ']) !!}
                 </div>
                 <div class="col-lg-5 col-sm-5 col-xs-12 float-left">
-                    <select name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
-                        <option value="3">Item 3</option>
-                        <option value="3"> Vũ</option>                      
-                        <option value="3"> vŨ</option>                      
-                        <option value="3"> Vũ</option>                      
-                    </select>
+                    {!! Form::select('', ['1'=>'donvi1'], '', ['id'=>'multiselect', 'class'=>'form-control', 'size'=>'8', 'multiple'=>'multiple']) !!}
                 </div>
             
                 <div class="multiselect-controls col-lg-2 col-sm-2 col-xs-12 float-left">
-                    <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="fa fa-forward"></i></button>
-                    <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="fa fa-chevron-right"></i></button>
-                    <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="fa fa-chevron-left"></i></button>
-                    <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="fa fa-backward"></i></button>
+                    {!! Form::button('<i class="fa fa-forward"></i>', ['id'=>'multiselect_rightAll', 'class'=>'btn btn-block']) !!}
+                    {!! Form::button('<i class="fa fa-chevron-right"></i>', ['id'=>'multiselect_rightSelected', 'class'=>'btn btn-block']) !!}
+                    {!! Form::button('<i class="fa fa-chevron-left"></i>', ['id'=>'multiselect_leftSelected', 'class'=>'btn btn-block']) !!}
+                    {!! Form::button('<i class="fa fa-backward"></i>', ['id'=>'multiselect_leftAll', 'class'=>'btn btn-block']) !!}
                 </div>
             
                 <div class="col-lg-5 col-sm-5 col-xs-12 float-left">
-                    <select name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
+                    {!! Form::select('departments', [], '', ['id'=>'multiselect_to', 'class'=>'form-control', 'size'=>'8', 'multiple'=>'multiple']) !!}
                 </div>
                 <div class="clear"></div><br>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                {!! Form::submit('Submit', ['class'=>'btn btn-primary']) !!}
+            {!! Form::close() !!}
         </div>
     </div>
 </div>
