@@ -11,8 +11,14 @@ class DocumentController extends Controller
     {
         return view('document.index');
     }
+
     public function create()
     {
         return view('document.create');
+    }
+
+    public function show()
+    {
+        return view('document.show');
     }
 }

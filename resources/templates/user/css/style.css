@@ -1635,3 +1635,7 @@ span.name {
 .clear {
     clear: both;
 }
+
+.cards-wrapper.row {
+    background-color: #fff;
+}

@@ -25,20 +25,20 @@ Danh sách
             </div>
         </div>
         <div class="list-group">
-            <a href="#" class="list-group-item">
+            <a href="{{ route('document.show', 1) }}" class="list-group-item">
                 <span class="name">Khoa du học tại chỗ</span> 
                 <span class="float-left">
-                    <span class="">[123456789123]</span>
-                    <span class="text-muted" >-&nbsp;<span>Trích yếu nội dung [max:45]</span>...</span> 
+                    <span class="">[123456789123]&nbsp;<span>Titlee here</span></span>
+                    <span class="text-muted" >-&nbsp;<span>Trích yếu nội dung [max:35]</span>...</span> 
                 </span>
                 <span class="badge">12:10 25/03/2019</span>
                 <span class="pull-right"></span>
             </a>
-            <a href="#" class="list-group-item read">
+            <a href="{{ route('document.show', 1) }}" class="list-group-item read">
                 <span class="name">Người gửi</span> 
                 <span class="float-left">
-                    <span class="">[123456789123]</span>
-                    <span class="text-muted" >-&nbsp;<span>Trích yếu nội dung [max;45]</span>...</span> 
+                    <span class="">[123456789123]&nbsp;<span>Titlee here</span></span>
+                    <span class="text-muted" >-&nbsp;<span>Trích yếu nội dung [max:35]</span>...</span> 
                 </span>
                 <span class="badge">12:10 25/03/2019</span> <span class="pull-right"></span>
             </a>
