@@ -26,21 +26,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($forms as $key)
+                        @foreach($forms as $form)
                             <tr>
-                                <th scope="row">{{ $key->id }}</th>
-                                <td>{{ $key->name }}</td>
-                                <td><a href="{{ route('forms.download',$key->id) }}">{{ $key->link }}</a> </td>
-                                <td>{{ $key->description }}</td>
+                                <th scope="row">{{ $form->id }}</th>
+                                <td>{{ $form->name }}</td>
+                                <td><a href="{{ route('forms.download',$form->id) }}">{{ $form->link }}</a> </td>
+                                <td>{{ $form->description }}</td>
                                 <td>
                                     <ul class="d-flex" style="list-style-type: none;margin-left: -16px;">
                                         <li class="mr-3">
-                                            <a href="{{ route('forms.show',$key->id) }}" class="text-warning" style="margin-right: 8px;">
+                                            <a href="{{ route('forms.show',$form->id) }}" class="text-warning" style="margin-right: 8px;">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                         </li>
-                                        <li><a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8"  onclick='submitForm("delete-department" + {{$key->id}});'><i class="fa fa-trash"></i></a>
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['forms.destroy',$key->id], 'id'=>'delete-department'.$key->id]) !!}
+                                        <li><a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8"  onclick='submitForm("delete-department" + {{$form->id}});'><i class="fa fa-trash"></i></a>
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['forms.destroy',$form->id], 'id'=>'delete-department'.$form->id]) !!}
                                             {!! Form::close() !!}
                                         </li>
                                     </ul>

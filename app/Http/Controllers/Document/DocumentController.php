@@ -33,8 +33,8 @@ class DocumentController extends Controller
     }
     public function checkUserSeen($id){
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
-        if(isset($userIdSeen['user_id'])){
-            $jsonSeen = json_decode($userIdSeen['user_id']);
+        if(isset($userIdSeen['array_user_seen'])){
+            $jsonSeen = json_decode($userIdSeen['array_user_seen']);
             foreach ($jsonSeen as $value){
                 if(Auth::user()->id != $value){
                     array_push($jsonSeen,Auth::user()->id);
@@ -52,7 +52,7 @@ class DocumentController extends Controller
     {
         //check nguoi xem tin
         $jsonUserId = json_encode($this->checkUserSeen($id));
-        DocumentUser::where('document_id', $id)->update(['user_id' => $jsonUserId]);
+        DocumentUser::where('document_id', $id)->update(['array_user_seen' => $jsonUserId]);
 
         $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
             ->join('users', 'users.id', '=', 'documents.user_id')

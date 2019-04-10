@@ -13,7 +13,7 @@ class DocumentUserSeeder extends Seeder
     {
         DB::table('document_user')->insert([
             'document_id' => 1,
-            'user_id' => 1,
+            'array_user_seen' => '',
             'is_seen' => 1,
         ]);
     }
