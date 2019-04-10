@@ -16,6 +16,7 @@
     {{ Html::script(asset('/templates/user/js/jquery-3.2.1.slim.min.js')) }}
     {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
     {{ Html::style(asset('/css/all.css')) }}
+        {{ Html::style(asset('templates/admin/vendor/fontawesome-free/css/all.min.css')) }}
     {{ Html::script(asset('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css')) }}
     {{ Html::style(asset('https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css')) }}
     </head>

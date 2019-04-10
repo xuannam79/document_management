@@ -4,7 +4,7 @@ namespace App\Http\Requests\DepartmentAdmin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserManagementRequest extends FormRequest
+class UpdateUserManagementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class UserManagementRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users',
             'password' => 'required',
             'name' => 'required',
             'address' => 'required',
@@ -36,8 +35,6 @@ class UserManagementRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => "Bạn vui lòng nhập email",
-            'email.email' => "Vui lòng nhập đúng định dạng email",
             'password.required' => "Vui lòng nhập mật khẩu",
             'name.required' => "Vui lòng nhập họ tên",
             'address.required' => "Vui lòng nhập địa chỉ",

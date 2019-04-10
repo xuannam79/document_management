@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DepartmentAdmin;
 
+use App\Http\Requests\DepartmentAdmin\UpdateUserManagementRequest;
 use App\Http\Requests\SystemAdmin\UserRequest;
 use App\Models\DepartmentUser;
 use App\Models\Position;
@@ -27,9 +28,10 @@ class UserManagementController extends Controller
             ->where('department_users.position_id',config('setting.position.secretary'))
             ->where('department_users.department_id', $departmentID['department_id'])
             ->get();
+//        dd($departmentUser);
 //        $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.is_active'))->where('departmentUser.department_id',2)->get();
 
-        return view('department_admin.usersUI.index', compact( 'departmentUser'));
+        return view('department_admin.users.index', compact( 'departmentUser'));
     }
 
     /**
@@ -39,7 +41,7 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        return view('department_admin.usersUI.add');
+        return view('department_admin.users.add');
     }
 
     /**
@@ -54,12 +56,23 @@ class UserManagementController extends Controller
         $input['password'] = bcrypt($input['password']);
         $input['avatar'] = $this->savePicture($input);
         $input['role'] = Auth::user()->role;
-        $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
-        User::create($input);
-        $id = User::select('id')->where('email', $input['email'])->first();
-        DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date'], 'department_id' => $departmentID['department_id'], 'position_id' => config('setting.position.secretary')]);
+        DB::beginTransaction();
+        try
+        {
+            $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
+            User::create($input);
+            $id = User::select('id')->where('email', $input['email'])->first();
+            DepartmentUser::insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date'], 'department_id' => $departmentID['department_id'], 'position_id' => config('setting.position.secretary')]);
 
-        return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
+            DB::commit();
+
+            return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('users.index')->with('messageFail', 'Thêm Thất Bại');
+        }
     }
 
     public function indexOfAdd(){
@@ -68,7 +81,7 @@ class UserManagementController extends Controller
             ->where('users.is_active', config('setting.active.is_active'))
             ->pluck('users.name', 'users.id');
 
-        return view('department_admin.usersUI.add_user_exists', compact('listUsers'));
+        return view('department_admin.users.add_user_exists', compact('listUsers'));
     }
 
     public function addUserExist(Request $request){
@@ -89,8 +102,6 @@ class UserManagementController extends Controller
 
     public function archiveIndex(){
         $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.no_active'))->get();
-        $position = Position::pluck('name', 'id');
-        $department = Department::pluck('name', 'id');
 
         return view('department_admin.users.archive', compact( 'position', 'department', 'departmentUser'));
     }
@@ -131,7 +142,7 @@ class UserManagementController extends Controller
             $user = User::with('departmentUser')->where('users.id',$id)->first();
             $department = DepartmentUser::where('user_id',$id)->first();
 
-            return view('department_admin.usersUI.edit', compact('user', 'department'));
+            return view('department_admin.users.edit', compact('user', 'department'));
         }
         catch (Exception $exception)
         {
@@ -161,7 +172,7 @@ class UserManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserManagementRequest $request, $id)
+    public function update(UpdateUserManagementRequest $request, $id)
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
@@ -169,7 +180,7 @@ class UserManagementController extends Controller
         try
         {
             if(!isset($input['avatar'])){
-                User::find($id)->update(['email' => $input['email'], 'password' => $input['password'], 'name' => $input['name'], 'birth_date' => $input['birth_date']]);
+                User::find($id)->update(['password' => $input['password'], 'name' => $input['name'], 'birth_date' => $input['birth_date'], 'gender' => $input['gender'], 'address' => $input['address'], 'phone' => $input['phone']]);
                 DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
             }
             else {

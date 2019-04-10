@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Document;
 
+use App\Http\Requests\Document\ReplyDocumentRequest;
 use App\Models\DepartmentUser;
 use App\Models\DocumentUser;
 use App\Models\ReplyDocument;
@@ -52,6 +53,7 @@ class DocumentController extends Controller
         $receivedDepartments = Department::where('id', '!=', $first_key)->pluck('name', 'id');
         return view('document.create', compact('departments', 'documentTypes', 'receivedDepartments'));
     }
+
     public function checkUserSeen($id){
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
         if(isset($userIdSeen['array_user_seen'])){
@@ -117,7 +119,7 @@ class DocumentController extends Controller
         return response()->download($pathToFile);
     }
 
-    public function reply(Request $request, $id){
+    public function reply(ReplyDocumentRequest $request, $id){
         $input = $request->all();
         $input['document_id'] = $id;
         $input['user_id'] = Auth::user()->id;

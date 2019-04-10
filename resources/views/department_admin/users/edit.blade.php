@@ -15,7 +15,7 @@
                                 {!! Form::label('email', "Email") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {!! Form::text('email', $user->email, ['class' => 'form-control', 'placeholder' => "Nhập Email", 'id' => 'email', 'required' => 'required', 'pattern' => config('setting.patter_email'),  'title' => 'Phía trước dấu @ phải có ít nhất một kí tự và phía sau dấu @ là tối đa 2 đuôi tên miền.']) !!}
+                                        {!! Form::text('email', $user->email, ['class' => 'form-control', 'placeholder' => "Nhập Email", 'id' => 'email', 'required' => 'required', 'pattern' => config('setting.patter_email'),  'title' => 'Phía trước dấu @ phải có ít nhất một kí tự và phía sau dấu @ là tối đa 2 đuôi tên miền.', 'disabled' => true]) !!}
                                     </div>
                                 </div>
                                 {!! Form::label('password', "Mật Khẩu") !!}

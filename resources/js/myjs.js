@@ -52,6 +52,18 @@ $(document).on('click', '#btnAddUser', function () {
         else {
             email.setCustomValidity("");
         }
+
+        var new_password = document.getElementById("newpassword");
+        var password_confirmation = document.getElementById("confirmpassword");
+        if(new_password.value != password_confirmation.value)
+        {
+            password_confirmation.setCustomValidity('Vui lòng nhập giống với mật khẩu mới');
+            $('#confirmpassword').focus();
+        }
+        else
+        {
+            password_confirmation.setCustomValidity("");
+        }
     });
 });
 
@@ -81,7 +93,6 @@ $(document).ready(function () {
 });
 
 jQuery(document).ready(function($){
-
     $('.live-search-list option').each(function(){
         $(this).attr('data-search-term', $(this).text().toLowerCase());
     });
@@ -101,5 +112,23 @@ jQuery(document).ready(function($){
         });
 
     });
+});
 
+$(document).on("click", "#editInfor", function(){
+    $.ajax({
+        url: "/ajax-infor",
+        type: 'GET',
+        cache: false,
+        success: function(data){
+            $('.css-profile').addClass('css-load-form');
+            $('#ajaxform').html(data);
+        },
+        error: function (){
+            alert("that bai");
+        }
+    });
+    return false;
+});
+$(document).on("change", "#picture", function(){
+    $('#changeAvatar').submit();
 });

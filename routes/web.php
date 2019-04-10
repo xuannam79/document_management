@@ -27,7 +27,25 @@ Route::group(['middleware' => 'checkUser'], function () {
 
     Route::get('/information', [
         'as' => 'profile',
-        'uses' => 'Information@index',
+        'uses' => 'Information@index'
+    ]);
+    Route::post('/update-avatar', [
+        'as' => 'update.avatar',
+        'uses' => 'Information@changeAvatar'
+    ]);
+
+    Route::post('/information', [
+        'as' => 'profile.update.pass',
+        'uses' => 'Information@changePass'
+    ]);
+    Route::get('/ajax-infor', [
+        'as' => 'ajax.information',
+        'uses' => 'Information@ajaxFormEdit'
+    ]);
+
+    Route::post('/Update-Infor', [
+        'as' => 'update.information',
+        'uses' => 'Information@updateInfo'
     ]);
 
     Route::resource('collaboration', 'CollaborationController');
@@ -83,7 +101,7 @@ Route::group(['middleware' => 'checkUser'], function () {
         ]);
 
         //delegacy
-        
+
     });
 
     Route::namespace ('Document')->group(function () {

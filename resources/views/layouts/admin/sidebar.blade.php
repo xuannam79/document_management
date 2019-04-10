@@ -86,6 +86,35 @@
             </div>
         </div>
     </li>
+     <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#thanhvien" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Thành viên</span>
+        </a>
+        <div id="thanhvien" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin-users.index') }}">Danh sách thành viên</a>
+                <a class="collapse-item" href="{{ route('admin-users.create') }}">Thêm thành viên</a>
+                <a class="collapse-item" href="{{ route('admin-users.archive') }}">Thành viên đã xóa</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bieumau" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Biểu Mẫu</span>
+        </a>
+        <div id="bieumau" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('forms.index') }}">Danh sách biểu mẫu</a>
+                <a class="collapse-item" href="{{ route('forms.create') }}">Thêm biểu mẫu</a>
+                <a class="collapse-item" href="{{ route('forms.archive') }}">Biểu mẫu đã xóa</a>
+            </div>
+        </div>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
