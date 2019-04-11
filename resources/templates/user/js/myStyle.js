@@ -43,3 +43,19 @@ if (typeof jQuery === "undefined") { throw new Error("multiselect requires jQuer
 jQuery(document).ready(function ($) {
     $('#multiselect').multiselect();
 });
+
+$(document).ready(function () {
+    $(".pulse-button").click(function () {
+        $("#rep-area").addClass("active-block");
+        $(".rep-bot-button").addClass("display-none");
+    });
+    $(".rep-bot-button").click(function () {
+        $("#rep-area").addClass("active-block");
+        $(".rep-bot-button").addClass("display-none");
+    });
+    $(".close-rep-area").click(function () {
+        $("#rep-area").removeClass("active-block");
+        $(".rep-bot-button").removeClass("display-none");
+    });
+});
+

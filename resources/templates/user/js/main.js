@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     /* ===== Stickyfill ===== */
     /* Ref: https://github.com/wilddeer/stickyfill */
     // Add browser support to position: sticky
@@ -6,7 +6,7 @@ $(document).ready(function() {
     Stickyfill.add(elements);
 
     /* Hack related to: https://github.com/twbs/bootstrap/issues/10236 */
-    $(window).on("load resize", function() {
+    $(window).on("load resize", function () {
         $(window).trigger("scroll");
     });
 
@@ -14,7 +14,7 @@ $(document).ready(function() {
     $("body").scrollspy({ target: "#doc-menu", offset: 100 });
 
     /* Smooth scrolling */
-    $("a.scrollto").on("click", function(e) {
+    $("a.scrollto").on("click", function (e) {
         //store hash
         var target = this.hash;
         e.preventDefault();
@@ -30,19 +30,19 @@ $(document).ready(function() {
     /* Bootstrap lightbox */
     /* Ref: http://ashleydw.github.io/lightbox/ */
 
-    $(document).delegate('*[data-toggle="lightbox"]', "click", function(e) {
+    $(document).delegate('*[data-toggle="lightbox"]', "click", function (e) {
         e.preventDefault();
         $(this).ekkoLightbox();
     });
 });
-$(function() {
-    $(".navicon").click(function() {
+$(function () {
+    $(".navicon").click(function () {
         $(this).toggleClass("open");
         $(".nav").toggleClass("open");
     });
 });
 
 // tooltipjs
-$(function() {
+$(function () {
     $('[data-toggle="tooltip"]').tooltip({ delay: { show: 0, hide: 100 } });
 });
