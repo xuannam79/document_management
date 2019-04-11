@@ -31,23 +31,17 @@
                             <tr>
                                 <th scope="row">{{ $key->id }}</th>
                                 <td>{{ $key->name }}</td>
-                                <td>{{ ($key->gender == 1)? "Nam":"Nữ" }}</td>
-                                <td><img src="/templates/admin/img/avatar/{{ $key->avatar }}" class="img-preview2"></td>
-
-
+                                <td>{{ ($key->gender == config('setting.gender.male'))? "Nam":"Nữ" }}</td>
+                                <td><a href="/images/avatar/{{ $key->avatar }}"><img src="/images/avatar/{{ $key->avatar }}" class="img-preview2"></a></td>
                                 <td>
-                                    {!! Form::open(['method'=>'POST', 'route'=>['users.ajaxps',$key->id], 'id' => 'changePosition'.$key->id]) !!}
-                                    {!! Form::select('positions', $position, $key->departmentUser[0]->position_id, ['class' => 'form-control', 'disabled' => true, 'onchange' => 'changePosition('.$key->id.')']) !!}
-                                    {!! Form::close() !!}
+                                    {!! Form::select('positions', $position, $key->departmentUser[0]->position_id, ['class' => 'form-control', 'disabled' => true]) !!}
                                 </td>
                                 <td>
-                                    {!! Form::open(['method'=>'POST', 'route'=>['users.ajaxdp',$key->id], 'id' => 'changeDepartment'.$key->id]) !!}
-                                    {!! Form::select('depart', $department, $key->departmentUser[0]->department_id, ['class' => 'form-control', 'disabled' => true, 'onchange' => 'changeDepartment('.$key->id.')']) !!}
-                                    {!! Form::close() !!}
+                                    {!! Form::select('depart', $department, $key->departmentUser[0]->department_id, ['class' => 'form-control', 'disabled' => true]) !!}
                                 </td>
                                 <td>
                                     <ul class="d-flex" style="list-style-type: none;margin-left: -16px;">
-                                        {!!Form::open(["method" => "PUT", "route" => ["users.archive.restore", $key->id ], "id" => "restoreArchive".$key->id])!!}
+                                        {!!Form::open(["method" => "PUT", "route" => ["admin-users.archive.restore", $key->id ], "id" => "restoreArchive".$key->id])!!}
                                         <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('restoreArchive'+{{$key->id}})" title="Khôi phục">
                                             <i class="fa fa-trash-restore"></i>
                                         </a>

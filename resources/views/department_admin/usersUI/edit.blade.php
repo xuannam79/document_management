@@ -1,13 +1,13 @@
-@extends('layouts.admin.master')
+@extends('layouts.user.master')
 @section('title')
-    Sửa Thành viên
+    Sửa Thành Viên
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 col-ml-12">
                 @include('common.errors')
-                <div class="row">
+                <div class="row" style="text-align: left;">
                     <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
@@ -33,19 +33,19 @@
                                 {!! Form::label('birth_date', "Ngày Sinh") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {{ Form::date('birth_date', $user->birth_date, ['class' => 'form-control', 'max' => \Carbon\Carbon::now()->format('Y-m-d'), 'min' => '1-1-1900']) }}
+                                        {{ Form::date('birth_date', $user->birth_date, ['class' => 'form-control', 'max' => \Carbon\Carbon::now()->subYear(19)->format('Y-m-d'), 'min' => \Carbon\Carbon::now()->subYear(100)->format('Y-m-d')]) }}
                                     </div>
                                 </div>
                                 {!! Form::label('gender', "Giới Tính") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {!! Form::select('gender' , [1 => 'Nam',2 => 'Nữ'], $user->gender, ['class' => 'form-control', 'id' => 'gender']) !!}
+                                        {!! Form::select('gender' , [config('setting.gender.male') => 'Nam', config('setting.gender.female') => 'Nữ'], $user->gender, ['class' => 'form-control', 'id' => 'gender']) !!}
                                     </div>
                                 </div>
                                 {!! Form::label('avatar', "Ảnh Đại Diện") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <img src="/templates/admin/img/avatar/{{ $user->avatar }}" class="img-preview" id="img-preview"/>
+                                        <a href="/images/avatar/{{ $user->avatar }}"><img src="/images/avatar/{{ $user->avatar }}" class="img-preview" id="img-preview"/></a>
                                         {!! Form::file('avatar', ['class' => 'form-control-file', 'id' => 'avatar'])  !!}
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                 {!! Form::label('birth_date', "Ngày Hết Hạn Tài Khoản") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {{ Form::date('end_date', \Carbon\Carbon::now(), ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->format('Y-m-d')]) }}
+                                        {{ Form::date('end_date', $department->end_date, ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->addDays(60)->format('Y-m-d'), 'max' => \Carbon\Carbon::now()->addYear(100)->format('Y-m-d')]) }}
                                     </div>
                                 </div>
                                 {!! Form::submit("Sửa", ['class' => 'btn btn-primary mt-4 pr-4 pl-4']) !!}
