@@ -25,23 +25,37 @@ Danh sách
             </div>
         </div>
         <div class="list-group">
-            <a href="{{ route('document.show', 1) }}" class="list-group-item">
-                <span class="name">Khoa du học tại chỗ</span> 
-                <span class="float-left">
-                    <span class="">[123456789123]&nbsp;<span>Titlee here</span></span>
-                    <span class="text-muted" >-&nbsp;<span>Trích yếu nội dung [max:35]</span>...</span> 
-                </span>
-                <span class="badge">12:10 25/03/2019</span>
-                <span class="pull-right"></span>
-            </a>
-            <a href="{{ route('document.show', 1) }}" class="list-group-item read">
-                <span class="name">Người gửi</span> 
-                <span class="float-left">
-                    <span class="">[123456789123]&nbsp;<span>Titlee here</span></span>
-                    <span class="text-muted" >-&nbsp;<span>Trích yếu nội dung [max:35]</span>...</span> 
-                </span>
-                <span class="badge">12:10 25/03/2019</span> <span class="pull-right"></span>
-            </a>
+            @foreach($document as $value)
+                @php
+                    $id = \App\Models\DocumentUser::where('document_id',$value->documentID)->first();
+                    $id_reply = \App\Models\ReplyDocument::where('document_id',$value->documentID)
+                        ->first();
+                    $arrId = json_decode($id->user_id);
+                    $checkNew = false;
+                    foreach($arrId as $arr){
+                        if(Auth::user()->id == $arr){
+                            $checkNew = true;
+                        }
+                    }
+                @endphp
+                <div class="list-group-item {{ ($checkNew == true)? '':'newDoc'}} {{ ($id_reply->user_id == Auth::user()->id)?'replied':'' }}">
+                    <a href="{{ route('document.show', $value->documentID) }}" title="{{ $value->content }}" >
+                        <span class="name" style="max-width: 135px !important;color: black;">{{ $value->name_department }}</span>
+                        <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
+                            <span class="" style="color: black;">{{ $value->title }}</span></br>
+                            <span class="text-muted"><span style="color: black;">Trích yếu nội dung: {{ $value->content }}</span></span>
+                        </span>
+                        <span class="badge">{{ $value->publish_date }}</span>
+                    </a>
+                    <span class="name userchinh">Người gửi</span>
+                    <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>
+                    @if($checkNew == true)
+                        <span class="userchinh2">đã xem</span>
+                    @else
+                        <span class="userchinh3">New</span>
+                    @endif
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

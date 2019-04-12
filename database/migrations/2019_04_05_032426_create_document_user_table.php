@@ -16,7 +16,7 @@ class CreateDocumentUserTable extends Migration
         Schema::create('document_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('document_id');
-            $table->integer('user_id');
+            $table->string('user_id')->nullable();
             $table->boolean('is_seen');
             $table->timestamps();
         });

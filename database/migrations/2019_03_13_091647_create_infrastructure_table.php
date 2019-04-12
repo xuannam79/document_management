@@ -14,7 +14,7 @@ class CreateInfrastructureTable extends Migration
     public function up()
     {
         Schema::create('infrastructure', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('picture')->default("default.png");
             $table->integer('department_id')->default(4);

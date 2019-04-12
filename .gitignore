@@ -4,6 +4,7 @@
 /public/templates
 /public/css
 /public/js
+/public/image
 /v8-compile-cache-0
 /storage/*.key
 /vendor

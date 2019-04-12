@@ -14,4 +14,9 @@ class DocumentType extends Model
         'name',
         'is_active',
     ];
+
+    public function document()
+    {
+        return $this->belongsTo(Document::class);
+    }
 }
