@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="container-fluid">
-        <a href="{{ route('users.create') }}" class="btn btn-primary">Thêm</a>
+        <a href="{{ route('admin-users.create') }}" class="btn btn-primary">Thêm</a>
         @include('common.errors')
         <br />
         <br />
@@ -22,7 +22,6 @@
                                 <th scope="col">Tên đầy đủ</th>
                                 <th scope="col">Giới tính</th>
                                 <th scope="col">Ảnh</th>
-                                <th scope="col">Chức vụ</th>
                                 <th scope="col">Phòng ban</th>
                                 <th scope="col">Hành động</th>
                             </tr>
@@ -32,29 +31,22 @@
                             <tr>
                                 <th scope="row">{{ $key->id }}</th>
                                 <td>{{ $key->name }}</td>
-                                <td>{{ ($key->gender == 1)? "Nam":"Nữ" }}</td>
-                                <td><img src="/templates/admin/img/avatar/{{ $key->avatar }}" class="img-preview2"></td>
-
-
+                                <td>{{ ($key->gender == config('setting.gender.male'))? "Nam":"Nữ" }}</td>
+                                <td><a href="/images/avatar/{{ $key->avatar }}"><img src="/images/avatar/{{ $key->avatar }}" class="img-preview2"></a></td>
                                 <td>
-                                    {!! Form::open(['method'=>'POST', 'route'=>['users.ajaxps',$key->id], 'id' => 'changePosition'.$key->id]) !!}
-                                        {!! Form::select('positions', $position, $key->departmentUser[0]->position_id, ['class' => 'form-control', 'onchange' => 'changePosition('.$key->id.')']) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                                <td>
-                                    {!! Form::open(['method'=>'POST', 'route'=>['users.ajaxdp',$key->id], 'id' => 'changeDepartment'.$key->id]) !!}
+                                    {!! Form::open(['method'=>'POST', 'route'=>['admin-users.ajaxdp',$key->id], 'id' => 'changeDepartment'.$key->id]) !!}
                                         {!! Form::select('depart', $department, $key->departmentUser[0]->department_id, ['class' => 'form-control', 'onchange' => 'changeDepartment('.$key->id.')']) !!}
                                     {!! Form::close() !!}
                                 </td>
                                 <td>
                                     <ul class="d-flex" style="list-style-type: none;margin-left: -16px;">
                                         <li class="mr-3">
-                                            <a href="{{ route('users.show',$key->id) }}" class="text-warning" style="margin-right: 8px;">
+                                            <a href="{{ route('admin-users.show',$key->id) }}" class="text-warning" style="margin-right: 8px;">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                         </li>
                                         <li><a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8"  onclick='submitForm("delete-department" + {{$key->id}});'><i class="fa fa-trash"></i></a>
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy',$key->id], 'id'=>'delete-department'.$key->id]) !!}
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['admin-users.destroy',$key->id], 'id'=>'delete-department'.$key->id]) !!}
                                             {!! Form::close() !!}
                                         </li>
                                     </ul>

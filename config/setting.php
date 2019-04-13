@@ -22,4 +22,11 @@ return [
         'secretary' => 3,
         'instructor' => 4,
     ],
+    'department' => [
+        'no_department' => 0,
+    ],
+    'gender' => [
+        'male' =>  1,
+        'female' => 2,
+    ]
 ];

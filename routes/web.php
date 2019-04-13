@@ -24,7 +24,35 @@ Route::group(['middleware' => 'checkUser'], function() {
         'as' => 'home-page',
         'uses' =>  'HomeController@index'
     ]);
+    Route::namespace('DepartmentAdmin')->group(function() {
+        Route::resource('users', 'UserManagementController');
 
+        Route::get('/ajax-email', [
+            'uses' => 'UserManagementController@ajaxEmail',
+            'as' => 'ajax.email',
+        ]);
+
+        Route::get('/archive', [
+            'uses' => 'UserManagementController@archiveIndex',
+            'as' => 'users.archive',
+        ]);
+
+        Route::put('/archive-restore/{id}', [
+            'uses' => 'UserManagementController@restore',
+            'as' => 'users.archive.restore',
+        ]);
+
+        Route::get('/add-user-exists', [
+            'uses' => 'UserManagementController@indexOfAdd',
+            'as' => 'add.user.exists',
+        ]);
+
+        Route::post('/add-user-exists', [
+            'uses' => 'UserManagementController@addUserExist',
+            'as' => 'users.exists',
+        ]);
+
+    });
     Route::namespace('Document')->group(function() {
 
         Route::resource('document', 'DocumentController');    
@@ -121,37 +149,29 @@ Route::prefix('admin')->middleware('checkIsAdmin')->group(function () {
             'uses' => 'InfrastructureManagementController@restore',
             'as' => 'infrastructure.archive.restore',
         ]);
-    });
 
-    Route::namespace('DepartmentAdmin')->middleware('checkDepAdmin')->group(function() {
-
-        Route::resource('users', 'UserManagementController');
-        Route::resource('forms', 'FormManagementController');
+        //users
+        Route::resource('admin-users', 'UserManagementController');
         Route::post('/ajaxdp/{id}',[
-            'as' => 'users.ajaxdp',
+            'as' => 'admin-users.ajaxdp',
             'uses' => 'UserManagementController@ajaxdp'
-        ]);
-
-        Route::post('/ajaxps/{id}',[
-            'as' => 'users.ajaxps',
-            'uses' => 'UserManagementController@ajaxps'
-        ]);
-
-        Route::get('/ajax-email', [
-            'uses' => 'UserManagementController@ajaxEmail',
-            'as' => 'ajax.email',
         ]);
 
         Route::get('/archive', [
             'uses' => 'UserManagementController@archiveIndex',
-            'as' => 'users.archive',
+            'as' => 'admin-users.archive',
         ]);
 
         Route::put('/archive-restore/{id}', [
             'uses' => 'UserManagementController@restore',
-            'as' => 'users.archive.restore',
+            'as' => 'admin-users.archive.restore',
         ]);
 
+    });
+
+    Route::namespace('DepartmentAdmin')->middleware('checkDepAdmin')->group(function() {
+
+        Route::resource('forms', 'FormManagementController');
         Route::get('/download/{id}', [
             'uses' => 'FormManagementController@download',
             'as' => 'forms.download',

@@ -96,9 +96,9 @@
         </a>
         <div id="thanhvien" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('users.index') }}">Danh sách thành viên</a>
-                <a class="collapse-item" href="{{ route('users.create') }}">Thêm thành viên</a>
-                <a class="collapse-item" href="{{ route('users.archive') }}">Thành viên đã xóa</a>
+                <a class="collapse-item" href="{{ route('admin-users.index') }}">Danh sách thành viên</a>
+                <a class="collapse-item" href="{{ route('admin-users.create') }}">Thêm thành viên</a>
+                <a class="collapse-item" href="{{ route('admin-users.archive') }}">Thành viên đã xóa</a>
             </div>
         </div>
     </li>

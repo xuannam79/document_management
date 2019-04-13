@@ -8,14 +8,18 @@
     margin-left: 8px;
 }
 .img-preview2 {
-    width: 160px;
-    height: 100px;
+    width: 110px;
+    height: 75px;
 }
 .img-preview {
     width: 160px;
-    height: 100px;
+    height: 115px;
     margin-bottom: 10px;
 }
 .tuychinh {
-    margin-top: 11px;
+    margin-left: 15%;
+}
+.warning {
+    background-color: #ffffcc;
+    border-left: 6px solid #ffeb3b;
 }

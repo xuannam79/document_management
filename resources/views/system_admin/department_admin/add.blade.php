@@ -24,9 +24,7 @@
 
                                 {!! Form::label('nameDepartment', 'Chọn phòng ban tiếp quản') !!}
                                 <div class="form-group">
-                                    {!! Form::select('department_id', $searchDepartment, null,
-                                            ['class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true']) !!}
+
                                 </div>
                                 {!! Form::label('namePosition', 'Chức vụ tiếp quản') !!}
                                 <div class="form-group">

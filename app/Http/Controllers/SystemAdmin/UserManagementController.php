@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\DepartmentAdmin;
+namespace App\Http\Controllers\SystemAdmin;
 
 use App\Http\Requests\SystemAdmin\UserRequest;
 use App\Models\DepartmentUser;
@@ -12,24 +12,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentAdmin\UserManagementRequest;
-use Illuminate\Support\Facades\Auth;
 use File;
 
 class UserManagementController extends Controller
 {
     public function index()
     {
-        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first();
-        $departmentUser = DB::table('users')
-            ->join('department_users', 'department_users.user_id', '=', 'users.id')
-            ->where('users.is_active',config('setting.active.is_active'))
-            ->where('users.role',config('setting.position.secretary'))
-            ->where('department_users.position_id',config('setting.position.secretary'))
-            ->where('department_users.department_id', $departmentID['department_id'])
-            ->get();
-//        $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.is_active'))->where('departmentUser.department_id',2)->get();
+        $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.is_active'))->get();
+//        $position = Position::pluck('name', 'id');
+        $department = Department::pluck('name', 'id');
 
-        return view('department_admin.usersUI.index', compact( 'departmentUser'));
+        return view('system_admin.users.index', compact( 'department', 'departmentUser'));
     }
 
     /**
@@ -39,7 +32,7 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        return view('department_admin.usersUI.add');
+        return view('system_admin.users.add');
     }
 
     /**
@@ -53,46 +46,60 @@ class UserManagementController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $input['avatar'] = $this->savePicture($input);
-        $input['role'] = Auth::user()->role;
-        $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
+        $input['role'] = config('setting.position.secretary');
         User::create($input);
         $id = User::select('id')->where('email', $input['email'])->first();
-        DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date'], 'department_id' => $departmentID['department_id'], 'position_id' => config('setting.position.secretary')]);
+        DB::table('department_users')->insert(['user_id' => $id->id, 'start_date' => Carbon::now(),'end_date' => $input['end_date'], 'department_id' => config('setting.department.no_department'), 'position_id' => config('setting.position.secretary')]);
 
-        return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
+        return redirect()->route('admin-users.index')->with('messageSuccess', 'Thêm Thành Công');
     }
 
-    public function indexOfAdd(){
-        $listUsers = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')
-            ->where('department_users.department_id', config('setting.department.no_department'))
-            ->where('users.is_active', config('setting.active.is_active'))
-            ->pluck('users.name', 'users.id');
-
-        return view('department_admin.usersUI.add_user_exists', compact('listUsers'));
-    }
-
-    public function addUserExist(Request $request){
-        $input = $request->departments;
-        $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
-        foreach($input as $value){
-            DepartmentUser::where('user_id', $value)->update(['department_id' => $departmentID['department_id']]);
-        }
-
-        return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
-    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function ajaxdp(Request $request, $id){
+        $input = $request->all();
+        DB::beginTransaction();
+        try
+        {
+            DepartmentUser::where('user_id', $id)->update(['department_id' => $input['depart']]);
+            DB::commit();
+
+            return redirect()->route('admin-users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('admin-users.index')->with('messageFail', 'Cập Nhật Thất Bại');
+        }
+    }
+
+    public function ajaxps(Request $request, $id){
+        $input = $request->all();
+        DB::beginTransaction();
+        try
+        {
+            DepartmentUser::where('user_id', $id)->update(['position_id' => $input['positions']]);
+            DB::commit();
+
+            return redirect()->route('admin-users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->route('admin-users.index')->with('messageFail', 'Cập Nhật Thất Bại');
+        }
+    }
 
     public function archiveIndex(){
         $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.no_active'))->get();
         $position = Position::pluck('name', 'id');
         $department = Department::pluck('name', 'id');
 
-        return view('department_admin.users.archive', compact( 'position', 'department', 'departmentUser'));
+        return view('system_admin.users.archive', compact( 'position', 'department', 'departmentUser'));
     }
 
     public function restore($id){
@@ -102,12 +109,12 @@ class UserManagementController extends Controller
             User::find($id)->update(['is_active' => config('setting.active.is_active')]);
             DB::commit();
 
-            return redirect()->route('users.archive')->with('messageSuccess', 'Hoàn Tác Thành Công');
+            return redirect()->route('admin-users.archive')->with('messageSuccess', 'Hoàn Tác Thành Công');
         }
         catch (Exception $exception)
         {
             DB::rollBack();
-            return redirect()->route('users.archive')->with('messageFail', 'Hoàn Tác Thất Bại');
+            return redirect()->route('admin-users.archive')->with('messageFail', 'Hoàn Tác Thất Bại');
         }
     }
 
@@ -128,10 +135,10 @@ class UserManagementController extends Controller
     {
         try
         {
-            $user = User::with('departmentUser')->where('users.id',$id)->first();
+            $user = User::with('departmentUser')->where('users.id',$id)->first() ;
             $department = DepartmentUser::where('user_id',$id)->first();
 
-            return view('department_admin.usersUI.edit', compact('user', 'department'));
+            return view('system_admin.users.edit', compact('user', 'department'));
         }
         catch (Exception $exception)
         {
@@ -179,12 +186,12 @@ class UserManagementController extends Controller
             }
             DB::commit();
 
-            return redirect()->route('users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
+            return redirect()->route('admin-users.index')->with('messageSuccess', 'Cập Nhật Thành Công');
         }
         catch (Exception $exception)
         {
             DB::rollBack();
-            return redirect()->route('users.index')->with('messageFail', 'Cập Nhật Thất Bại');
+            return redirect()->route('admin-users.index')->with('messageFail', 'Cập Nhật Thất Bại');
         }
     }
 
@@ -204,7 +211,7 @@ class UserManagementController extends Controller
             DepartmentUser::where('user_id', $id)->update(['is_active' => config('setting.active.no_active')]);
             DB::commit();
 
-            return redirect()->route('users.index')->with('messageSuccess', 'Xóa Thành Công');
+            return redirect()->route('admin-users.index')->with('messageSuccess', 'Xóa Thành Công');
         }
         catch (Exception $exception)
         {
