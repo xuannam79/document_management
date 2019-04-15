@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
             'name' => 'Vu Phan',
             'birth_date' => '1997/03/28',
-            'gender' => 'Nam',
+            'gender' => 1,
             'address' => '08 Ha Van Tinh, Da Nang',
             'phone' => '0354525110',
         ]);

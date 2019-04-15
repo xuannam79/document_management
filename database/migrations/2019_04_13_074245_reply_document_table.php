@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollaborationUnitsTable extends Migration
+class ReplyDocumentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCollaborationUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('collaboration_units', function (Blueprint $table) {
+        Schema::create('reply_document', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('phone_number');
-            $table->string('email');
-            $table->string('address');
-            $table->string('description');
+            $table->integer('document_id');
+            $table->integer('user_id');
+            $table->string('content_reply');
+            $table->string('file_attachment_reply')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateCollaborationUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collaboration_units');
+        Schema::dropIfExists('replydocument');
     }
 }

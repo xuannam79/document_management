@@ -36,4 +36,9 @@ class Department extends Model
         return $this->hasMany(Form::class);
     }
 
+    public function reply()
+    {
+        return $this->hasMany(ReplyDocument::class);
+    }
+
 }

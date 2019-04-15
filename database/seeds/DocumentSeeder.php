@@ -13,6 +13,7 @@ class DocumentSeeder extends Seeder
     {
         DB::table('documents')->insert([
             'document_number' => 'NQ001',
+            'title' => 'nghi quyet thanh lap dang',
             'document_type_id' => 1,
             'content' => "Nghị quyết về việc koon ăn gà quá nhiều bị gà nhập và mua bi tít dẫn đến đói nhăn răng cuối tháng",
             'publish_date' => "2019-06-16",

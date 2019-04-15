@@ -1,5 +1,5 @@
 @if(Session::has('messageSuccess'))
-    <div class="alert alert-success alert-dismissible fade show col col-8 tuychinh" role="alert">
+    <div class="alert alert-success alert-dismissible fade show col col-8 message" role="alert">
         <strong>{{ Session::get('messageSuccess') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -7,7 +7,7 @@
     </div>
 @endif
 @if(Session::has('messageFail'))
-    <div class="alert alert-danger alert-dismissible fade show col col-8 tuychinh" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show col col-8 message" role="alert">
         <strong>{{ Session::get('messageFail') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>

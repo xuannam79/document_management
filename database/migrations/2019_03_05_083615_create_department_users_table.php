@@ -14,7 +14,7 @@ class CreateDepartmentUsersTable extends Migration
     public function up()
     {
         Schema::create('department_users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('department_id')->default(4);
             $table->integer('user_id');
             $table->integer('position_id')->default(4);

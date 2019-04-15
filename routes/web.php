@@ -55,7 +55,17 @@ Route::group(['middleware' => 'checkUser'], function() {
     });
     Route::namespace('Document')->group(function() {
 
-        Route::resource('document', 'DocumentController');    
+        Route::resource('document', 'DocumentController');
+
+        Route::post('/document/{id}', [
+            'as' => 'reply.document',
+            'uses' => 'DocumentController@reply',
+        ]);
+
+        Route::get('/download-file-attachment/{nameFile}', [
+            'uses' => 'DocumentController@downloadFileAttachment',
+            'as' => 'file-attachment.download',
+        ]);
     });
 });
 
