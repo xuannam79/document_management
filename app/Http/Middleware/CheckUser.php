@@ -18,14 +18,13 @@ class CheckUser
         if(auth()->check())
         {
             if (auth()->user()->role == config('setting.roles.user')
-                || auth()->user()->role == config('setting.roles.system_admin')
                 || auth()->user()->role == config('setting.roles.admin_department'))
             {
 
                 return $next($request);
             } else {
 
-                return redirect()->back();
+                return redirect()->route('admin-index');
             }
         }
 

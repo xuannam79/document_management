@@ -28,5 +28,9 @@ return [
     'gender' => [
         'male' =>  1,
         'female' => 2,
-    ]
+    ],
+    'position' => [
+        'no_delegacy' => 1,
+        'edit_document' => 2,
+    ],
 ];

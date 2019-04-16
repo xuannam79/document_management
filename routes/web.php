@@ -24,7 +24,30 @@ Route::group(['middleware' => 'checkUser'], function() {
         'as' => 'home-page',
         'uses' =>  'HomeController@index'
     ]);
+
     Route::namespace('DepartmentAdmin')->group(function() {
+        
+        Route::resource('delegacy', 'DelegacyController');        
+
+        // form
+        Route::resource('forms', 'FormManagementController');
+        
+        Route::get('/download/{id}', [
+            'uses' => 'FormManagementController@download',
+            'as' => 'forms.download',
+        ]);
+
+        Route::get('/form-archive', [
+            'uses' => 'FormManagementController@archiveIndex',
+            'as' => 'forms.archive',
+        ]);
+
+        Route::put('/form-restore/{id}', [
+            'uses' => 'FormManagementController@restore',
+            'as' => 'forms.archive.restore',
+        ]);
+
+        // users
         Route::resource('users', 'UserManagementController');
 
         Route::get('/ajax-email', [
@@ -51,8 +74,8 @@ Route::group(['middleware' => 'checkUser'], function() {
             'uses' => 'UserManagementController@addUserExist',
             'as' => 'users.exists',
         ]);
-
     });
+    
     Route::namespace('Document')->group(function() {
 
         Route::resource('document', 'DocumentController');
@@ -69,132 +92,98 @@ Route::group(['middleware' => 'checkUser'], function() {
     });
 });
 
-Route::prefix('admin')->middleware('checkIsAdmin')->group(function () {
+Route::group(['middleware' => 'checkSysAdmin'], function() {
+    Route::prefix('admin')->group(function () {
 
-    Route::get('/', [
-        'as' => 'admin-index',
-        'uses' => 'HomeAdminController@index',
-    ]);
-
-    Route::namespace('SystemAdmin')->middleware('checkSysAdmin')->group(function () {
-
-        //department
-        Route::resource('department', 'DepartmentController');
-
-        Route::get('/deparment-archived', [
-            'as' => 'department-archived',
-            'uses' => 'DepartmentController@archive',
+        Route::get('/', [
+            'as' => 'admin-index',
+            'uses' => 'HomeAdminController@index',
         ]);
 
-        Route::put('/department-restore/{id}', [
-            'as' => 'department-restore',
-            'uses' => 'DepartmentController@restore'
-        ]);
+        Route::namespace('SystemAdmin')->group(function () {
 
-        //department admin
-        Route::resource('department-admin', 'DepartmentAdminController');
+            //department
+            Route::resource('department', 'DepartmentController');
 
-        Route::get('/deparment-admin-archived', [
-            'as' => 'department-admin-archived',
-            'uses' => 'DepartmentAdminController@archive',
-        ]);
+            Route::get('/deparment-archived', [
+                'as' => 'department-archived',
+                'uses' => 'DepartmentController@archive',
+            ]);
 
-        Route::put('/department-admin-restore/{id}', [
-            'as' => 'department-admin-restore',
-            'uses' => 'DepartmentAdminController@restore'
-        ]);
+            Route::put('/department-restore/{id}', [
+                'as' => 'department-restore',
+                'uses' => 'DepartmentController@restore'
+            ]);
 
-        //department user
-        Route::resource('department-user', 'DepartmentUserController');
+            //department admin
+            Route::resource('department-admin', 'DepartmentAdminController');
 
-        Route::get('/deparment-user-archived', [
-            'as' => 'department-user-archived',
-            'uses' => 'DepartmentUserController@archive',
-        ]);
+            Route::get('/deparment-admin-archived', [
+                'as' => 'department-admin-archived',
+                'uses' => 'DepartmentAdminController@archive',
+            ]);
 
-        Route::put('/department-user-restore/{id}', [
-            'as' => 'department-user-restore',
-            'uses' => 'DepartmentUserController@restore'
-        ]);
+            Route::put('/department-admin-restore/{id}', [
+                'as' => 'department-admin-restore',
+                'uses' => 'DepartmentAdminController@restore'
+            ]);
 
-        //document-type
-        Route::resource('document-type', 'DocumentTypeController');
+            //department user
+            Route::resource('department-user', 'DepartmentUserController');
 
-        Route::get('/document-type-archived', [
-            'as' => 'document-type-archived',
-            'uses' => 'DocumentTypeController@archive',
-        ]);
+            Route::get('/deparment-user-archived', [
+                'as' => 'department-user-archived',
+                'uses' => 'DepartmentUserController@archive',
+            ]);
 
-        Route::put('/document-type-restore/{id}', [
-            'as' => 'document-type-restore',
-            'uses' => 'DocumentTypeController@restore',
-        ]);
+            Route::put('/department-user-restore/{id}', [
+                'as' => 'department-user-restore',
+                'uses' => 'DepartmentUserController@restore'
+            ]);
 
-        //collaboration-unit
-        Route::resource('collaboration-unit', 'CollaborationUnitController');
+            //document-type
+            Route::resource('document-type', 'DocumentTypeController');
 
-        Route::get('/collaboration-unit-archived', [
-            'as' => 'collaboration-unit-archived',
-            'uses' => 'CollaborationUnitController@archive',
-        ]);
+            Route::get('/document-type-archived', [
+                'as' => 'document-type-archived',
+                'uses' => 'DocumentTypeController@archive',
+            ]);
 
-        Route::put('/collaboration-unit-restore/{id}', [
-            'as' => 'collaboration-unit-restore',
-            'uses' => 'CollaborationUnitController@restore',
-        ]);
+            Route::put('/document-type-restore/{id}', [
+                'as' => 'document-type-restore',
+                'uses' => 'DocumentTypeController@restore',
+            ]);
 
-        //infrastructure
-        Route::post('/infrastructure-department/{id}', [
-            'uses' => 'InfrastructureManagementController@changeDepartment',
-            'as' => 'infrastructure.department',
-        ]);
+            //collaboration-unit
+            Route::resource('collaboration-unit', 'CollaborationUnitController');
 
-        Route::resource('infrastructure', 'InfrastructureManagementController');
+            Route::get('/collaboration-unit-archived', [
+                'as' => 'collaboration-unit-archived',
+                'uses' => 'CollaborationUnitController@archive',
+            ]);
 
-        Route::get('/infrastructure-archive', [
-            'uses' => 'InfrastructureManagementController@archiveIndex',
-            'as' => 'infrastructure.archive',
-        ]);
-        Route::put('/infrastructure-archive-restore/{id}', [
-            'uses' => 'InfrastructureManagementController@restore',
-            'as' => 'infrastructure.archive.restore',
-        ]);
+            Route::put('/collaboration-unit-restore/{id}', [
+                'as' => 'collaboration-unit-restore',
+                'uses' => 'CollaborationUnitController@restore',
+            ]);
 
-        //users
-        Route::resource('admin-users', 'UserManagementController');
-        Route::post('/ajaxdp/{id}',[
-            'as' => 'admin-users.ajaxdp',
-            'uses' => 'UserManagementController@ajaxdp'
-        ]);
+            //infrastructure
+            Route::post('/infrastructure-department/{id}', [
+                'uses' => 'InfrastructureManagementController@changeDepartment',
+                'as' => 'infrastructure.department',
+            ]);
 
-        Route::get('/archive', [
-            'uses' => 'UserManagementController@archiveIndex',
-            'as' => 'admin-users.archive',
-        ]);
+            Route::resource('infrastructure', 'InfrastructureManagementController');
 
-        Route::put('/archive-restore/{id}', [
-            'uses' => 'UserManagementController@restore',
-            'as' => 'admin-users.archive.restore',
-        ]);
-
-    });
-
-    Route::namespace('DepartmentAdmin')->middleware('checkDepAdmin')->group(function() {
-
-        Route::resource('forms', 'FormManagementController');
-        Route::get('/download/{id}', [
-            'uses' => 'FormManagementController@download',
-            'as' => 'forms.download',
-        ]);
-
-        Route::get('/form-archive', [
-            'uses' => 'FormManagementController@archiveIndex',
-            'as' => 'forms.archive',
-        ]);
-
-        Route::put('/form-restore/{id}', [
-            'uses' => 'FormManagementController@restore',
-            'as' => 'forms.archive.restore',
-        ]);
+            Route::get('/infrastructure-archive', [
+                'uses' => 'InfrastructureManagementController@archiveIndex',
+                'as' => 'infrastructure.archive',
+            ]);
+            Route::put('/infrastructure-archive-restore/{id}', [
+                'uses' => 'InfrastructureManagementController@restore',
+                'as' => 'infrastructure.archive.restore',
+            ]);
+        });
     });
 });
+
