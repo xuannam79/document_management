@@ -24,7 +24,7 @@ Route::group(['middleware' => 'checkUser'], function() {
         'as' => 'home-page',
         'uses' =>  'HomeController@index'
     ]);
-
+    Route::resource('collaboration', 'CollaborationController');
     Route::namespace('DepartmentAdmin')->group(function() {
         
         Route::resource('delegacy', 'DelegacyController');        
