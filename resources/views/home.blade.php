@@ -13,7 +13,7 @@
                     </div>
                     <h3 class="title">Tạo mới và lưu văn bản</h3>
                     <p class="intro">
-                        zxczxczxc
+                        Tạo mới các văn bản, công văn, quyết định
                     </p>
                     <a class="link" href="{{ route('document.create') }}"><span></span></a>
                 </div>
@@ -25,43 +25,34 @@
                     </div>
                     <h3 class="title">Danh Sách Giảng Viên</h3>
                     <p class="intro">
-                    {{$department->name}}
+                        Quản lý danh sách giảng viên, thành viên
                     </p>
                     <a class="link" href="{{ route('users.index') }}"><span></span></a>
                 </div>
             </div>
-            <div class="item item-primary item-2 col-lg-4 col-6">
+            <div class="item item-red col-lg-4 col-6">
                 <div class="item-inner">
                     <div class="icon-holder">
-                        <i class="icon fa fa-address-book"></i>
+                        <i class="icon fa fa-calendar-check-o"></i>
                     </div>
-                    <h3 class="title">Số địa chỉ</h3>
+                    <h3 class="title">Ủy quyền</h3>
                     <p class="intro">
-                        zxczxc
+                       Ủy quyền cho cán bộ lưu và soạn thảo văn bản
                     </p>
                     <a class="link" href="#"><span></span></a>
                 </div>
             </div>
-            <div class="item item-orange item-2 col-lg-4 col-6">
-                <div class="item-inner">
-                    <div class="icon-holder">
-                        <i class="icon fa fa-wpforms"></i>
-                    </div>
-                    <h3 class="title">Biểu mẫu</h3>
-                    <p class="intro">
-                        zxczxc
-                    </p>
-                    <a class="link" href="{{route('document.show',1)}}"><span></span></a>
-                </div>
-            </div>
         @endif
+
         <div class="item item-green col-lg-4 col-6">
             <div class="item-inner">
                 <div class="icon-holder">
                     <i class="icon fa fa-download"></i>
                 </div>
                 <h3 class="title">Văn bản đến</h3>
-                <p class="intro">zxccczxc</p>
+                <p class="intro">
+                    Xem các văn bản đến và phản hồi
+                </p>
             <a class="link" href="{{ route('document.index') }}"><span></span></a>
             </div>
         </div>
@@ -72,7 +63,7 @@
                 </div>
                 <h3 class="title">Văn bản đi</h3>
                 <p class="intro">
-                    zzxczxcx
+                    Tạo và gửi các văn bản đi
                 </p>
                 <a class="link" href="#"><span></span></a>
             </div>
@@ -84,7 +75,7 @@
                 </div>
                 <h3 class="title">Thời khóa biểu</h3>
                 <p class="intro">
-                   zxczxc
+                   Xem thời khóa biểu của trường
                 </p>
                 <a class="link" href="#"><span></span></a>
             </div>
@@ -96,7 +87,7 @@
                 </div>
                 <h3 class="title">Lịch tuần trường</h3>
                 <p class="intro">
-                    zxczxc
+                    Xem thời khóa biểu của tuần
                 </p>
                 <a class="link" href="#"><span></span></a>
             </div>
@@ -108,7 +99,7 @@
                 </div>
                 <h3 class="title">Lịch công tác tuần cơ sở</h3>
                 <p class="intro">
-                   zxczxc
+                   Xem lịch công tác các cấp cơ sở
                 </p>
                 <a class="link" href="#"><span></span></a>
             </div>
@@ -120,7 +111,7 @@
                 </div>
                 <h3 class="title">Hồ sơ văn bản</h3>
                 <p class="intro">
-                    zxczxc
+                    Xem hồ sơ văn bản
                 </p>
                 <a class="link" href="#"><span></span></a>
             </div>
@@ -128,11 +119,11 @@
         <div class="item item-primary item-2 col-lg-4 col-6">
             <div class="item-inner">
                 <div class="icon-holder">
-                    <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
+                    <i class="icon fa fa-address-book"></i>
                 </div>
                 <h3 class="title">Số địa chỉ</h3>
                 <p class="intro">
-                    zxczxc
+                    Xem các địa chỉ/ đơn vị liên kết
                 </p>
                 <a class="link" href="{{ route('collaboration.index') }}"><span></span></a>
             </div>
@@ -140,7 +131,7 @@
         <div class="item item-orange item-2 col-lg-4 col-6">
             <div class="item-inner">
                 <div class="icon-holder">
-                    <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
+                    <i class="icon fa fa-wpforms"></i>
                 </div>
                 <h3 class="title">Biểu mẫu</h3>
                 <p class="intro">
