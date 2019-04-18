@@ -25,16 +25,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($forms as $key)
+                        @foreach($forms as $form)
                             <tr>
-                                <th scope="row">{{ $key->id }}</th>
-                                <td>{{ $key->name }}</td>
-                                <td><a href="{{ route('forms.download',$key->id) }}">{{ $key->link }}</a> </td>
-                                <td>{{ $key->description }}</td>
+                                <th scope="row">{{ $form->id }}</th>
+                                <td>{{ $form->name }}</td>
+                                <td><a href="{{ route('forms.download',$form->id) }}">{{ $form->link }}</a> </td>
+                                <td>{{ $form->description }}</td>
                                 <td>
                                     <ul class="d-flex" style="list-style-type: none;margin-left: -16px;">
-                                        {!!Form::open(["method" => "PUT", "route" => ["forms.archive.restore", $key->id ], "id" => "restoreArchive".$key->id])!!}
-                                        <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('restoreArchive'+{{$key->id}})" title="Khôi phục">
+                                        {!!Form::open(["method" => "PUT", "route" => ["forms.archive.restore", $form->id ], "id" => "restoreArchive".$form->id])!!}
+                                        <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('restoreArchive'+{{$form->id}})" title="Khôi phục">
                                             <i class="fa fa-trash-restore"></i>
                                         </a>
                                         {!!Form::close()!!}
