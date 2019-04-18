@@ -15,27 +15,27 @@ Route::resource('forgot-password', 'ForgotPasswordController');
 
 Route::get('404', [
     'as' => 'not-found',
-    'uses' =>  'ErrorController@notFound'
+    'uses' => 'ErrorController@notFound',
 ]);
 
-Route::group(['middleware' => 'checkUser'], function() {
-    
+Route::group(['middleware' => 'checkUser'], function () {
+
     Route::get('/', [
         'as' => 'home-page',
-        'uses' =>  'HomeController@index'
+        'uses' => 'HomeController@index',
     ]);
     Route::get('/information', [
         'as' => 'profile',
-        'uses' => 'Information@index'
+        'uses' => 'Information@index',
     ]);
     Route::resource('collaboration', 'CollaborationController');
-    Route::namespace('DepartmentAdmin')->group(function() {
-        
-        Route::resource('delegacy', 'DelegacyController');        
+    Route::namespace ('DepartmentAdmin')->group(function () {
+
+        Route::resource('delegacy', 'DelegacyController');
 
         // form
         Route::resource('forms', 'FormManagementController');
-        
+
         Route::get('/download/{id}', [
             'uses' => 'FormManagementController@download',
             'as' => 'forms.download',
@@ -79,11 +79,12 @@ Route::group(['middleware' => 'checkUser'], function() {
             'as' => 'users.exists',
         ]);
     });
-    
-    Route::namespace('Document')->group(function() {
+
+    Route::namespace ('Document')->group(function () {
 
         Route::resource('document', 'DocumentController');
-
+        Route::get('ajax/department/{id}', 'DocumentController@handleSelectDepartment');
+        
         Route::post('/document/{id}', [
             'as' => 'reply.document',
             'uses' => 'DocumentController@reply',
@@ -96,7 +97,7 @@ Route::group(['middleware' => 'checkUser'], function() {
     });
 });
 
-Route::group(['middleware' => 'checkSysAdmin'], function() {
+Route::group(['middleware' => 'checkSysAdmin'], function () {
     Route::prefix('admin')->group(function () {
 
         Route::get('/', [
@@ -104,7 +105,7 @@ Route::group(['middleware' => 'checkSysAdmin'], function() {
             'uses' => 'HomeAdminController@index',
         ]);
 
-        Route::namespace('SystemAdmin')->group(function () {
+        Route::namespace ('SystemAdmin')->group(function () {
 
             //department
             Route::resource('department', 'DepartmentController');
@@ -116,7 +117,7 @@ Route::group(['middleware' => 'checkSysAdmin'], function() {
 
             Route::put('/department-restore/{id}', [
                 'as' => 'department-restore',
-                'uses' => 'DepartmentController@restore'
+                'uses' => 'DepartmentController@restore',
             ]);
 
             //department admin
@@ -129,7 +130,7 @@ Route::group(['middleware' => 'checkSysAdmin'], function() {
 
             Route::put('/department-admin-restore/{id}', [
                 'as' => 'department-admin-restore',
-                'uses' => 'DepartmentAdminController@restore'
+                'uses' => 'DepartmentAdminController@restore',
             ]);
 
             //department user
@@ -142,7 +143,7 @@ Route::group(['middleware' => 'checkSysAdmin'], function() {
 
             Route::put('/department-user-restore/{id}', [
                 'as' => 'department-user-restore',
-                'uses' => 'DepartmentUserController@restore'
+                'uses' => 'DepartmentUserController@restore',
             ]);
 
             //document-type
@@ -190,4 +191,3 @@ Route::group(['middleware' => 'checkSysAdmin'], function() {
         });
     });
 });
-

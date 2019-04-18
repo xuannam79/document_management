@@ -57,5 +57,12 @@ $(document).ready(function () {
         $("#rep-area").removeClass("active-block");
         $(".rep-bot-button").removeClass("display-none");
     });
+    $('#department').change(function () {
+        var idDepartment = $(this).val();
+        $.get('/ajax/department/' + idDepartment, function (data) {
+            $('#multiselect').html(data)
+            $('#multiselect_to').html('')
+        })
+    })
 });
 
