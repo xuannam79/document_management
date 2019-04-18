@@ -1,3 +1,35 @@
+// $(document).ready(function () {
+//     $(document).on('click', '#btn-more', function () {
+//         var id = $(this).data('id');
+
+//         $("#btn-more").html("Loading....");
+//         $.ajaxSetup({
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//         });
+//         $.ajax({
+//             url: "/document-department/load-more",
+//             type: "POST",
+//             data: { id: id },
+//             cache: false,
+//             // dataType : "text",
+//             success: function (data) {
+//                 if (data != '') {
+//                     $("#btn-more").remove();
+//                     $('#sec1').append(data);
+//                 }
+//                 else {
+//                     $('#btn-more').html("No Data");
+//                 }
+//             },
+//             error: function () {
+//                 console.log('lỗi rồi');
+//             }
+//         });
+//     });
+// });
+
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -64,5 +96,13 @@ $(document).ready(function () {
             $('#multiselect_to').html('')
         })
     })
+    // smoth scroll click a
+    $("a[href*='#']:not([href='#])").click(function () {
+        let target = $(this).attr("href");
+        $('html,body').stop().animate({
+            scrollTop: $(target).offset().top
+        }, 1000);
+        event.preventDefault();
+    });
 });
 

@@ -15,7 +15,7 @@
     {{ Html::style(asset('/templates/user/css/datepicker.css')) }}
     {{ Html::script(asset('/templates/user/js/jquery-3.2.1.slim.min.js')) }}
     {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
-        {{ Html::style(asset('/css/all.css')) }}
+    {{ Html::style(asset('/css/all.css')) }}
     </head>
     <body class="landing-page">
         <div class="page-wrapper">
