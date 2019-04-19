@@ -86,7 +86,7 @@
         </div>
     </li>
 
-{{--     <!-- Nav Item - Utilities Collapse Menu -->
+     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#thanhvien" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
@@ -114,7 +114,7 @@
                 <a class="collapse-item" href="{{ route('forms.archive') }}">Biểu mẫu đã xóa</a>
             </div>
         </div>
-    </li> --}}
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">

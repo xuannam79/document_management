@@ -43,7 +43,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function departmentUsers()
+    public function departmentUser()
     {
         return $this->hasMany(DepartmentUser::class);
     }
