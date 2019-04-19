@@ -15,7 +15,7 @@
                                         'method'=>'POST',
                                         'route'=>'department-admin.store'
                                         ]) !!}
-                                {!! Form::label('nameAdminDepartment', 'Chọn trưởng đơn vị') !!}
+                                {!! Form::label('nameAdminDepartment', 'Chọn người ủy nhiệm') !!}
                                 <div class="form-group">
                                     {!! Form::select('user_id', $searchAdmin, null,
                                             ['class' => 'selectpicker form-control',
@@ -24,13 +24,9 @@
 
                                 {!! Form::label('nameDepartment', 'Chọn phòng ban tiếp quản') !!}
                                 <div class="form-group">
-
-                                </div>
-                                {!! Form::label('namePosition', 'Chức vụ tiếp quản') !!}
-                                <div class="form-group">
-                                    {!! Form::text('position_id', $searchPosition->name, [
-                                        'class'=>'form-control',
-                                        'readonly']) !!}
+                                    {!! Form::select('department_id', $searchDepartment, null,
+                                            ['class' => 'selectpicker form-control',
+                                            'data-live-search' => 'true']) !!}
                                 </div>
                                 {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
                                 <div class="form-group">

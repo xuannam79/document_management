@@ -30,7 +30,7 @@ return [
         'male' =>  1,
         'female' => 2,
     ],
-    'position' => [
+    'delegacy' => [
         'no_delegacy' => 1,
         'edit_document' => 2,
     ],

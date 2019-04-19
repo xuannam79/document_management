@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SystemAdmin;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
@@ -41,15 +42,29 @@ class DepartmentController extends Controller
     public function store(DepartmentRequest $request)
     {
         try {
+            DB::beginTransaction();
+
             $input = $request->only('name');
             $input['is_active'] = config('setting.active.is_active');
+
+            $getAllDepartments = Department::all();
+            $inputRequest = trim(str_replace('-', '', str_slug($input['name'])));
+            foreach ($getAllDepartments as $department) {
+                $departmentName = trim(str_replace('-', '', str_slug($department->name)));
+                if ($inputRequest == $departmentName) {
+
+                    return redirect()->route('department.create')->with('alert', 'Tên phòng ban bạn nhập đã bị trùng! Vui lòng nhập tên phòng ban khác!');
+                }
+            } 
             Department::create($input);
+            DB::commit();
+
+            return redirect(route('department.index'))->with('alert', 'Thêm thành công');
         } catch (Exception $e) {
+            DB::rollBack();
 
             return redirect(route('department.create'))->with('alert', 'Thêm thất bại');
         }
-
-        return redirect(route('department.index'))->with('alert', 'Thêm thành công');
     }
 
     /**

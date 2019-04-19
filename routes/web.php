@@ -24,11 +24,14 @@ Route::group(['middleware' => 'checkUser'], function () {
         'as' => 'home-page',
         'uses' => 'HomeController@index',
     ]);
+
     Route::get('/information', [
         'as' => 'profile',
         'uses' => 'Information@index',
     ]);
+
     Route::resource('collaboration', 'CollaborationController');
+
     Route::namespace ('DepartmentAdmin')->group(function () {
 
         Route::resource('delegacy', 'DelegacyController');
@@ -78,6 +81,9 @@ Route::group(['middleware' => 'checkUser'], function () {
             'uses' => 'UserManagementController@addUserExist',
             'as' => 'users.exists',
         ]);
+
+        //delegacy
+        
     });
 
     Route::namespace ('Document')->group(function () {
@@ -121,6 +127,8 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
             ]);
 
             //department admin
+            Route::resource('create-department-admin', 'CreateAnAdmin');
+
             Route::resource('department-admin', 'DepartmentAdminController');
 
             Route::get('/deparment-admin-archived', [
