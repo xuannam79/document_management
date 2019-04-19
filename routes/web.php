@@ -81,8 +81,12 @@ Route::group(['middleware' => 'checkUser'], function () {
     });
 
     Route::namespace ('Document')->group(function () {
-
         Route::resource('document', 'DocumentController');
+        Route::resource('document-department', 'DocumentDepartmentController');
+        Route::post('/document-department/load-more', [
+            'uses' => 'DocumentDepartmentController@load_data',
+        ]);
+
         Route::get('ajax/department/{id}', 'DocumentController@handleSelectDepartment');
         
         Route::post('/document/{id}', [

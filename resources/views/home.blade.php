@@ -113,7 +113,7 @@
                 <p class="intro">
                     Xem hồ sơ văn bản
                 </p>
-                <a class="link" href="#"><span></span></a>
+            <a class="link" href="{{ route("document-department.index") }}"><span></span></a>
             </div>
         </div>
         <div class="item item-primary item-2 col-lg-4 col-6">
