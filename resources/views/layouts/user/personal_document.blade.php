@@ -49,7 +49,11 @@
                                 <li>
                                     <i class="icon-leftbar fa fa-download"></i>&nbsp;
                                     Văn bản đang chờ duyệt
-                                    <span class="count-new-document">5</span>
+                                    @if(isset($pendingDocumentsQuantity))
+                                        <span class="count-new-document">
+                                            {{$pendingDocumentsQuantity}}
+                                        </span>
+                                    @endif
                                 </li>
                             </a>
                         </ul>

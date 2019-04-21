@@ -25,6 +25,11 @@ return [
     ],
     'department' => [
         'no_department' => 0,
+        'active' => 1,
+    ],
+    'department_user' => [
+        'active' => 1,
+        'no_approved' => 0,
     ],
     'gender' => [
         'male' =>  1,
