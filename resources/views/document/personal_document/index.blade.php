@@ -1,4 +1,4 @@
-@extends('layouts.user.personal_document')
+@extends('layouts.user.personal_document', ['personalUnSeenDocumentsQuantity' => $personalUnSeenDocumentsQuantity])
 @section('title')
 Văn bản đến cá nhân
 @endsection
@@ -9,19 +9,21 @@ Văn bản đến cá nhân
             <div id="sec1">
                 <h4 class="h4-first">Văn bản đến cá nhân</h4>
                 <div class="all-document list-group">
-                    <div class="list-group-item ">
-                        <a href="#" title="content ở đây" >
-                        <span class="name" style="max-width: 135px !important;color: black;">nam_department</span>
-                            <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
-                                <span class="" style="color: black;">title</span><br/>
-                                <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;Trích yếu</span></span>
-                            </span>
-                            <span class="badge">Ngày</span>
-                        </a>
-                        <span class="name userchinh">Người gửi</span>
-                        <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">Tên người gửi</a></span>
-                        <span class="userchinh3">New</span>
-                    </div>
+                    @foreach($documents as $document)
+                        <div class="list-group-item ">
+                            <a href="#" title="{{$document->content}}" >
+                            <span class="name" style="max-width: 135px !important;color: black;">{{$document->name}}</span>
+                                <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
+                                    <span class="" style="color: black;">{{$document->title}}</span><br/>
+                                    <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
+                                </span>
+                                <span class="badge">{{Carbon\Carbon::createFromTimeStamp(strtotime($document->created_at))->diffForHumans()}}</span>
+                            </a>
+                            @if($document->is_seen == config('setting.document_user.is_unseen'))
+                                <span class="userchinh3">New</span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
