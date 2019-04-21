@@ -83,12 +83,12 @@ Route::group(['middleware' => 'checkUser'], function () {
     Route::namespace ('Document')->group(function () {
         Route::resource('document', 'DocumentController');
         Route::resource('document-department', 'DocumentDepartmentController');
-        Route::post('/document-department/load-more', [
-            'uses' => 'DocumentDepartmentController@load_data',
-        ]);
+        Route::resource('document-personal', 'PersonalDocumentController');
+        Route::resource('document-sent', 'SentDocumentController');
+        Route::resource('document-pending', 'PendingDocumentController');
 
         Route::get('ajax/department/{id}', 'DocumentController@handleSelectDepartment');
-        
+
         Route::post('/document/{id}', [
             'as' => 'reply.document',
             'uses' => 'DocumentController@reply',
@@ -195,9 +195,9 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
 
             //users
             Route::resource('admin-users', 'UserManagementController');
-            Route::post('/ajaxdp/{id}',[
+            Route::post('/ajaxdp/{id}', [
                 'as' => 'admin-users.ajaxdp',
-                'uses' => 'UserManagementController@ajaxdp'
+                'uses' => 'UserManagementController@ajaxdp',
             ]);
 
             Route::get('/archive', [

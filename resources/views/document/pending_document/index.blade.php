@@ -1,13 +1,13 @@
 @extends('layouts.user.personal_document')
 @section('title')
-Văn bản đến đơn vị
+Văn bản đang chờ duyệt
 @endsection
 @section('content')
  <div class="container">
     <div id="cards-wrapper" class="cards-wrapper row">
         <div class="list-document-detail">
             <div id="sec1">
-                <h4 class="h4-first">Văn bản đến đơn vị</h4>
+                <h4 class="h4-first">Văn bản đang chờ duyệt</h4>
                 <div class="all-document list-group">
                     <div class="list-group-item ">
                         <a href="#" title="content ở đây" >
