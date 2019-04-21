@@ -17,7 +17,7 @@ class CreateDocumentDepartmentTable extends Migration
             $table->bigIncrements('id');
             $table->integer('document_id');
             $table->integer('department_id');
-            $table->boolean('is_approved');
+            $table->boolean('is_approved')->default(0);;
             $table->timestamps();
         });
     }
