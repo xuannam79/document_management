@@ -38,20 +38,20 @@
                                         'class'=>'form-control',
                                         'readonly']) !!}
                                 </div>
-
-                                {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
-                                <div class="form-group">
-                                    {!! Form::date('start_date', '', [
-                                            'class'=>'form-control',
-                                            'required']) !!}
+                                <div class="form-group" style="width: 50%;float:left">
+                                    {!! Form::label("date-start", "Chọn ngày bắt đầu tiếp quản", []) !!}
+                                    <div class="input-group date" data-date-format="dd-mm-yyyy">
+                                        {!! Form::text("date-start", old("date-start"), ["class"=>"form-control", "readonly"]) !!}
+                                        <span style="background-color: #fff;width: 15%;" class="input-group-addon"><i class="fa fa-calendar" style="font-size: 20px;margin-top: 9px;"></i></span>
+                                    </div>
                                 </div>
-
-                                {!! Form::label('date-end', 'Chọn ngày kết thúc') !!}
-                                <div class="form-group">
-                                    {!! Form::date('end_date', '', [
-                                            'class'=>'form-control']) !!}
+                                <div class="form-group" style="width: 50%;float:left">
+                                    {!! Form::label("date-end", "Chọn ngày kết thúc", []) !!}
+                                    <div class="input-group date" data-date-format="dd-mm-yyyy">
+                                        {!! Form::text("date-end", old("date-end"), ["class"=>"form-control", "readonly"]) !!}
+                                        <span style="background-color: #fff;width: 15%;" class="input-group-addon"><i class="fa fa-calendar" style="font-size: 20px;margin-top: 9px;"></i></span>
+                                    </div>
                                 </div>
-
                                 {!! Form::submit('Thêm', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
                             {!! Form::close() !!}
