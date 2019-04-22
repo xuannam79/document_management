@@ -40,9 +40,8 @@ class DepartmentAdminController extends Controller
     {
         $searchAdmin = User::pluck('name', 'id');
         $searchDepartment = Department::pluck('name' ,'id');
-        $searchPosition = Position::whereId(config('setting.position.admin_department'))->first();
 
-        return view('system_admin.department_admin.add', compact('searchAdmin', 'searchDepartment', 'searchPosition'));
+        return view('system_admin.department_admin.add', compact('searchAdmin', 'searchDepartment'));
     }
 
     /**
@@ -54,12 +53,25 @@ class DepartmentAdminController extends Controller
     public function store(Request $request)
     {
         try {
+            DB::beginTransaction();
+
             $input = $request->only('user_id', 'department_id', 'start_date', 'end_date');
             $input['position_id'] = config('setting.position.admin_department');
+
+            $getAllDepartment = DepartmentUser::all();
+            foreach ($getAllDepartment as $depUser) {
+                if ($input['department_id'] == $depUser->department_id 
+                    && $input['user_id'] == $depUser->user_id) {
+
+                    return redirect()->route('department-admin.create')->with('alert', 'Người này đã là trưởng đơn vị của phòng ban này rồi! Vui lòng vào khu vực Trưởng đơn vị đã xóa để khôi phục nếu bạn đã xóa người này khỏi danh sách! ');
+                }
+            }
             DepartmentUser::create($input);
+            DB::commit();
 
             return redirect(route('department-admin.index'))->with('alert', 'Thêm thành công');
         } catch (Exception $e) {
+            DB::rollBack();
             return redirect(route('department-admin.create'))->with('alert', 'Thêm thất bại');
         }
     }
@@ -135,18 +147,19 @@ class DepartmentAdminController extends Controller
     public function destroy($id)
     {
         try {
+            DB::beginTransaction();
             $dataActive = config('setting.active.no_active');
-            $result = DepartmentUser::whereId($id)->update(['is_active' => $dataActive]);
+            $roleUser = config('setting.roles.user');
+            DepartmentUser::whereId($id)->update(['is_active' => $dataActive]);
+            $getUserId = DepartmentUser::select('user_id')->whereId($id)->first();
 
-            if ($result) {
+            User::whereId($getUserId->user_id)->update(['role' => $roleUser]);
 
-                return redirect(route('department-admin.index'))->with('alert', 'Xóa thành công');
-            } else {
-
-                return redirect(route('department-admin.index'))->with('alert', 'Xóa thất bại');
-            }
-
+            DB::commit();
+            
+            return redirect(route('department-admin.index'))->with('alert', 'Xóa thành công');
         } catch (Exception $e) {
+            DB::rollBack();
 
             return redirect(route('department-admin.index'))->with('alert', 'Xóa thất bại');
         }
@@ -170,18 +183,20 @@ class DepartmentAdminController extends Controller
     public function restore($id)
     {
         try {
+            DB::beginTransaction();
             $active = config('setting.active.is_active');
-            $result = DepartmentUser::whereId($id)->update(['is_active' => $active]);
+            $roleDepUser = config('setting.roles.admin_department');
+            DepartmentUser::whereId($id)->update(['is_active' => $active]);
+            $getDepUser = DepartmentUser::select('user_id')->whereId($id)->first();
 
-            if ($result) {
+            User::whereId($getDepUser->user_id)->update(['role' => $roleDepUser]);
+            
+            DB::commit();
 
-                return redirect(route('department-admin-archived'))->with('alert', 'Khôi phục thành công');
-            } else {
-
-                return redirect(route('department-admin-archived'))->with('alert', 'Không tìm thấy');
-            }
+            return redirect(route('department-admin-archived'))->with('alert', 'Khôi phục thành công');
 
         } catch (Exception $e) {
+            DB::rollBack();
 
             return redirect(route('department-admin-archived'))->with('alert', 'Khôi phục thất bại');
         }

@@ -140,18 +140,6 @@
                 <a class="link" href="{{route('document.show',1)}}"><span></span></a>
             </div>
         </div>
-        <div class="item item-orange item-2 col-lg-4 col-6">
-            <div class="item-inner">
-                <div class="icon-holder">
-                    <i class="icon fa fa-users"></i>
-                </div>
-                <h3 class="title">Danh Sách Giảng Viên</h3>
-                <p class="intro">
-                {{$department->name}}
-                </p>
-                <a class="link" href="{{ route('users.index') }}"><span></span></a>
-            </div>
-        </div>
     </div>
 </div>
 @endsection
