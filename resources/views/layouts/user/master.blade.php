@@ -16,6 +16,8 @@
     {{ Html::script(asset('/templates/user/js/jquery-3.2.1.slim.min.js')) }}
     {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
     {{ Html::style(asset('/css/all.css')) }}
+    {{ Html::script(asset('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css')) }}
+    {{ Html::style(asset('https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css')) }}
     </head>
     <body class="landing-page">
         <div class="page-wrapper">
@@ -33,8 +35,12 @@
     {{ Html::script(asset('/templates/user/js/myStyle.js')) }}
     {{ Html::script(asset('/templates/user/js/bootstrapdatepick.min.js')) }}
     {{ Html::script(asset('/templates/user/js/bootstrap-datepicker.js')) }}
-        {{ Html::script(asset('/js/all.js')) }}
-        {{ Html::script(asset('/js/app.js')) }}
+    {{ Html::script(asset('/js/all.js')) }}
+    {{ Html::script(asset('/js/app.js')) }}
+    {{ Html::script(asset('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')) }}
+    {{ Html::script(asset('https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js')) }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
     </body>
 </html>
 

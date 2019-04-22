@@ -23,7 +23,7 @@
                     <div class="icon-holder">
                         <i class="icon fa fa-users"></i>
                     </div>
-                    <h3 class="title">Danh Sách Giảng Viên</h3>
+                    <h3 class="title">Danh sách cán bộ, nhân viên</h3>
                     <p class="intro">
                         Quản lý danh sách giảng viên, thành viên
                     </p>
@@ -37,9 +37,9 @@
                     </div>
                     <h3 class="title">Ủy quyền</h3>
                     <p class="intro">
-                       Ủy quyền cho cán bộ lưu và soạn thảo văn bản
+                       Ủy quyền cho cán bộ soạn thảo và lưu văn bản
                     </p>
-                    <a class="link" href="#"><span></span></a>
+                    <a class="link" href="{{ route('delegacy.index') }}"><span></span></a>
                 </div>
             </div>
         @endif

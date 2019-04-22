@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.user.master')
 @section('title')
     Thêm ủy quyền
 @endsection
@@ -6,7 +6,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 col-ml-12">
-        @include('common.errors')
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Thêm người muốn ủy quyền</h6>
+            </div>
+            @include('common.errors')
             <div class="row">
                 <div class="col-12 mt-5">
                     <div class="card">
@@ -22,19 +25,19 @@
                                             'data-live-search' => 'true']) !!}
                                 </div>
 
-{{--                                 {!! Form::label('department', 'Thuộc phòng ban') !!}
+                                {!! Form::label('department', 'Thuộc phòng ban') !!}
                                 <div class="form-group">
-                                    {!! Form::select('department_id', $searchDepartment, null,
+                                    {!! Form::select('department_id', $searchAdmin, null,
                                             ['class' => 'selectpicker form-control',
                                             'data-live-search' => 'true']) !!}
-                                </div> --}}
-{{--
+                                </div>
+
                                 {!! Form::label('namePosition', 'Ủy quyền cho') !!}
                                 <div class="form-group">
-                                    {!! Form::text('position_id', $searchPosition->name, [
+                                    {!! Form::text('position_id', 'ahihi', [
                                         'class'=>'form-control',
                                         'readonly']) !!}
-                                </div> --}}
+                                </div>
 
                                 {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
                                 <div class="form-group">
