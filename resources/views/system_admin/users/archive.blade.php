@@ -39,7 +39,7 @@
                                 <td>
                                     {!! Form::select('depart', $department, $key->departmentUser[0]->department_id, ['class' => 'form-control', 'disabled' => true]) !!}
                                 </td>
-                                <td>
+                                <td style="text-align: center;vertical-align: middle;">
                                     <ul class="d-flex" style="list-style-type: none;margin-left: -16px;">
                                         {!!Form::open(["method" => "PUT", "route" => ["admin-users.archive.restore", $key->id ], "id" => "restoreArchive".$key->id])!!}
                                         <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('restoreArchive'+{{$key->id}})" title="Khôi phục">

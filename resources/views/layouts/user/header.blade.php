@@ -49,18 +49,17 @@
 			</ul>
 			<ul class="navbar-nav position-login">
 				@if(Auth::check())
-					<li class="nav-item cool-link dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fa fa-user"></i> {{Auth::user()->name}}
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="{{ route('profile') }}">Thông tin cá nhân</a>
-							<a class="dropdown-item" href="#">Đăng xuất</a>
-						</div>
-					</li>
+				<li class="nav-item cool-link dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-user"></i> {{Auth::user()->name}}
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="{{ route('profile') }}">Thông tin cá nhân</a>
+						<a class="dropdown-item" href="{{ route('login.create') }}">Đăng xuất</a>
+					</div>
+				</li>
 				@endif
 			</ul>
-
 		</div>
 	</nav>
 </header>

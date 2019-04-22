@@ -101,3 +101,33 @@
 .icon-margin-right {
     margin-right: 15px;
 }
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -27%;
+    width: 65%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.css-profile-input {
+    max-width: 75%;
+    display: inline;
+}
+.css-load-form {
+    height: 336px !important;
+}
