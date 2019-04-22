@@ -6,6 +6,10 @@
     font-style: normal;
 }
 
+* {
+    list-style: none;
+}
+
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 
 [data-icon]:before {
@@ -2064,4 +2068,23 @@ video {
 
 .pagination {
     margin-top: 10px;
+}
+
+.big-sidebar {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+}
+
+.big-sidebar-ul {
+    margin: 0;
+    padding: 2%;
+    text-align: left;
+}
+
+.big-li {
+    color: #222;
+    font-weight: bold;
+}
+
+.small-ul {
+    padding: 1% 5%;
 }
