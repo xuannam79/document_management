@@ -25,13 +25,6 @@
                                             'data-live-search' => 'true']) !!}
                                 </div>
 
-                                {!! Form::label('department', 'Thuộc phòng ban') !!}
-                                <div class="form-group">
-                                    {!! Form::select('department_id', $searchAdmin, null,
-                                            ['class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true']) !!}
-                                </div>
-
                                 {!! Form::label('namePosition', 'Ủy quyền cho') !!}
                                 <div class="form-group">
                                     {!! Form::text('position_id', 'ahihi', [
@@ -62,4 +55,5 @@
         </div>
     </div>
 </div>
+{{ Html::script(asset('/templates/user/js/handleDate.js')) }}
 @endsection

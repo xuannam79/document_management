@@ -1350,7 +1350,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
     top: 0;
     left: 0;
     z-index: 1;
-    background-image: url("../images/empty.gif");
+/*    background-image: url("../images/empty.gif");*/
     /* for IE8 */
 }
 

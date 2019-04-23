@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\SystemAdmin;
+namespace App\Http\Controllers\DepartmentAdmin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SystemAdmin\CollaborationUnitEditRequest;
 use App\Http\Requests\SystemAdmin\CollaborationUnitRequest;
@@ -18,7 +19,7 @@ class CollaborationUnitController extends Controller
     {
         $collaborationUnits = CollaborationUnit::where("is_active", config('setting.active.is_active'))->get();
 
-        return view("system_admin.collaboration_unit.index", compact("collaborationUnits"));
+        return view("department_admin.collaboration_unit.index", compact("collaborationUnits"));
     }
 
     /**
@@ -28,14 +29,13 @@ class CollaborationUnitController extends Controller
      */
     public function create()
     {
-
-        return view('system_admin.collaboration_unit.add');
+        return view('department_admin.collaboration_unit.add');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\CollaborationUnitRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CollaborationUnitRequest $request)
@@ -79,13 +79,13 @@ class CollaborationUnitController extends Controller
     {
         $collaborationUnit = CollaborationUnit::findOrFail($id);
 
-        return view('system_admin.collaboration_unit.edit', compact('collaborationUnit'));
+        return view('department_admin.collaboration_unit.edit', compact('collaborationUnit'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\CollaborationUnitRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -139,7 +139,7 @@ class CollaborationUnitController extends Controller
     {
         $collaborationUnits = CollaborationUnit::where("is_active", config('setting.active.no_active'))->get();
 
-        return view('system_admin.collaboration_unit.archive', compact('collaborationUnits'));
+        return view('department_admin.collaboration_unit.archive', compact('collaborationUnits'));
     }
 
     public function restore($id)

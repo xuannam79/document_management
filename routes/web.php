@@ -12,7 +12,6 @@
  */
 Route::resource('login', 'LoginController');
 Route::resource('forgot-password', 'ForgotPasswordController');
-Route::resource('users-forms', 'FormsController');
 Route::get('404', [
     'as' => 'not-found',
     'uses' => 'ErrorController@notFound',
@@ -48,7 +47,7 @@ Route::group(['middleware' => 'checkUser'], function () {
         'uses' => 'Information@updateInfo'
     ]);
 
-    Route::resource('collaboration', 'CollaborationController');
+    Route::resource('users-forms', 'FormsController');
 
     Route::namespace ('DepartmentAdmin')->group(function () {
 
@@ -100,11 +99,25 @@ Route::group(['middleware' => 'checkUser'], function () {
             'as' => 'users.exists',
         ]);
 
+        //collaboration-unit
+        Route::resource('collaboration-unit', 'CollaborationUnitController');
+
+        Route::get('/collaboration-unit-archived', [
+            'as' => 'collaboration-unit-archived',
+            'uses' => 'CollaborationUnitController@archive',
+        ]);
+
+        Route::put('/collaboration-unit-restore/{id}', [
+            'as' => 'collaboration-unit-restore',
+            'uses' => 'CollaborationUnitController@restore',
+        ]);
+
         //delegacy
 
     });
 
     Route::namespace ('Document')->group(function () {
+        
         Route::resource('document', 'DocumentController');
         Route::resource('document-department', 'DocumentDepartmentController');
         Route::resource('document-personal', 'PersonalDocumentController');
@@ -189,19 +202,6 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
                 'uses' => 'DocumentTypeController@restore',
             ]);
 
-            //collaboration-unit
-            Route::resource('collaboration-unit', 'CollaborationUnitController');
-
-            Route::get('/collaboration-unit-archived', [
-                'as' => 'collaboration-unit-archived',
-                'uses' => 'CollaborationUnitController@archive',
-            ]);
-
-            Route::put('/collaboration-unit-restore/{id}', [
-                'as' => 'collaboration-unit-restore',
-                'uses' => 'CollaborationUnitController@restore',
-            ]);
-
             //infrastructure
             Route::post('/infrastructure-department/{id}', [
                 'uses' => 'InfrastructureManagementController@changeDepartment',
@@ -218,7 +218,6 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
                 'uses' => 'InfrastructureManagementController@restore',
                 'as' => 'infrastructure.archive.restore',
             ]);
-
         });
     });
 });
