@@ -25,7 +25,7 @@ class ReplyDocumentRequest extends FormRequest
     {
         return [
             'content_reply' => 'required|max:400',
-            'file_attachment_reply' => 'file|mimes:xlsx,xls,csv,jpg,jpeg,png,bmp,doc,docx,pdf,tif,tiff',
+            'file_attachment_reply.*' => 'file|mimes:xlsx,xls,csv,jpg,jpeg,png,bmp,doc,docx,pdf,tif,tiff',
         ];
     }
 
@@ -34,7 +34,7 @@ class ReplyDocumentRequest extends FormRequest
         return [
             'content_reply.required'      => 'Vui lòng nhập nội dung Phản hồi',
             'content_reply.max'           => 'Chỉ được nhập tối đa 400 ký tự',
-            'file_attachment_reply.mimes' => "File Upload phải là một tệp loại: xlsx,xls,csv,jpg,jpeg,png,bmp,doc,docx,pdf,tif,tiff.",
+            'file_attachment_reply.*.mimes' => "File Upload phải là một tệp loại: xlsx,xls,csv,jpg,jpeg,png,bmp,doc,docx,pdf,tif,tiff.",
 
         ];
     }

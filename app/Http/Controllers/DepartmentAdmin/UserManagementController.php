@@ -29,7 +29,6 @@ class UserManagementController extends Controller
             ->where('department_users.department_id', $departmentID['department_id'])
             ->get();
 //        dd($departmentUser);
-//        $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.is_active'))->where('departmentUser.department_id',2)->get();
 
         return view('department_admin.users.index', compact( 'departmentUser'));
     }
@@ -55,7 +54,7 @@ class UserManagementController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $input['avatar'] = $this->savePicture($input);
-        $input['role'] = Auth::user()->role;
+        $input['role'] = config('setting.position.secretary');
         DB::beginTransaction();
         try
         {
@@ -63,7 +62,6 @@ class UserManagementController extends Controller
             User::create($input);
             $id = User::select('id')->where('email', $input['email'])->first();
             DepartmentUser::insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date'], 'department_id' => $departmentID['department_id'], 'position_id' => config('setting.position.secretary')]);
-
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
