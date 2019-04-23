@@ -9,7 +9,7 @@
             <div class="card-header py-3" style="margin-bottom: 5px;">
                 <h6 class="m-0 font-weight-bold text-primary">Danh sách ủy quyền</h6>
             </div>
-            <a href="{{ route('delegacy.create') }}" class="btn btn-primary" style="float:left;}">Thêm ủy quyền</a>
+            <a href="{{ route('delegacy.create') }}" class="btn btn-primary" style="float:left;">Thêm ủy quyền</a>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>

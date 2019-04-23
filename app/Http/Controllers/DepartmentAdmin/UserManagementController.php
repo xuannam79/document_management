@@ -28,9 +28,8 @@ class UserManagementController extends Controller
             ->where('department_users.position_id',config('setting.position.secretary'))
             ->where('department_users.department_id', $departmentID['department_id'])
             ->get();
-//        dd($departmentUser);
 
-        return view('department_admin.users.index', compact( 'departmentUser'));
+        return view('department_admin.users.index', compact('departmentUser'));
     }
 
     /**

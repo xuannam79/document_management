@@ -34,6 +34,16 @@
 						<a class="dropdown-item" href="{{ route('delegacy.index') }}">Danh sách ủy quyền</a>
 					</div>
 				</li>
+				<li class="nav-item cool-link dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Đơn vị liên kết
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="{{ route('collaboration-unit.index') }}">Danh sách đơn vị liên kết</a>
+						<a class="dropdown-item" href="{{ route('collaboration-unit.create') }}">Tạo mới đơn vị liên kết</a>
+						<a class="dropdown-item" href="{{ route('collaboration-unit-archived') }}">Đơn vị liên kết đã xóa</a>
+					</div>
+				</li>
 				<li class="nav-item cool-link">
 					<a class="nav-link" href="/">Kế hoạch tuần </a>
 				</li>

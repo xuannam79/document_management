@@ -86,6 +86,7 @@
             </div>
         </div>
     </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -105,22 +106,6 @@
                 <div class="collapse-divider"></div>
                 <a class="collapse-item" href="{{ route('document-type.index') }}">Danh sách loại văn bản</a>
                 <a class="collapse-item" href="{{ route('document-type-archived') }}">Loại văn bản đã xóa</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#don-vi-lien-ket" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-user-friends"></i>
-            <span>Đơn vị liên kết</span>
-        </a>
-        <div id="don-vi-lien-ket" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('collaboration-unit.create') }}">Tạo mới đơn vị liên kết</a>
-                <div class="collapse-divider"></div>
-                <a class="collapse-item" href="{{ route('collaboration-unit.index') }}">Danh sách đơn vị liên kết</a>
-                <a class="collapse-item" href="{{ route('collaboration-unit-archived') }}">Đơn vị liên kết đã xóa</a>
             </div>
         </div>
     </li>
