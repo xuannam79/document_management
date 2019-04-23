@@ -12,7 +12,7 @@
  */
 Route::resource('login', 'LoginController');
 Route::resource('forgot-password', 'ForgotPasswordController');
-
+Route::resource('users-forms', 'FormsController');
 Route::get('404', [
     'as' => 'not-found',
     'uses' => 'ErrorController@notFound',
@@ -219,22 +219,6 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
                 'as' => 'infrastructure.archive.restore',
             ]);
 
-            //users
-            Route::resource('admin-users', 'UserManagementController');
-            Route::post('/ajaxdp/{id}', [
-                'as' => 'admin-users.ajaxdp',
-                'uses' => 'UserManagementController@ajaxdp',
-            ]);
-
-            Route::get('/archive', [
-                'uses' => 'UserManagementController@archiveIndex',
-                'as' => 'admin-users.archive',
-            ]);
-
-            Route::put('/archive-restore/{id}', [
-                'uses' => 'UserManagementController@restore',
-                'as' => 'admin-users.archive.restore',
-            ]);
         });
     });
 });

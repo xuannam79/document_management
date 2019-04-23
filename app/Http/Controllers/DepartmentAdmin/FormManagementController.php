@@ -18,7 +18,7 @@ class FormManagementController extends Controller
 {
     public function index()
     {
-        $forms = Form::all();
+        $forms = Form::where('is_active', config('setting.active.is_active'))->get();
 
         return view('department_admin.forms.index', compact( 'forms'));
     }
@@ -42,11 +42,17 @@ class FormManagementController extends Controller
     public function store(FormManagementRequest $request)
     {
         $input = $request->all();
-        $input['link'] = $this->saveFile($input);
-
         DB::beginTransaction();
         try {
-            Form::create($input);
+            if(!isset($input['link'])){
+                $input['link'] = null;
+                Form::create($input);
+            }
+            else {
+                $data = $this->saveFile($input);
+                $input['link'] = json_encode($data);
+                Form::create($input);
+            }
             DB::commit();
 
             return redirect()->route('forms.index')->with('messageSuccess', 'Thêm Thành Công');
@@ -67,7 +73,7 @@ class FormManagementController extends Controller
      */
 
     public function archiveIndex(){
-        $forms = Form::where('is_active',0)->get();
+        $forms = Form::where('is_active',config('setting.active.no_active'))->get();
 
         return view('department_admin.forms.archive', compact( 'forms'));
     }
@@ -88,9 +94,8 @@ class FormManagementController extends Controller
         }
     }
 
-    public function download($id){
-        $entry = Form::where('id',$id)->first();
-        $pathToFile = public_path('files/department_admin/forms/'.$entry->link);
+    public function download($nameFile){
+        $pathToFile = public_path('files/department_admin/forms/'.$nameFile);
 
         return response()->download($pathToFile);
     }
@@ -98,13 +103,16 @@ class FormManagementController extends Controller
     public function saveFile($input){
         if(isset($input['link']))
         {
-            $file = $input['link'];
-            $fileExtension = $input['link']->getClientOriginalExtension();
-            $newName = 'forms-'.time().'.'.$fileExtension;
-            $path = public_path('files/department_admin/forms');
-            $input['link'] = $newName;
-            $file->move($path, $newName);
-            return $newName;
+            foreach($input['link'] as $file)
+            {
+                $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+                $fileExtension = $file->getClientOriginalExtension();
+                $newName = $fileName.'-'.time().'.'.$fileExtension;
+                $path = public_path('files/department_admin/forms');
+                $file->move($path, $newName);
+                $data[] = $newName;
+            }
+            return $data;
         }
     }
 
@@ -112,9 +120,16 @@ class FormManagementController extends Controller
     {
         try
         {
+            //array file attachment
+            $fileString = Form::where('id', $id)->first();
+            $arrayFileDecode = array();
+            if(isset($fileString['link'])){
+                $arrayFileDecode = json_decode($fileString['link']);
+            }
+
             $forms = Form::where('id',$id)->first() ;
 
-            return view('department_admin.forms.edit', compact('forms'));
+            return view('department_admin.forms.edit', compact('forms', 'arrayFileDecode'));
         }
         catch (Exception $exception)
         {

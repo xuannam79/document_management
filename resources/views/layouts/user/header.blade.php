@@ -44,7 +44,7 @@
 					<a class="nav-link" href="/">Hồ sơ văn bản</a>
 				</li>
 				<li class="nav-item cool-link">
-					<a class="nav-link" href="/">Biểu mẫu</a>
+					<a class="nav-link" href="{{ Route('forms.index') }}">Biểu mẫu</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav position-login">

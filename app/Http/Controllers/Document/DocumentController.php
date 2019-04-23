@@ -103,8 +103,9 @@ class DocumentController extends Controller
         {
             foreach($input['file_attachment_reply'] as $file)
             {
+                $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
                 $fileExtension = $file->getClientOriginalExtension();
-                $newName = 'file-'.time().'.'.$fileExtension;
+                $newName = $fileName.'-'.time().'.'.$fileExtension;
                 $path = public_path('files/file_attachment');
                 $file->move($path, $newName);
                 $data[] = $newName;
@@ -163,7 +164,7 @@ class DocumentController extends Controller
             DB::commit();
 
             return redirect(route('document.create'))->with('alert', 'Công văn đã được đưa vào danh sách phê duyệt');
-        } catch (Exception $e) {
+        } catch (Exception  $e) {
             DB::rollBack();
 
             return redirect(route('document.create'))->with('alert', 'Gửi công văn thất bại, vui lòng kiểm tra lại');

@@ -29,7 +29,7 @@ class DocumentAddRequest extends FormRequest
             'department_id' => 'required',
             'publish_date' => 'required|date|after:'. date('Y-m-d'),
             'content' => 'required|max:500',
-            'attachedFiles' => 'required|file|mimes:xlsx,xls,csv,jpg,jpeg,png,bmp,doc,docx,pdf,tif,tiff',
+            'attachedFiles.*' => 'required|file|mimes:xlsx,xls,csv,jpg,jpeg,png,bmp,doc,docx,pdf,tif,tiff',
             'departments' => 'required',
         ];
     }

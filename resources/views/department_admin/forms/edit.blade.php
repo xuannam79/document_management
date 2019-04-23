@@ -1,13 +1,16 @@
-@extends('layouts.admin.master')
+@extends('layouts.user.master')
 @section('title')
-    Sửa Thành viên
+    Sửa Biểu Mẫu
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 col-ml-12">
+                <div class="card-header py-3" style="margin-bottom: 5px;">
+                    <h6 class="m-0 font-weight-bold text-primary">Sửa Biễu Mẫu</h6>
+                </div>
                 @include('common.errors')
-                <div class="row">
+                <div class="row" style="text-align: left;">
                     <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
