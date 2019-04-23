@@ -43,4 +43,8 @@ return [
         'approved' => 1,
         'file_location' => '../storage/files',
     ],
+    'document_user' => [
+        'is_unseen' => 0,
+        'is_seen' => 1,
+    ],
 ];

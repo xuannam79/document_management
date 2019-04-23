@@ -35,7 +35,11 @@
                                 <li>
                                     <i class="icon-leftbar fa fa-download"></i>&nbsp;
                                     Văn bản đến cá nhân
-                                    <span class="count-new-document">5</span>
+                                    @if(isset($personalUnSeenDocumentsQuantity) && $personalUnSeenDocumentsQuantity > 0)
+                                        <span class="count-new-document">
+                                            {{$personalUnSeenDocumentsQuantity}}
+                                        </span>
+                                    @endif
                                 </li>
                             </a>
                             <a href="{{route('document-sent.index')}}">
@@ -49,7 +53,7 @@
                                 <li>
                                     <i class="icon-leftbar fa fa-download"></i>&nbsp;
                                     Văn bản đang chờ duyệt
-                                    @if(isset($pendingDocumentsQuantity))
+                                    @if(isset($pendingDocumentsQuantity) && $pendingDocumentsQuantity > 0)
                                         <span class="count-new-document">
                                             {{$pendingDocumentsQuantity}}
                                         </span>
