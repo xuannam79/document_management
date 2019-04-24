@@ -12,6 +12,20 @@ function restoreArchivedData(id) {
     }
 }
 
+function acceptApproval(id) {
+    const flag = confirm("bạn có chắc chắc muốn duyệt biễu mẫu này không ?");
+    if (flag === true) {
+        document.getElementById(id).submit();
+    }
+}
+
+function cancelApproval(id) {
+    const flag = confirm("bạn có chắc chắc muốn hủy duyệt biễu mẫu này không ?");
+    if (flag === true) {
+        document.getElementById(id).submit();
+    }
+}
+
 function changeDepartment(id) {
     const flag = confirm("Bạn có muốn thay đổi phòng ban của id: " + id + " này không ?");
     if (flag === true) {

@@ -8,7 +8,7 @@ class Form extends Model
 {
     protected $table = 'form_management';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'name',
@@ -16,10 +16,17 @@ class Form extends Model
         'link',
         'description',
         'is_active',
+        'approved_by',
+        'sent_date',
     ];
 
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

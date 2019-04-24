@@ -71,6 +71,25 @@ Route::group(['middleware' => 'checkUser'], function () {
             'as' => 'forms.archive.restore',
         ]);
 
+        Route::get('/approval', [
+            'uses' => 'FormManagementController@approval',
+            'as' => 'forms.approval',
+        ]);
+
+        Route::get('/approval/{id}', [
+            'uses' => 'FormManagementController@detailApproval',
+            'as' => 'forms.approval.detail',
+        ]);
+
+        Route::put('/cancel-approval{id}', [
+            'uses' => 'FormManagementController@cancelApproval',
+            'as' => 'forms.approval.cancel',
+        ]);
+
+        Route::put('/accept-approval/{id}', [
+            'uses' => 'FormManagementController@acceptApproval',
+            'as' => 'forms.approval.accept',
+        ]);
         // users
         Route::resource('users', 'UserManagementController');
 

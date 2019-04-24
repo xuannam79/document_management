@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-body">
                                 {!! Form::open(['method'=>'POST', 'route'=>'forms.store', 'files' => true]) !!}
-                                {!! Form::label('name', "Biểu Mẫu") !!}
+                                {!! Form::label('name', "Tên biễu mẫu") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => "Nhập Tên Biểu Mẫu", 'id' => 'name', 'required' => 'required']) !!}
