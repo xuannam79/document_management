@@ -24,8 +24,21 @@
                                 {!! Form::label('link', "File Biểu Mẫu") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <a href="{{ route('forms.download',$forms->id) }}" title="file cu">{{ $forms->link }}</a>
-                                        {!! Form::file('link', ['class' => 'form-control-file', 'id' => 'link', 'required' => 'required'])  !!}                                    </div>
+                                        @php
+                                            $arrayFileDecode = array();
+                                            if(isset($forms->link)){
+                                                $arrayFileDecode = json_decode($forms->link);
+                                            }
+                                        @endphp
+                                        <ul style=" padding: 0;">
+                                            @foreach($arrayFileDecode as $value)
+                                                <li>
+                                                    <a href="{{ route('forms.download',$value) }}">{{ $value}}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        {!! Form::file('link[]', ['class' => 'form-control-file', "multiple", 'id' => 'link'])  !!}
+                                    </div>
                                 </div>
                                 {!! Form::label('description', "Mô Tả") !!}
                                 <div class="form-group row">

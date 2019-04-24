@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\DepartmentAdmin\FormManagementRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use File;
 
@@ -39,6 +40,21 @@ class FormManagementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function saveForm($input){
+        if(Auth::user()->role == config('setting.roles.admin_department')){
+            $input['approved_by'] = Auth::user()->id;
+            $idDepartment = DepartmentUser::where('user_id', Auth::user()->id)->first();
+            $input['department_id'] = $idDepartment->department_id ;
+            $input['sent_date'] = Carbon::now();
+        }
+        else {
+            $idDepartment = DepartmentUser::where('user_id', Auth::user()->id)->first();
+            $input['department_id'] = $idDepartment->department_id ;
+        }
+
+        return $input;
+    }
+
     public function store(FormManagementRequest $request)
     {
         $input = $request->all();
@@ -46,11 +62,15 @@ class FormManagementController extends Controller
         try {
             if(!isset($input['link'])){
                 $input['link'] = null;
+                $input = $this->saveForm($input);
+
                 Form::create($input);
             }
             else {
                 $data = $this->saveFile($input);
                 $input['link'] = json_encode($data);
+                $input = $this->saveForm($input);
+
                 Form::create($input);
             }
             DB::commit();
@@ -71,6 +91,51 @@ class FormManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function approval(){
+        $idDepartment = DepartmentUser::where('user_id', Auth::user()->id)->first();
+        $form = Form::where('is_active', config('setting.active.is_active'))
+            ->where('department_id', $idDepartment->department_id)
+            ->where('approved_by', null)
+            ->get();
+
+        return view('department_admin.forms.approval', compact('form'));
+    }
+
+    public function detailApproval($id){
+        $form = Form::where('is_active', config('setting.active.is_active'))->where('id',$id)->first();
+        //array file attachment
+        $fileString = Form::where('id', $id)->first();
+        $arrayFileDecode = array();
+        if(isset($fileString['link'])){
+            $arrayFileDecode = json_decode($fileString['link']);
+        }
+
+        return view('department_admin.forms.detail_approval', compact('form', 'arrayFileDecode'));
+    }
+    public function acceptApproval($id){
+        try
+        {
+            Form::where('id',$id)->update(['approved_by' => Auth::user()->id, 'sent_date' => Carbon::now()]);
+
+            return redirect()->route('forms.approval')->with('messageSuccess', 'Duyệt Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            return redirect()->back()->with('messageFail', "Duyệt Thất Bại");
+        }
+    }
+
+    public function cancelApproval($id){
+        try
+        {
+            Form::where('id',$id)->update(['approved_by' => 0]);
+            return redirect()->route('forms.approval')->with('messageSuccess', 'Hủy Duyệt Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            return redirect()->back()->with('messageFail', "Hủy Duyệt Thất Bại");
+        }
+    }
 
     public function archiveIndex(){
         $forms = Form::where('is_active',config('setting.active.no_active'))->get();
@@ -154,7 +219,7 @@ class FormManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(FormManagementRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
         DB::beginTransaction();
@@ -164,7 +229,8 @@ class FormManagementController extends Controller
                 Form::find($id)->update(['name' => $input['name'], 'description' => $input['description']]);
             }
             else {
-                $input['link'] = $this->saveFile($input);
+                $data = $this->saveFile($input);
+                $input['link'] = json_encode($data);
                 Form::find($id)->update($input);
             }
             DB::commit();

@@ -53,8 +53,27 @@
 				<li class="nav-item cool-link">
 					<a class="nav-link" href="/">Hồ sơ văn bản</a>
 				</li>
-				<li class="nav-item cool-link">
-					<a class="nav-link" href="{{ Route('forms.index') }}">Biểu mẫu</a>
+				@php
+					$idDepartment = \App\Models\DepartmentUser::where('user_id', Auth::user()->id)->first();
+            		$form = \App\Models\Form::where('is_active', config('setting.active.is_active'))
+                	->where('department_id', $idDepartment->department_id)
+                	->where('approved_by', null)
+                	->get();
+            		$count = $form->count();
+				@endphp
+				<li class="nav-item cool-link dropdown">
+					<a class="nav-link dropdown-toggle {{ ($count>0)?"css-form-approval":"" }}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Biểu mẫu
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="{{ route('forms.create') }}">Thêm biểu mẫu</a>
+						<a class="dropdown-item" href="{{ route('forms.index') }}">Danh sách biểu mẫu</a>
+						<a class="dropdown-item {{ ($count>0)?"css-form-approval":"" }}" href="{{ route('forms.approval') }}">DS biểu mẫu chờ phê duyệt
+							@if($count > 0)
+								<span class="badge-pill badge-danger">{{ $count }}</span>
+							@endif
+						</a>
+					</div>
 				</li>
 			</ul>
 			<ul class="navbar-nav position-login">
