@@ -146,3 +146,31 @@
     color: red !important;
     border: 1px solid red;
 }
+.css-timetable-a {
+    color: #000;
+    font: normal 15px Tahoma, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+.css-timetable-span {
+    font-style: italic;
+    color: #999999;
+    font: normal 13px Arial,Helvetica,sans-serif;
+}
+.css-timetable-ul li{
+    border-bottom: 1px dashed black;
+    text-align: left;
+}
+.css-timetable-ul li::before {
+    content: "\2022";
+    color: red;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+}
+.css-timetable-pdf-span {
+    color: #999999;
+    font: normal 14px Arial,Helvetica,sans-serif;
+    text-align: center;
+}

@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Form::class);
     }
+
+    public function timeTable()
+    {
+        return $this->hasMany(TimeTable::class);
+    }
 }

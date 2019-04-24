@@ -23,7 +23,7 @@ Route::group(['middleware' => 'checkUser'], function () {
         'as' => 'home-page',
         'uses' => 'HomeController@index',
     ]);
-
+    Route::resource('timetable-users', 'TimeTableController');
     Route::get('/information', [
         'as' => 'profile',
         'uses' => 'Information@index'
@@ -52,7 +52,23 @@ Route::group(['middleware' => 'checkUser'], function () {
     Route::namespace ('DepartmentAdmin')->group(function () {
 
         Route::resource('delegacy', 'DelegacyController');
+        //TimeTable
+        Route::resource('timetable', 'TimeTableController');
+        Route::get('/download/{namefile}', [
+            'uses' => 'TimeTableController@download',
+            'as' => 'timetable.download',
+        ]);
 
+        Route::get('/timetable-archive', [
+            'uses' => 'TimeTableController@archiveIndex',
+            'as' => 'timetable.archive',
+        ]);
+
+        Route::put('/timetable-restore/{id}', [
+            'uses' => 'TimeTableController@restore',
+            'as' => 'timetable.archive.restore',
+        ]);
+        //
         // form
         Route::resource('forms', 'FormManagementController');
 

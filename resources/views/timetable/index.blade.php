@@ -1,6 +1,6 @@
 @extends('layouts.user.master')
 @section('title')
-    Danh Sách Biễu Mẫu
+    Danh Sách Thời Khóa Biểu
 @endsection
 @section('content')
     <div class="container">
@@ -25,14 +25,17 @@
                 </div>
             </div>
             <div class="list-group">
-                @foreach($form as $value)
-                    <div class="list-group-item" >
-                        <a href="{{ route('users-forms.show',$value->id) }}" title="{{ $value->name }}" >
-                            <span style="float: left;color: black;width: 80%">{{ $value->name }}</span>
-                            <span class="badge">{{ $value->created_at }}</span>
-                        </a>
-                    </div>
-                @endforeach
+                <ul class="css-timetable-ul">
+                    @foreach($timeTable as $value)
+                        <li>
+                            <a href="{{ route('timetable-users.show', $value->id) }}" class="css-timetable-a">{{ $value->name }}
+                                <span class="css-timetable-span">
+                               ( {{ date('d-m-Y', strtotime($value->created_at)) }} )
+                                </span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>
