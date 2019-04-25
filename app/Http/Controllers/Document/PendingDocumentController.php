@@ -23,9 +23,10 @@ class PendingDocumentController extends Controller
             ->join('document_department', 'documents.id', '=', 'document_department.document_id')
             ->join('users', 'users.id', '=', 'documents.user_id')
             ->where(['documents.department_id' => $currentDepartmentId, 'document_department.is_approved' => config('setting.department_user.no_approved')])
-            ->select('documents.*', 'users.name', 'document_department.sending_date')->get();
-        $pendingDocumentsQuantity = count($documents);
-        
-        return view("document.pending_document.index",compact('documents', 'pendingDocumentsQuantity'));
+            ->select('documents.*', 'users.name', 'document_department.sending_date')
+            ->orderBy('documents.created_at', 'desc')
+            ->paginate(5);
+
+        return view("document.pending_document.index",compact('documents'));
     }
 }

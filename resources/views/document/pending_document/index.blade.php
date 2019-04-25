@@ -1,4 +1,4 @@
-@extends('layouts.user.personal_document', ['pendingDocumentsQuantity' => $pendingDocumentsQuantity])
+@extends('layouts.user.personal_document')
 @section('title')
 Văn bản đang chờ duyệt
 @endsection

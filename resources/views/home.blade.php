@@ -5,7 +5,35 @@
 @section('content')
     <div class="container">
         <div id="cards-wrapper" class="cards-wrapper row">
+            <div class="item item-green item-2 col-lg-4 col-6">
+                <div class="item-inner">
+                    <div class="icon-holder">
+                        <i class="icon fa fa-calendar-plus-o"></i>
+                    </div>
+                    <h3 class="title">Hồ sơ văn bản</h3>
+                    <p class="intro">
+                        Xem hồ sơ văn bản
+                    </p>
+                    @if (auth()->user()->role == config('setting.roles.admin_department'))
+                        <a class="link" href="{{ route("document-department.index") }}"><span></span></a>
+                    @elseif(auth()->user()->role == config('setting.roles.user'))
+                        <a class="link" href="{{ route("document-personal.index") }}"><span></span></a>
+                    @endif
+                </div>
+            </div>
             @if (auth()->user()->role == config('setting.roles.admin_department'))
+                <div class="item item-orange item-2 col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fab fa-wpforms"></i>
+                        </div>
+                        <h3 class="title">Biểu mẫu</h3>
+                        <p class="intro">
+                            Tạo mới biểu mẫu
+                        </p>
+                        <a class="link" href="{{route('forms.index')}}"><span></span></a>
+                    </div>
+                </div>
                 <div class="item item-blue col-lg-4 col-6">
                     <div class="item-inner">
                         <div class="icon-holder">
@@ -42,60 +70,45 @@
                         <a class="link" href="{{ route('delegacy.index') }}"><span></span></a>
                     </div>
                 </div>
+                <div class="item item-purple col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fa fa-calendar-check-o"></i>
+                        </div>
+                        <h3 class="title">Thời khóa biểu</h3>
+                        <p class="intro">
+                            Xem thời khóa biểu của trường
+                        </p>
+                        <a class="link" href="{{ route('timetable.index') }}"><span></span></a>
+                    </div>
+                </div>
             @endif
-            <div class="item item-green col-lg-4 col-6">
-                <div class="item-inner">
-                    <div class="icon-holder">
-                        <i class="icon fa fa-download"></i>
-                    </div>
-                    <h3 class="title">Văn bản đến</h3>
-                    <p class="intro">
-                        Xem các văn bản đến và phản hồi
-                    </p>
-                    <a class="link" href="{{ route('document.index') }}"><span></span></a>
-                </div>
-            </div>
-            <div class="item item-pink item-2 col-lg-4 col-6">
-                <div class="item-inner">
-                    <div class="icon-holder">
-                        <i class="icon fa fa-upload"></i>
-                    </div>
-                    <h3 class="title">Văn bản đi</h3>
-                    <p class="intro">
-                        Tạo và gửi các văn bản đi
-                    </p>
-                    <a class="link" href="{{ route('document.create') }}"><span></span></a>
-                </div>
-            </div>
-                @if (auth()->user()->role == config('setting.roles.admin_department'))
-                    <div class="item item-purple col-lg-4 col-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <i class="icon fa fa-calendar-check-o"></i>
-                            </div>
-                            <h3 class="title">Thời khóa biểu</h3>
-                            <p class="intro">
-                                Xem thời khóa biểu của trường
-                            </p>
-                            <a class="link" href="{{ route('timetable.index') }}"><span></span></a>
+            @if (auth()->user()->role == config('setting.roles.user'))
+                <div class="item item-purple col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fa fa-calendar-check-o"></i>
                         </div>
-                     </div>
-                @endif
-                @if (auth()->user()->role == config('setting.roles.user'))
-                    <div class="item item-purple col-lg-4 col-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <i class="icon fa fa-calendar-check-o"></i>
-                            </div>
-                            <h3 class="title">Thời khóa biểu</h3>
-                            <p class="intro">
-                                Xem thời khóa biểu của trường
-                            </p>
-                            <a class="link" href="{{ route('timetable-users.index') }}"><span></span></a>
-                        </div>
+                        <h3 class="title">Thời khóa biểu</h3>
+                        <p class="intro">
+                            Xem thời khóa biểu của trường
+                        </p>
+                        <a class="link" href="{{ route('timetable-users.index') }}"><span></span></a>
                     </div>
-                @endif
-
+                </div>
+                <div class="item item-orange item-2 col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fab fa-wpforms"></i>
+                        </div>
+                        <h3 class="title">Biểu mẫu</h3>
+                        <p class="intro">
+                            Xem biểu mẫu có sẵn
+                        </p>
+                        <a class="link" href="{{route('users-forms.index')}}"><span></span></a>
+                    </div>
+                </div>
+            @endif
             <div class="item item-red col-lg-4 col-6">
                 <div class="item-inner">
                     <div class="icon-holder">
@@ -120,18 +133,6 @@
                     <a class="link" href="#"><span></span></a>
                 </div>
             </div>
-            <div class="item item-green item-2 col-lg-4 col-6">
-                <div class="item-inner">
-                    <div class="icon-holder">
-                        <i class="icon fa fa-calendar-plus-o"></i>
-                    </div>
-                    <h3 class="title">Hồ sơ văn bản</h3>
-                    <p class="intro">
-                        Xem hồ sơ văn bản
-                    </p>
-                    <a class="link" href="{{ route("document-department.index") }}"><span></span></a>
-                </div>
-            </div>
             <div class="item item-primary item-2 col-lg-4 col-6">
                 <div class="item-inner">
                     <div class="icon-holder">
@@ -144,34 +145,6 @@
                     <a class="link" href="{{ route('collaboration-unit.index') }}"><span></span></a>
                 </div>
             </div>
-            @if (auth()->user()->role == config('setting.roles.admin_department'))
-                <div class="item item-orange item-2 col-lg-4 col-6">
-                    <div class="item-inner">
-                        <div class="icon-holder">
-                            <i class="icon fab fa-wpforms"></i>
-                        </div>
-                        <h3 class="title">Biểu mẫu</h3>
-                        <p class="intro">
-                            Tạo mới biểu mẫu
-                        </p>
-                        <a class="link" href="{{route('forms.index')}}"><span></span></a>
-                    </div>
-                </div>
-            @endif
-            @if (auth()->user()->role == config('setting.roles.user'))
-                <div class="item item-orange item-2 col-lg-4 col-6">
-                    <div class="item-inner">
-                        <div class="icon-holder">
-                            <i class="icon fab fa-wpforms"></i>
-                        </div>
-                        <h3 class="title">Biểu mẫu</h3>
-                        <p class="intro">
-                            Xem biểu mẫu có sẵn
-                        </p>
-                        <a class="link" href="{{route('users-forms.index')}}"><span></span></a>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 @endsection
