@@ -14,5 +14,6 @@ class DocumentDepartment extends Model
         'document_id',
         'department_id',
         'is_approved',
+        'sending_date',
     ];
 }

@@ -41,6 +41,7 @@ return [
     ],
     'document' => [
         'approved' => 1,
+        'pending' => 0,
         'file_location' => '../storage/files',
     ],
     'document_user' => [
