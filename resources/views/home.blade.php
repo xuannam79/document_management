@@ -64,7 +64,7 @@
                     <p class="intro">
                         Tạo và gửi các văn bản đi
                     </p>
-                    <a class="link" href="#"><span></span></a>
+                    <a class="link" href="{{ route('document.create') }}"><span></span></a>
                 </div>
             </div>
             <div class="item item-purple col-lg-4 col-6">

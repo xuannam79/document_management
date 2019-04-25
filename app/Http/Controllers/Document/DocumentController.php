@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Document;
 
-use App\Http\Requests\Document\ReplyDocumentRequest;
-use App\Models\DepartmentUser;
-use App\Models\DocumentUser;
-use App\Models\ReplyDocument;
-use phpDocumentor\Reflection\Types\Array_;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Document\DocumentAddRequest;
+use App\Http\Requests\Document\ReplyDocumentRequest;
 use App\Models\Department;
+use App\Models\DepartmentUser;
 use App\Models\Document;
-use App\Models\DocumentType;
 use App\Models\DocumentAttachment;
 use App\Models\DocumentDepartment;
+use App\Models\DocumentType;
+use App\Models\DocumentUser;
+use App\Models\ReplyDocument;
 use App\Uploaders\Uploader;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -30,12 +29,12 @@ class DocumentController extends Controller
 
     public function index()
     {
-        $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
+        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first();
         $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
             ->join('users', 'users.id', '=', 'documents.user_id')
             ->join('departments', 'departments.id', '=', 'documents.department_id')
-            ->where('documents.department_id',$departmentID['department_id'])
-            ->select('documents.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department' )
+            ->where('documents.department_id', $departmentID['department_id'])
+            ->select('documents.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department')
             ->get();
         return view('document.index', compact('document'));
     }
@@ -54,20 +53,20 @@ class DocumentController extends Controller
         return view('document.create', compact('departments', 'documentTypes', 'receivedDepartments'));
     }
 
-    public function checkUserSeen($id){
+    public function checkUserSeen($id)
+    {
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
-        if(!isset($userIdSeen['array_user_seen'])){
+        if (!isset($userIdSeen['array_user_seen'])) {
             $jsonSeen = json_decode($userIdSeen['array_user_seen']);
-            foreach ($jsonSeen as $value){
-                if(Auth::user()->id != $value){
-                    array_push($jsonSeen,Auth::user()->id);
+            foreach ($jsonSeen as $value) {
+                if (Auth::user()->id != $value) {
+                    array_push($jsonSeen, Auth::user()->id);
                 }
             }
             return $jsonSeen;
-        }
-        else {
+        } else {
             $jsonSeen = array();
-            array_push($jsonSeen,Auth::user()->id);
+            array_push($jsonSeen, Auth::user()->id);
             return $jsonSeen;
         }
     }
@@ -80,32 +79,30 @@ class DocumentController extends Controller
         $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
             ->join('users', 'users.id', '=', 'documents.user_id')
             ->join('departments', 'departments.id', '=', 'documents.department_id')
-            ->where('documents.id',$id)
-            ->select('documents.*','documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department')
+            ->where('documents.id', $id)
+            ->select('documents.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department')
             ->first();
         $replyDocument = DB::table('reply_document')->join('users', 'reply_document.user_id', '=', 'users.id')
-            ->where('reply_document.document_id',$id)
+            ->where('reply_document.document_id', $id)
             ->get();
 
         //array file attachment
         $fileString = Document::where('id', $id)->first();
         $arrayFileDecode = array();
-        if(isset($fileString['file_attachment'])){
+        if (isset($fileString['file_attachment'])) {
             $arrayFileDecode = json_decode($fileString['file_attachment']);
         }
-
 
         return view('document.show', compact('document', 'arrayFileDecode', 'replyDocument', 'arrayFileReplyDecode'));
     }
 
-    public function saveFile($input){
-        if(isset($input['file_attachment_reply']))
-        {
-            foreach($input['file_attachment_reply'] as $file)
-            {
-                $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+    public function saveFile($input)
+    {
+        if (isset($input['file_attachment_reply'])) {
+            foreach ($input['file_attachment_reply'] as $file) {
+                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $fileExtension = $file->getClientOriginalExtension();
-                $newName = $fileName.'-'.time().'.'.$fileExtension;
+                $newName = $fileName . '-' . time() . '.' . $fileExtension;
                 $path = public_path('files/file_attachment');
                 $file->move($path, $newName);
                 $data[] = $newName;
@@ -114,27 +111,28 @@ class DocumentController extends Controller
         }
     }
 
-    public function downloadFileAttachment($nameFile){
-        $pathToFile = public_path('files/file_attachment/'.$nameFile);
+    public function downloadFileAttachment($nameFile)
+    {
+        $pathToFile = public_path('files/file_attachment/' . $nameFile);
 
         return response()->download($pathToFile);
     }
 
-    public function reply(ReplyDocumentRequest $request, $id){
+    public function reply(ReplyDocumentRequest $request, $id)
+    {
         $input = $request->all();
         $input['document_id'] = $id;
         $input['user_id'] = Auth::user()->id;
-        if(!isset($input['file_attachment_reply'])){
+        if (!isset($input['file_attachment_reply'])) {
             $input['file_attachment_reply'] = null;
             ReplyDocument::create($input);
-        }
-        else {
+        } else {
             $data = $this->saveFile($input);
             $input['file_attachment_reply'] = json_encode($data);
             ReplyDocument::create($input);
         }
 
-        return redirect()->route('document.show',$id);
+        return redirect()->route('document.show', $id);
 
     }
 
@@ -143,7 +141,6 @@ class DocumentController extends Controller
         DB::beginTransaction();
         try {
             $documentData = $request->except('departments', 'attachedFiles', 'search', '_token');
-            $documentData['department_id'] = 1;
             $documentData['user_id'] = Auth::user()->id;
             $departments = $request->only('departments');
             $attachedFiles = $request->only('attachedFiles');
@@ -152,7 +149,8 @@ class DocumentController extends Controller
                 DocumentDepartment::create([
                     'document_id' => $documentId,
                     'department_id' => $department,
-                    'is_approved' => config('setting.document.approved'),
+                    'sending_date' => Carbon::now(),
+                    'is_approved' => config('setting.document.pending'),
                 ]);
             }
             foreach ($attachedFiles["attachedFiles"] as $key => $file) {
@@ -164,7 +162,7 @@ class DocumentController extends Controller
             DB::commit();
 
             return redirect(route('document.create'))->with('alert', 'Công văn đã được đưa vào danh sách phê duyệt');
-        } catch (Exception  $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             return redirect(route('document.create'))->with('alert', 'Gửi công văn thất bại, vui lòng kiểm tra lại');
@@ -172,9 +170,10 @@ class DocumentController extends Controller
     }
 
     //ajax function
-    public function handleSelectDepartment($id){
-        $receivedDepartments = Department::where('id','!=',$id)->pluck('name', 'id');
-        foreach($receivedDepartments as $key => $value){
+    public function handleSelectDepartment($id)
+    {
+        $receivedDepartments = Department::where('id', '!=', $id)->pluck('name', 'id');
+        foreach ($receivedDepartments as $key => $value) {
             echo "<option value='$key'>$value</option>";
         }
     }

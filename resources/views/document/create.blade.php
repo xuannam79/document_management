@@ -21,11 +21,8 @@ Tạo mới văn bản
                     {!! Form::select("department_id", $departments, old("department_id"), ["class"=>"form-control", "id"=>"department"]) !!}
                 </div>
                 <div class="form-group" style="width: 45%;float:left">
-                    {!! Form::label("publish_date", "Ngày ban hành", []) !!}
-                    <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
-                        {!! Form::text("publish_date", old("publish_date"), ["class"=>"form-control", "readonly"]) !!}
-                        <span style="background-color: #fff;width: 15%;" class="input-group-addon"><i class="fa fa-calendar" style="font-size: 20px;margin-top: 9px;"></i></span>
-                    </div>
+                    {!! Form::label("title", "Tiêu đề", []) !!}
+                    {!! Form::text("title", old("title"), ["class"=>"form-control"]) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label("content", "Trích yếu nội dung", []) !!}

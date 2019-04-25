@@ -19,7 +19,7 @@ class CreateDocumentsTable extends Migration
             $table->string('document_number')->unique();
             $table->integer('document_type_id');
             $table->text('content');
-            $table->date('publish_date');
+            $table->date('publish_date')->nullable();
             $table->integer('department_id');
             $table->integer('user_id');
             $table->string('file_attachment')->nullable();
