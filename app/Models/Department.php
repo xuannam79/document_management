@@ -41,4 +41,8 @@ class Department extends Model
         return $this->hasMany(ReplyDocument::class);
     }
 
+    public function timeTable()
+    {
+        return $this->hasMany(TimeTable::class);
+    }
 }

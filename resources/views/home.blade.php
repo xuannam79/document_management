@@ -67,18 +67,35 @@
                     <a class="link" href="{{ route('document.create') }}"><span></span></a>
                 </div>
             </div>
-            <div class="item item-purple col-lg-4 col-6">
-                <div class="item-inner">
-                    <div class="icon-holder">
-                        <i class="icon fa fa-calendar-check-o"></i>
+                @if (auth()->user()->role == config('setting.roles.admin_department'))
+                    <div class="item item-purple col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-calendar-check-o"></i>
+                            </div>
+                            <h3 class="title">Thời khóa biểu</h3>
+                            <p class="intro">
+                                Xem thời khóa biểu của trường
+                            </p>
+                            <a class="link" href="{{ route('timetable.index') }}"><span></span></a>
+                        </div>
+                     </div>
+                @endif
+                @if (auth()->user()->role == config('setting.roles.user'))
+                    <div class="item item-purple col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-calendar-check-o"></i>
+                            </div>
+                            <h3 class="title">Thời khóa biểu</h3>
+                            <p class="intro">
+                                Xem thời khóa biểu của trường
+                            </p>
+                            <a class="link" href="{{ route('timetable-users.index') }}"><span></span></a>
+                        </div>
                     </div>
-                    <h3 class="title">Thời khóa biểu</h3>
-                    <p class="intro">
-                        Xem thời khóa biểu của trường
-                    </p>
-                    <a class="link" href="#"><span></span></a>
-                </div>
-            </div>
+                @endif
+
             <div class="item item-red col-lg-4 col-6">
                 <div class="item-inner">
                     <div class="icon-holder">
