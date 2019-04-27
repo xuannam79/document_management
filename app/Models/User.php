@@ -73,4 +73,8 @@ class User extends Authenticatable
     {
         return $this->hasMany( ScheduleWeek::class);
     }
+    public function message()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

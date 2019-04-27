@@ -33,7 +33,15 @@ $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
         todayHighlight: true
-    }).datepicker('update', new Date());
+    });
+    document.getElementById("datepicker").onchange = function () {
+        var datepicker = document.getElementById("datepicker").value;
+        $('#datepicker2').datepicker('setStartDate', datepicker);
+    }
+    $("#datepicker2").datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
 });
 jQuery(document).ready(function ($) {
 

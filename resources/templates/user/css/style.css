@@ -1542,7 +1542,7 @@ span.name {
 }
 
 .list-group {
-    width: 95%;
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -1607,7 +1607,7 @@ span.name {
 }
 
 .document-topBody {
-    width: 95%;
+    width: 100%;
 }
 
 .dropdown-search {
@@ -1616,7 +1616,7 @@ span.name {
 }
 
 .input-search {
-    min-width: 25em;
+    max-width: 13em;
 }
 
 .form-search {
@@ -2087,4 +2087,16 @@ video {
 
 .small-ul {
     padding: 1% 5%;
+}
+
+.date-area {
+    max-width: 9em;
+}
+
+.small-ul a {
+    color: #222;
+}
+
+.small-ul a:hover {
+    color: #222;
 }
