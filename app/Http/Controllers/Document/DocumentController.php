@@ -8,6 +8,7 @@ use App\Http\Requests\Document\ReplyDocumentRequest;
 use App\Models\Department;
 use App\Models\DepartmentUser;
 use App\Models\Document;
+use App\Models\Message;
 use App\Models\DocumentAttachment;
 use App\Models\DocumentDepartment;
 use App\Models\DocumentType;

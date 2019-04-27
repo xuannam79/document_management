@@ -145,6 +145,46 @@
                     <a class="link" href="{{ route('collaboration-unit.index') }}"><span></span></a>
                 </div>
             </div>
+            @if (auth()->user()->role == config('setting.roles.admin_department'))
+                <div class="item item-orange item-2 col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fab fa-wpforms"></i>
+                        </div>
+                        <h3 class="title">Biểu mẫu</h3>
+                        <p class="intro">
+                            Tạo mới biểu mẫu
+                        </p>
+                        <a class="link" href="{{route('forms.index')}}"><span></span></a>
+                    </div>
+                </div>
+            @endif
+            @if (auth()->user()->role == config('setting.roles.user'))
+                <div class="item item-orange item-2 col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fab fa-wpforms"></i>
+                        </div>
+                        <h3 class="title">Biểu mẫu</h3>
+                        <p class="intro">
+                            Xem biểu mẫu có sẵn
+                        </p>
+                        <a class="link" href="{{route('users-forms.index')}}"><span></span></a>
+                    </div>
+                </div>
+            @endif
+            <div class="item item-orange item-2 col-lg-4 col-6">
+                <div class="item-inner">
+                    <div class="icon-holder">
+                        <i class="icon fa fa-envelope"></i>
+                    </div>
+                    <h3 class="title">Tin nhắn</h3>
+                    <p class="intro">
+                        Soạn và xem tin nhắn
+                    </p>
+                <a class="link" href="{{route('message.index')}}"><span></span></a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

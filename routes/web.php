@@ -52,11 +52,16 @@ Route::group(['middleware' => 'checkUser'], function () {
         'uses' => 'HomeController@index',
     ]);
 
+    Route::resource('timetable-users', 'TimeTableController');
+    Route::resource('message', 'MessageController');
     Route::get('/information', [
         'as' => 'profile',
         'uses' => 'Information@index'
     ]);
-
+    Route::post('/reply-message/{id}', [
+        'as' => 'reply-message',
+        'uses' => 'MessageController@reply'
+    ]);
     Route::resource('timetable-users', 'TimeTableController');
 
     Route::resource('users-forms', 'FormsController');
