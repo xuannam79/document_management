@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Document;
 
 use App\Http\Controllers\Controller;
 use App\Models\Document;
-use App\Models\Department;
 use App\Models\DocumentUser;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PersonalDocumentController extends Controller
 {
@@ -22,16 +21,13 @@ class PersonalDocumentController extends Controller
             ->select('documents.*', 'departments.name', 'document_user.is_seen')
             ->orderBy('created_at', 'desc')
             ->paginate(5);
-        $personalUnSeenDocumentsQuantity = count(
-            DocumentUser::where(['user_id' => Auth::user()->id, 'is_seen' => config('setting.document_user.is_unseen')])
-                ->get()
-        );
         $this->setSeenDocument($documents);
 
-        return view("document.personal_document.index", compact('documents', 'personalUnSeenDocumentsQuantity'));
+        return view("document.personal_document.index", compact('documents'));
     }
 
-    private function setSeenDocument($documents){
+    private function setSeenDocument($documents)
+    {
         DocumentUser::whereIn('document_id', $documents->pluck('id'))->update(['is_seen' => config('setting.document_user.is_seen')]);
     }
 }

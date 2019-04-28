@@ -1,4 +1,4 @@
-@extends('layouts.user.personal_document', ['personalUnSeenDocumentsQuantity' => $personalUnSeenDocumentsQuantity])
+@extends('layouts.user.personal_document')
 @section('title')
 Văn bản đến cá nhân
 @endsection
