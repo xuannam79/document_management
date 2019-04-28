@@ -32,6 +32,7 @@ class TimeTableController extends Controller
                 ->orderBy(DB::raw('RAND()'))
                 ->limit(5)
                 ->get();
+            $countTimeTable = $timeTableRandom->count();
             //array file attachment
             $fileString = TimeTable::where('id', $id)->first();
             $arrayFileDecode = array();
@@ -41,7 +42,7 @@ class TimeTableController extends Controller
 
             $timeTable = TimeTable::where('id',$id)->first() ;
 
-            return view('timetable.detail', compact('timeTable', 'department',  'timeTableRandom','arrayFileDecode'));
+            return view('timetable.detail', compact('timeTable', 'department',  'timeTableRandom', 'arrayFileDecode', 'countTimeTable'));
         }
         catch (Exception $exception)
         {

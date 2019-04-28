@@ -11,11 +11,16 @@
 |
  */
 Route::resource('login', 'LoginController');
+Route::get('schedule-no-login', [
+    'as' => 'schedule-week.nologin',
+    'uses' => 'ScheduleWeekController@indexNoLogin',
+]);
 Route::resource('forgot-password', 'ForgotPasswordController');
 Route::get('404', [
     'as' => 'not-found',
     'uses' => 'ErrorController@notFound',
 ]);
+Route::resource('schedule', 'ScheduleWeekController');
 
 Route::group(['middleware' => 'checkUser'], function () {
 
@@ -183,6 +188,17 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
 
         Route::namespace ('SystemAdmin')->group(function () {
 
+            //schedule
+            Route::resource('schedule-admin', 'ScheduleWeekController');
+            Route::get('/schedule-archived', [
+                'as' => 'schedule-archived',
+                'uses' => 'ScheduleWeekController@archive',
+            ]);
+
+            Route::put('/schedule-restore/{id}', [
+                'as' => 'schedule-restore',
+                'uses' => 'ScheduleWeekController@restore',
+            ]);
             //department
             Route::resource('department', 'DepartmentController');
 

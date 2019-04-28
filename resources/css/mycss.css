@@ -174,3 +174,48 @@
     font: normal 14px Arial,Helvetica,sans-serif;
     text-align: center;
 }
+.schedule table {
+    border-collapse: collapse !important;
+}
+.field {
+    font-weight: bold;
+    color:#1b4b72;
+}
+.schedule th,td {
+    color: red;
+    font-weight: bold;
+}
+.schedule table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+.schedule-show table {
+    border-collapse: collapse !important;
+}
+.schedule-show {
+    width: 89%;
+    margin: auto;
+}
+.schedule-show th {
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 23px;
+    background-color: slateblue;
+    vertical-align: middle !important;
+}
+.schedule-show td {
+    color: #1b4b72;
+    padding: 10px;
+}
+.schedule-show table, th, td {
+    border: 1px solid black;
+    text-align: center;
+    border-spacing: 10px;
+}
+.style-col-schedule {
+    color: #1b4b72;
+}
+.style-col-content {
+    text-align: left;
+}
