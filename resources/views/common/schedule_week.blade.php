@@ -17,6 +17,7 @@
         Đăng Nhập
     </a>
 </div>
+@if(isset($schedule))
 <div style="text-align: center;margin-bottom: 2%">
     <h4>LỊCH CÔNG TÁC</h4>
     <span>{{ $schedule->title }}</span>
@@ -78,6 +79,7 @@
         </p>
     @endif
 </div>
+@endif
 {{ Html::style(asset('/templates/user/css/font-awesome.min.css')) }}
 {{ Html::style(asset('/templates/user/css/bootstrap.min.css')) }}
 {{ Html::style(asset('/templates/user/css/style.css')) }}

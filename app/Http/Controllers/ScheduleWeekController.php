@@ -22,7 +22,18 @@ class ScheduleWeekController extends Controller
             $schedule = ScheduleWeek::where('is_active', config('setting.active.is_active'))
                 ->where(DB::raw('DATEDIFF(CURRENT_DATE(), scheduleweek.start)'),'<=','6')
                 ->first();
-            $timeTable = json_decode($schedule->content);
+            if(isset($schedule->content)){
+                $timeTable = json_decode($schedule->content);
+            }
+            else {
+                $timeTable = array();
+                for($i=2; $i<=8 ; $i++){
+                    $timeTable['thu'.$i.'S'] =  null;
+                    $timeTable['thu'.$i.'C'] =  null;
+                    $timeTable['thu'.$i.'T'] =  null;
+
+                }
+            }
             $scheduleRandom = ScheduleWeek::where('is_active', config('setting.active.is_active'))
                 ->where('id', '!=', $id)
                 ->orderBy(DB::raw('RAND()'))
@@ -42,7 +53,17 @@ class ScheduleWeekController extends Controller
         $schedule = ScheduleWeek::where('is_active', config('setting.active.is_active'))
             ->where(DB::raw('DATEDIFF(CURRENT_DATE(), scheduleweek.start)'),'<=','6')
             ->first();
-        $timeTable = json_decode($schedule->content);
+        if(isset($schedule->content)){
+            $timeTable = json_decode($schedule->content);
+        }
+        else {
+            $timeTable = array();
+            for($i=2; $i<=8 ; $i++){
+                $timeTable['thu'.$i.'S'] =  null;
+                $timeTable['thu'.$i.'C'] =  null;
+                $timeTable['thu'.$i.'T'] =  null;
+            }
+        }
 
         return view('common.schedule_week', compact('schedule', 'timeTable'));
     }
