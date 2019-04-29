@@ -18,7 +18,7 @@ class CreateDocumentUserTable extends Migration
             $table->integer('document_id');
             $table->integer('user_id');
             $table->string('array_user_seen')->nullable();
-            $table->boolean('is_seen')->default(0);;
+            $table->boolean('is_seen')->default(0);
             $table->timestamps();
         });
     }
