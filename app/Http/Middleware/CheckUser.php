@@ -28,6 +28,6 @@ class CheckUser
             }
         }
 
-        return redirect()->route('login.index');
+        return redirect()->route('schedule-week.nologin');
     }
 }

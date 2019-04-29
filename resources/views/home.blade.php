@@ -118,7 +118,7 @@
                     <p class="intro">
                         Xem thời khóa biểu của tuần
                     </p>
-                    <a class="link" href="#"><span></span></a>
+                    <a class="link" href="{{ route('schedule.index') }}"><span></span></a>
                 </div>
             </div>
             <div class="item item-orange col-lg-4 col-6">

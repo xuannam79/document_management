@@ -68,23 +68,25 @@
                         </div>
                     </div>
                     <div class="clear"></div>
-                    <div class="list-group">
-                        <span>
-                            <i class="icon fa fa-calendar"></i>
-                             Thông tin các thời khóa biểu khác
-                        </span>
-                        <ul class="css-timetable-ul">
-                            @foreach($timeTableRandom as $timeTableRandom)
-                                <li>
-                                    <a href="{{ route('timetable-users.show', $timeTableRandom->id) }}" class="css-timetable-a">{{ $timeTableRandom->name }}
-                                        <span class="css-timetable-span">
-                               ( {{ date('d-m-Y', strtotime($timeTableRandom->created_at)) }} )
-                                </span>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    @if($countTimeTable > 0)
+                        <div class="list-group">
+                            <span>
+                                <i class="icon fa fa-calendar"></i>
+                                 Thông tin các thời khóa biểu khác
+                            </span>
+                            <ul class="css-timetable-ul">
+                                @foreach($timeTableRandom as $timeTableRandom)
+                                    <li>
+                                        <a href="{{ route('timetable-users.show', $timeTableRandom->id) }}" class="css-timetable-a">{{ $timeTableRandom->name }}
+                                            <span class="css-timetable-span">
+                                   ( {{ date('d-m-Y', strtotime($timeTableRandom->created_at)) }} )
+                                    </span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
