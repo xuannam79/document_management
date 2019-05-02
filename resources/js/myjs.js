@@ -130,7 +130,7 @@ jQuery(document).ready(function($){
 
 $(document).on("click", "#editInfor", function(){
     $.ajax({
-        url: "/ajax-infor",
+        url: '/ajax-infor',
         type: 'GET',
         cache: false,
         success: function(data){
@@ -143,6 +143,7 @@ $(document).on("click", "#editInfor", function(){
     });
     return false;
 });
+
 $(document).on("change", "#picture", function(){
     $('#changeAvatar').submit();
 });

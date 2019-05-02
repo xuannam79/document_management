@@ -133,7 +133,7 @@
 }
 .css-profile-input {
     max-width: 75%;
-    display: inline;
+    display: inline-block !important;
 }
 .css-load-form {
     height: 336px !important;

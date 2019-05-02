@@ -17,6 +17,10 @@ class Information extends Controller
         return view('information');
     }
 
+    public function indexAdmin(){
+        return view('information_admin');
+    }
+
     public function changePass(ChangePasswordRequest $request){
         $input = $request->all();
         $oldPass = User::where('id',Auth::user()->id)->first();
@@ -24,11 +28,17 @@ class Information extends Controller
             if ($input['newpassword'] == $input['confirmpassword']){
                 User::where('id', Auth::user()->id)->update(['password' => bcrypt($input['newpassword'])]);
 
-                return redirect()->route('information')->with('alert', 'Cập Nhật Thành Công');
+                if( Auth::user()->role == config('setting.roles.system_admin'))
+                    return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');
+                else
+                    return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
             }
         }
         else{
-            return redirect()->route('profile')->with('alert', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
+            if( Auth::user()->role == config('setting.roles.system_admin'))
+                return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
+            else
+                return redirect()->route('profile')->with('alert', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
         }
 
     }
@@ -55,7 +65,10 @@ class Information extends Controller
         $input = $request->all();
         User::where('id', Auth::user()->id)->update(['name' => $input['name'],'birth_date' => $input['birth_date'],'gender' => $input['gender'],'address' => $input['address'],'phone' => $input['phone']]);
 
-        return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
+        if( Auth::user()->role == config('setting.roles.system_admin'))
+            return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');
+        else
+            return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
     }
 
     public function changeAvatar(ChangeAvatarRequest $request){
@@ -64,6 +77,9 @@ class Information extends Controller
 
         User::where('id', Auth::user()->id)->update(['avatar' =>$input]);
 
-        return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
+        if( Auth::user()->role == config('setting.roles.system_admin'))
+            return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');
+        else
+            return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
     }
 }

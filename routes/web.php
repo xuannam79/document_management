@@ -11,11 +11,34 @@
 |
  */
 Route::resource('login', 'LoginController');
+
 Route::get('schedule-no-login', [
     'as' => 'schedule-week.nologin',
     'uses' => 'ScheduleWeekController@indexNoLogin',
 ]);
+
+Route::post('/update-avatar', [
+    'as' => 'update.avatar',
+    'uses' => 'Information@changeAvatar'
+]);
+
+Route::post('/information', [
+    'as' => 'profile.update.pass',
+    'uses' => 'Information@changePass'
+]);
+
+Route::get('/ajax-infor', [
+    'as' => 'ajax.information',
+    'uses' => 'Information@ajaxFormEdit'
+]);
+
+Route::post('/Update-Infor', [
+    'as' => 'update.information',
+    'uses' => 'Information@updateInfo'
+]);
+
 Route::resource('forgot-password', 'ForgotPasswordController');
+
 Route::get('404', [
     'as' => 'not-found',
     'uses' => 'ErrorController@notFound',
@@ -28,29 +51,13 @@ Route::group(['middleware' => 'checkUser'], function () {
         'as' => 'home-page',
         'uses' => 'HomeController@index',
     ]);
-    Route::resource('timetable-users', 'TimeTableController');
+
     Route::get('/information', [
         'as' => 'profile',
         'uses' => 'Information@index'
     ]);
-    Route::post('/update-avatar', [
-        'as' => 'update.avatar',
-        'uses' => 'Information@changeAvatar'
-    ]);
 
-    Route::post('/information', [
-        'as' => 'profile.update.pass',
-        'uses' => 'Information@changePass'
-    ]);
-    Route::get('/ajax-infor', [
-        'as' => 'ajax.information',
-        'uses' => 'Information@ajaxFormEdit'
-    ]);
-
-    Route::post('/Update-Infor', [
-        'as' => 'update.information',
-        'uses' => 'Information@updateInfo'
-    ]);
+    Route::resource('timetable-users', 'TimeTableController');
 
     Route::resource('users-forms', 'FormsController');
 
@@ -184,6 +191,11 @@ Route::group(['middleware' => 'checkSysAdmin'], function () {
         Route::get('/', [
             'as' => 'admin-index',
             'uses' => 'HomeAdminController@index',
+        ]);
+
+        Route::get('/information', [
+            'as' => 'profile.index-admin',
+            'uses' => 'Information@indexAdmin'
         ]);
 
         Route::namespace ('SystemAdmin')->group(function () {
