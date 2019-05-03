@@ -42,6 +42,7 @@
         {{ Html::script(asset('/templates/user/js/jquery.dataTables.min.js')) }}
         {{ Html::script(asset('/templates/user/js/dataTables.bootstrap4.min.js')) }}
         {{ Html::script(asset('/templates/user/js/bootstrap-select.min.js')) }}
+        {{ Html::script(asset('/templates/user/datatable-js/vi.js')) }}
     </body>
 </html>
 

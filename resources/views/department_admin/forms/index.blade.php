@@ -64,13 +64,4 @@
         </div>
         <a href="{{ route('forms.archive') }}" class="btn btn-warning" style="float: right;margin-top: 10px;margin-right: 16px"><i class="fa fa-trash" style="color:white"></i></a>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#example').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
-            }
-        });
-        } );
-    </script>
 @endsection

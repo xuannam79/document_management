@@ -31,7 +31,7 @@
                         <td>{{ $value->address }}</td>
                         <td class="frm-align">
                             @if($value->is_active != 0)
-                                <span class="badge badge-success" style="background-color: #28a745">khả dụng</span>
+                                <span class="badge badge-success" style="background-color: #28a745">Khả dụng</span>
                             @else
                                 <span class="badge badge-pill badge-warning" style="background-color: #dc3545">Không khả dụng</span>
                             @endif
@@ -52,13 +52,4 @@
     </div>
     <a href="{{ route('users.archive') }}" class="btn btn-warning" style="float: right;margin-top: 10px;margin-right: 16px"><i class="fa fa-trash" style="color:white"></i></a>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#example').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
-            }
-        });
-    });
-</script>
 @endsection

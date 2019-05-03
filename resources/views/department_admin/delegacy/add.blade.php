@@ -25,26 +25,15 @@
                                             'data-live-search' => 'true']) !!}
                                 </div>
 
-                                {!! Form::label('namePosition', 'Ủy quyền cho') !!}
+                                {!! Form::label('namePosition', 'Phòng ban sẽ được ủy quyền:') !!}
                                 <div class="form-group">
-                                    {!! Form::text('position_id', 'ahihi', [
+                                    {!! Form::text('position_name', $getDepartment['department']['name'], [
                                         'class'=>'form-control',
                                         'readonly']) !!}
                                 </div>
-                                <div class="form-group" style="width: 50%;float:left">
-                                    {!! Form::label("date-start", "Chọn ngày bắt đầu tiếp quản", []) !!}
-                                    <div class="input-group date" data-date-format="dd-mm-yyyy">
-                                        {!! Form::text("date-start", old("date-start"), ["class"=>"form-control", "readonly"]) !!}
-                                        <span style="background-color: #fff;width: 15%;" class="input-group-addon"><i class="fa fa-calendar" style="font-size: 20px;margin-top: 9px;"></i></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="width: 50%;float:left">
-                                    {!! Form::label("date-end", "Chọn ngày kết thúc", []) !!}
-                                    <div class="input-group date" data-date-format="dd-mm-yyyy">
-                                        {!! Form::text("date-end", old("date-end"), ["class"=>"form-control", "readonly"]) !!}
-                                        <span style="background-color: #fff;width: 15%;" class="input-group-addon"><i class="fa fa-calendar" style="font-size: 20px;margin-top: 9px;"></i></span>
-                                    </div>
-                                </div>
+                                <p>
+                                    Cá nhân được ủy quyền có quyền Quản lý các công văn/ văn bản như là Trưởng đơn vị
+                                </p>
                                 {!! Form::submit('Thêm', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
                             {!! Form::close() !!}
@@ -55,5 +44,4 @@
         </div>
     </div>
 </div>
-{{ Html::script(asset('/templates/user/js/handleDate.js')) }}
 @endsection
