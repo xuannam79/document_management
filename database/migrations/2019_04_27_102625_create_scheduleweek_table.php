@@ -18,8 +18,8 @@ class CreateScheduleweekTable extends Migration
             $table->string('title');
             $table->date('start');
             $table->date('end');
-            $table->text('content');
-            $table->string('note');
+            $table->text('content')->nullable();
+            $table->string('note')->nullable();
             $table->integer('user_id');
             $table->integer('is_active');
             $table->timestamps();

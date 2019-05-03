@@ -82,9 +82,9 @@ class ScheduleWeekController extends Controller
             $input['content'] = $array;
             $input['end'] = $dateConvert;
             $input['user_id'] = Auth::user()->id;
-            ScheduleWeek::update($input);
+            ScheduleWeek::find($id)->update($input);
 
-            return redirect()->route('schedule-admin.index')->with('messageSuccess', 'Thêm Thành Công');
+            return redirect()->route('schedule-admin.index')->with('messageSuccess', 'Sửa Thành Công');
         }
         catch (Exception $exception)
         {

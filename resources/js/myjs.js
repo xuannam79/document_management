@@ -147,3 +147,16 @@ $(document).on("click", "#editInfor", function(){
 $(document).on("change", "#picture", function(){
     $('#changeAvatar').submit();
 });
+//validate form schecule_week
+$(document).on('click', '#btnAddSchedule', function () {
+    var date = document.getElementById("start");
+    var d = new Date(date.value);
+    if( d.getDay() != 1) {
+        date.setCustomValidity('Chỉ chọn được ngày bắt đầu từ thứ 2');
+            $('start').focus();
+    }
+    else
+    {
+        date.setCustomValidity("");
+    }
+});
