@@ -87,7 +87,8 @@
                                 {!! Form::textarea('note', $schedule->note, ['class'=>'form-control', 'placeholder'=>'Nhập nội dung', 'cols' => 50, 'rows' => 3]) !!}
                             </div>
                             {!! Form::submit('Sửa', [
-                                'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
+                                'class'=>'btn btn-primary mt-4 pr-4 pl-4',
+                                'id' => 'btnAddSchedule']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
