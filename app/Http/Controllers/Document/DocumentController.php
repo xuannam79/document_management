@@ -70,6 +70,7 @@ class DocumentController extends Controller
             return $jsonSeen;
         }
     }
+
     public function show($id)
     {
         //check nguoi xem tin

@@ -173,6 +173,11 @@ Route::group(['middleware' => 'checkUser'], function () {
 
         Route::get('ajax/department/{id}', 'DocumentController@handleSelectDepartment');
 
+        Route::post('/document-department/{id}', [
+            'as' => 'reply.document-department',
+            'uses' => 'DocumentDepartmentController@reply',
+        ]);
+
         Route::post('/document/{id}', [
             'as' => 'reply.document',
             'uses' => 'DocumentController@reply',

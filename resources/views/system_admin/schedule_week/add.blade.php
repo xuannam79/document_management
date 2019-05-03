@@ -30,9 +30,9 @@
                                     'min' => \Carbon\Carbon::now()->format('Y-m-d'),
                                     'required']) !!}
                                 </div>
-                                <div class="form-group schedule">
+                                <div class="form-group">
                                     {!! Form::label('content', 'Lập lịch') !!}
-                                    <table width="100%">
+                                    <table width="100%" class="schedule">
                                         <tr style="text-align: center">
                                             <th width="15%">Thứ, ngày</th>
                                             <th width="30%">Sáng</th>

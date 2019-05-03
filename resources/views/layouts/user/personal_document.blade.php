@@ -28,9 +28,9 @@
                             @if (auth()->user()->role == config('setting.roles.admin_department'))
                                 @php
                                     $currentDepartmentId = DB::table('department_users')->where([
-                                        'position_id' => 1,
+                                        'position_id' => config('setting.position.admin_department'),
                                         'user_id' => Auth::user()->id,
-                                        'is_active' => config('setting.department_user.active')])->first()->department_id;
+                                        'is_active' => config('setting.department_user.active') ])->first()->department_id;
                                     $pendingDocumentsQuantity = count(DB::table('documents')
                                         ->join('document_department', 'documents.id', '=', 'document_department.document_id')
                                         ->join('users', 'users.id', '=', 'documents.user_id')
@@ -39,12 +39,46 @@
                                             'document_department.is_approved' => config('setting.department_user.no_approved')])
                                         ->select('documents.*', 'users.name', 'document_department.sending_date')->get()
                                     );
+                                    //count number document not yet seen
+                                    $departmentID = \App\Models\DepartmentUser::where([
+                                        'user_id' => Auth::user()->id,
+                                        'is_active' => config('setting.department_user.active')
+                                    ])->first();
+                                    $arrDocumentID = \App\Models\Document::where('department_id', $departmentID->department_id)->get();
+                                    foreach($arrDocumentID as $arrID){
+                                          $listIdDoc = array();
+                                          if(isset($arrID->id)){
+                                            array_push($listIdDoc, $arrID->id);
+                                          }
+                                    }
+                                    $documentUser = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->get();
+                                    $count = 0;
+                                    foreach($documentUser as $value){
+                                        if(isset($value->array_user_seen)){
+                                            $check = false;
+                                            $arrayUserSeenDecode = json_decode($value->array_user_seen);
+                                            foreach($arrayUserSeenDecode as $ar){
+                                                if(Auth::user()->id == $ar){
+                                                    $check = false;
+                                                }
+                                                else {
+                                                    $check = true;
+                                                }
+                                            }
+                                            if($check == true){
+                                                $count = $count + 1;
+                                            }
+                                        }
+                                        else {
+                                           $count = $documentUser->count();
+                                        }
+                                    }
                                 @endphp
                                 <a href="{{route('document-department.index')}}">
                                     <li>
                                         <i class="icon-leftbar fa fa-download"></i>&nbsp;
                                         Văn bản đến đơn vị
-                                        <span class="count-new-document">5</span>
+                                        <span class="count-new-document">{{ $count }}</span>
                                     </li>
                                 </a>
                                 <a href="{{route('document-sent.index')}}">
