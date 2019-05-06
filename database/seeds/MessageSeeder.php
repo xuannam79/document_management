@@ -16,7 +16,6 @@ class MessageSeeder extends Seeder
             'receiver_id' => 1,
             'title' => 'title title',
             'content' => 'content content',
-            'file_attachment' => '',
         ]);
     }
 }

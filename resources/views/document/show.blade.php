@@ -23,7 +23,7 @@
                     <br>
                     <div class="line"></div>
                     <div >
-                        <div class="upload__files">
+                        <div>
                             @foreach($arrayFileDecode as $value)
                                 <div class="preview">
                                     <a href="{{ Route('file-attachment.download',$value) }}" style="color:black;">
@@ -58,7 +58,7 @@
                                 <br>
                                 <div class="line" style="max-width: 98%;margin: 0 auto;"></div>
                                 <div >
-                                    <div class="upload__files" style="margin: 5px 10px;">
+                                    <div style="margin: 5px 10px;">
                                         @php
                                             $arrayFileReplyDecode = array();
                                             if(isset($value->file_attachment_reply)){
@@ -91,7 +91,7 @@
                             <span class="badge"style="padding-left: 1em;float:none !important;">RE: {{ $document->document_number }}</span>
                         </div>
                         {!! Form::open(['method'=>'POST', 'route'=>['reply.document',1], 'files' => true]) !!}
-                        {!! Form::textarea('content_reply', null, ['id' => 'content_reply', 'rows' => 5, 'cols' => 90, 'style' => 'resize:none']) !!}
+                        {!! Form::textarea('content_reply', null, ['id' => 'content_reply', 'rows' => 5, 'cols' => 9, 'style' => 'resize:none']) !!}
                         <div class="upload">
                             <div class="upload__files">
                             </div>
@@ -104,7 +104,7 @@
                                 </label>
                                 {!! Form::file('file_attachment_reply[]', ['class' => 'upload__input', 'id' => 'file-input', 'multiple' => true])  !!}
                             </div>
-                            <button class="fa fa-trash close-rep-area"></button>
+                            <a class="fa fa-trash close-rep-area"></a>
                         </div>
                         {!! Form::close() !!}
                     </div>

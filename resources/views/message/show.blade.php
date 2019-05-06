@@ -28,7 +28,7 @@
                         @endforeach
                     </div>
                 </div>
-                <button type="button" class="btn btn-light rep-bot-button"><i class="fa fa-reply"></i>&nbsp;Phản hồi</button>
+                <button type="button" class="btn btn-light rep-bot-button"><i class="fa fa-reply"></i>&nbsp;Trả lời</button>
                 <div class="reply display-none" id="rep-area">
                     {!! Form::open(['method'=>'POST', 'route'=>['reply-message', $getMessages->id], 'files' => true]) !!}
                         <div class="form-group">
