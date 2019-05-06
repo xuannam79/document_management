@@ -8,7 +8,7 @@ class DocumentDepartment extends Model
 {
     protected $table = 'document_department';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'document_id',

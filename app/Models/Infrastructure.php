@@ -8,7 +8,7 @@ class Infrastructure extends Model
 {
     protected $table = 'infrastructure';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'name',

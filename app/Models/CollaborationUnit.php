@@ -13,7 +13,7 @@ class CollaborationUnit extends Model
      */
     protected $table = 'collaboration_units';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'name',

@@ -16,7 +16,7 @@ class DepartmentUser extends Model
      */
     protected $table = 'department_users';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'department_id', 

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\SystemAdmin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Department;
+use App\Models\DepartmentUser;
 use App\Http\Requests\SystemAdmin\DepartmentRequest;
+use Carbon\Carbon;
 
 class DepartmentController extends Controller
 {
@@ -29,8 +32,9 @@ class DepartmentController extends Controller
      */
     public function create()
     {
+        $departments = Department::where('is_active', config('setting.active.is_active'))->get();
 
-        return view('system_admin.department.add');
+        return view('system_admin.department.add', compact('departments'));
     }
 
     /**

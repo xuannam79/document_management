@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\DepartmentAdmin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Department;
+use App\Models\DepartmentUser;
 
 class DelegacyController extends Controller
 {
@@ -15,7 +19,15 @@ class DelegacyController extends Controller
      */
     public function index()
     {
-        return view('department_admin.delegacy.index');
+        $getDepartment = DepartmentUser::with([
+            'user' => function($query) {
+                $query->whereId(Auth::user()->id);
+            }, 
+            'department'
+        ])->first()->toArray();
+        $getUser = User::where('delegacy', config('setting.delegacy.department_admin'))->get();
+
+        return view('department_admin.delegacy.index', compact('getUser', 'getDepartment'));
     }
 
     /**
@@ -25,8 +37,20 @@ class DelegacyController extends Controller
      */
     public function create()
     {
-        $searchAdmin = User::pluck('name', 'id');
-        return view('department_admin.delegacy.add', compact('searchAdmin'));
+        $getDepartment = DepartmentUser::with([
+            'user' => function($query) {
+                $query->whereId(Auth::user()->id);
+            }, 
+            'department'
+        ])->first()->toArray();
+        $getIdDepartment = $getDepartment['department']['id'];
+
+        $searchAdmin = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')
+                        ->where('department_id', $getIdDepartment)
+                        ->whereNotIn('users.id', [Auth::user()->id])
+                        ->pluck('name', 'users.id');
+
+        return view('department_admin.delegacy.add', compact('searchAdmin', 'getDepartment'));
     }
 
     /**
@@ -37,7 +61,26 @@ class DelegacyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $getIdUser = $request->user_id;
+            $checkAssign = User::select('delegacy')->whereId($getIdUser)->first();
+            if ($checkAssign->delegacy == config('setting.delegacy.department_admin')) {
+
+                return redirect(route('delegacy.create'))->with('alert', 'Người này đã được ủy quyền rồi!');                
+            } else {
+                $pushAssign = config('setting.delegacy.department_admin');
+                User::whereId($getIdUser)->update(['delegacy' => $pushAssign]);
+                DB::commit();
+
+                return redirect(route('delegacy.index'))->with('alert', 'Thêm thành công');
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect(route('delegacy.create'))->with('alert', 'Thêm thất bại');
+        }
     }
 
     /**
@@ -82,6 +125,18 @@ class DelegacyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $deleteAssign = config('setting.delegacy.no_delegacy');
+            User::whereId($id)->update(['delegacy' => $deleteAssign]);
+            DB::commit();
+
+            return redirect(route('delegacy.index'))->with('alert', 'Xóa thành công');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect(route('delegacy.create'))->with('alert', 'Xóa thất bại');
+        }
     }
 }

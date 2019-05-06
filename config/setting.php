@@ -36,8 +36,8 @@ return [
         'female' => 2,
     ],
     'delegacy' => [
-        'no_delegacy' => 1,
-        'edit_document' => 2,
+        'no_delegacy' => null,
+        'department_admin' => 1,
     ],
     'document' => [
         'approved' => 1,
