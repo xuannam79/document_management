@@ -4,10 +4,7 @@
 /public/templates
 /public/css
 /public/js
-/public/images
-/public/files/department_admin/forms
-/public/files/department_admin/timetables
-/public/files/file_attachment
+/public/svg
 /v8-compile-cache-0
 /storage/*.key
 /storage/files
