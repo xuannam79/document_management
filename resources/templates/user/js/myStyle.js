@@ -29,6 +29,9 @@
 //         });
 //     });
 // });
+function showMessages(id) {
+    window.location.href = 'message/' + id;
+}
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -107,6 +110,12 @@ $(document).ready(function () {
         let target = $(this).attr("href");
         $('html,body').stop().animate({
             scrollTop: $(target).offset().top
+        }, 1000);
+        event.preventDefault();
+    });
+    $(".pulse-button").click(function () {
+        $('html,body').stop().animate({
+            scrollTop: $('#rep-area').offset().top
         }, 1000);
         event.preventDefault();
     });

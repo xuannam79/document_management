@@ -24,8 +24,10 @@ class MessageController extends Controller
 
     public function index()
     {
-        $getMessages = Message::with(['user'])->get();
-        dd($getMessages);
+        $getMessages = DB::table('messages')
+            ->join('users', 'users.id', 'messages.sender_id')
+            ->select('users.avatar', 'users.name', 'messages.id', 'messages.sender_id', 'messages.title', 'messages.created_at')
+            ->where('messages.receiver_id', Auth::user()->id)->get();
         return view('message.index', compact('getMessages'));
     }
     public function create()
@@ -59,6 +61,44 @@ class MessageController extends Controller
             DB::rollBack();
 
             return redirect(route('message.index'))->with('alert', 'Gửi thất bại, vui lòng kiểm tra lại');
+        }
+    }
+    public function show($id)
+    {
+        $getMessages = DB::table('messages')
+            ->join('users', 'users.id', 'messages.sender_id')
+            ->select('users.avatar', 'users.name', 'messages.id', 'messages.sender_id', 'messages.content', 'messages.title', 'messages.created_at')
+            ->where('messages.id', $id)->first();
+        $getAttachedFile = MessageAttachments::where('messages_id', $getMessages->id)->get();
+        return view('message.show', compact('getMessages', 'getAttachedFile'));
+    }
+
+    public function reply($id, MessageRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $receiveId = Message::select('sender_id')->where('id', $id)->first();
+            $message['sender_id'] = Auth::user()->id;
+            $message['title'] = $request->title;
+            $message['content'] = $request->content;
+            $message['receiver_id'] = $receiveId->sender_id;
+            $messageId = Message::insertGetId($message);
+            if (isset($request->attachedFiles)) {
+                $attachedFiles = $request->only('attachedFiles');
+                foreach ($attachedFiles['attachedFiles'] as $key => $file) {
+                    MessageAttachments::create([
+                        'messages_id' => $messageId,
+                        'name' => $this->uploader->saveDocument($file),
+                    ]);
+                }
+            }
+            DB::commit();
+
+            return redirect(route('message.show', $id))->with('alert', 'Tin nhắn đã được gửi');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect(route('message.show', $id))->with('alert', 'Gửi thất bại, vui lòng kiểm tra lại');
         }
     }
 }

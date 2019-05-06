@@ -11,8 +11,9 @@ class Uploader
             $tokenName = substr(str_shuffle($strDefault), 0, 16);
             $file = $documentFile;
             $fileExtension = $documentFile->getClientOriginalExtension();
-            $newName = $tokenName . time() . '.' . $fileExtension;
-            $path = resource_path(config('setting.document.file_location'));
+            $nameFile = explode('.',$documentFile->getClientOriginalName());
+            $newName = time() .'-'. $nameFile[0] . '.' . $fileExtension;
+            $path = public_path('files/file_attachment');
             $documentFile = $newName;
             $file->move($path, $newName);
             return $newName;

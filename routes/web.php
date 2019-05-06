@@ -58,7 +58,10 @@ Route::group(['middleware' => 'checkUser'], function () {
         'as' => 'profile',
         'uses' => 'Information@index'
     ]);
-
+    Route::post('/reply-message/{id}', [
+        'as' => 'reply-message',
+        'uses' => 'MessageController@reply'
+    ]);
     Route::resource('timetable-users', 'TimeTableController');
 
     Route::resource('users-forms', 'FormsController');

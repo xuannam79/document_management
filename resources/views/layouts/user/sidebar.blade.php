@@ -18,7 +18,7 @@
             <li>
                 <ul class="small-ul">
                     @foreach($message as $key => $message)
-                    <a href=""><li><i class="fas fa-hand-point-right"></i>&nbsp;<span>{{ $message->title }}</span></li></a>
+                <a href="{{route('message.show', $message->id)}}"><li><i class="fas fa-hand-point-right"></i>&nbsp;<span>{{ $message->title }}</span></li></a>
                     @endforeach
                 </ul>
             </li>
