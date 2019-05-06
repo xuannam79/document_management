@@ -16,7 +16,7 @@
                         <div class="upload__files">
                             @foreach($arrayFileDecode as $value)
                                 <div class="preview">
-                                    <a href="{{ Route('forms.download',$value) }}" style="color:black;">
+                                    <a href="/upload/files/form/{{ $value }}" download title="{{ $value }}" style="color:black;">
                                         @php
                                             $path = pathinfo($value,PATHINFO_EXTENSION);
                                         @endphp

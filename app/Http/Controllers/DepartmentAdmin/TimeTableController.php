@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DepartmentAdmin;
 
 use App\Models\DepartmentUser;
 use App\Models\TimeTable;
+use App\Uploaders\Uploader;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class TimeTableController extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index(){
         $departmentUser = DepartmentUser::where('user_id', Auth::user()->id)->first();
         $timeTable = TimeTable::where('is_active', config('setting.active.is_active'))
@@ -20,21 +28,6 @@ class TimeTableController extends Controller
         return view('department_admin.timetable.index', compact('timeTable'));
     }
 
-    public function saveFile($input){
-        if(isset($input['file_attachment']))
-        {
-            foreach($input['file_attachment'] as $file)
-            {
-                $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
-                $fileExtension = $file->getClientOriginalExtension();
-                $newName = $fileName.'-'.time().'.'.$fileExtension;
-                $path = public_path('files/department_admin/timetables');
-                $file->move($path, $newName);
-                $data[] = $newName;
-            }
-            return $data;
-        }
-    }
     public function saveTimeTable($input){
         $departmentUser = DepartmentUser::where('user_id', Auth::user()->id)->first();
         $input['user_id'] = Auth::user()->id;
@@ -42,12 +35,6 @@ class TimeTableController extends Controller
         $input['department_id'] = $departmentUser->department_id;
 
         return $input;
-    }
-
-    public function download($nameFile){
-        $pathToFile = public_path('files/department_admin/timetables/'.$nameFile);
-
-        return response()->download($pathToFile);
     }
 
     public function create()
@@ -65,8 +52,9 @@ class TimeTableController extends Controller
                 TimeTable::create($input);
             }
             else {
-                $data = $this->saveFile($input);
-                $input['file_attachment'] = json_encode($data);
+                $path = 'upload/files/schedule';
+                $arrFiles = $this->uploader->saveFileAttach($input['file_attachment'],$path);
+                $input['file_attachment'] = json_encode($arrFiles);
                 $input = $this->saveTimeTable($input);
                 TimeTable::create($input);
             }
@@ -113,8 +101,9 @@ class TimeTableController extends Controller
                 TimeTable::find($id)->update(['name' => $input['name'], 'description' => $input['description']]);
             }
             else {
-                $data = $this->saveFile($input);
-                $input['file_attachment'] = json_encode($data);
+                $path = 'upload/files/schedule';
+                $arrFiles = $this->uploader->saveFileAttach($input['file_attachment'],$path);
+                $input['file_attachment'] = json_encode($arrFiles);
                 TimeTable::find($id)->update($input);
             }
             DB::commit();

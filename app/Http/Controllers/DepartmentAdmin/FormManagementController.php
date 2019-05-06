@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DepartmentAdmin;
 use App\Models\Department;
 use App\Models\DepartmentUser;
 use App\Models\Form;
+use App\Uploaders\Uploader;
 use App\Models\Position;
 use App\Models\User;
 use Carbon\Carbon;
@@ -17,6 +18,13 @@ use File;
 
 class FormManagementController extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index()
     {
         $forms = Form::where('is_active', config('setting.active.is_active'))->get();
@@ -67,8 +75,9 @@ class FormManagementController extends Controller
                 Form::create($input);
             }
             else {
-                $data = $this->saveFile($input);
-                $input['link'] = json_encode($data);
+                $path = 'upload/files/form';
+                $arrFiles = $this->uploader->saveFileAttach($input['link'],$path);
+                $input['link'] = json_encode($arrFiles);
                 $input = $this->saveForm($input);
 
                 Form::create($input);
@@ -159,28 +168,6 @@ class FormManagementController extends Controller
         }
     }
 
-    public function download($nameFile){
-        $pathToFile = public_path('files/department_admin/forms/'.$nameFile);
-
-        return response()->download($pathToFile);
-    }
-
-    public function saveFile($input){
-        if(isset($input['link']))
-        {
-            foreach($input['link'] as $file)
-            {
-                $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
-                $fileExtension = $file->getClientOriginalExtension();
-                $newName = $fileName.'-'.time().'.'.$fileExtension;
-                $path = public_path('files/department_admin/forms');
-                $file->move($path, $newName);
-                $data[] = $newName;
-            }
-            return $data;
-        }
-    }
-
     public function show($id)
     {
         try
@@ -229,8 +216,9 @@ class FormManagementController extends Controller
                 Form::find($id)->update(['name' => $input['name'], 'description' => $input['description']]);
             }
             else {
-                $data = $this->saveFile($input);
-                $input['link'] = json_encode($data);
+                $path = 'upload/files/form';
+                $arrFiles = $this->uploader->saveFileAttach($input['link'],$path);
+                $input['link'] = json_encode($arrFiles);
                 Form::find($id)->update($input);
             }
             DB::commit();

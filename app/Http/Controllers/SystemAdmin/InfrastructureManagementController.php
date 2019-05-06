@@ -7,11 +7,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Infrastructure;
 use App\Models\Department;
+use App\Uploaders\uploader;
 use App\Http\Requests\SystemAdmin\InfrastructureRequest;
 use File;
 
 class InfrastructureManagementController extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index()
     {
 
@@ -55,19 +63,6 @@ class InfrastructureManagementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function savePicture($input){
-        if(isset($input['picture']))
-        {
-            $file = $input['picture'];
-            $fileExtension = $input['picture']->getClientOriginalExtension();
-            $newName = 'picture-'.time().'.'.$fileExtension;
-            $path = resource_path('templates/admin/img/picture');
-            $input['picture'] = $newName;
-            $file->move($path, $newName);
-            return $newName;
-        }
-    }
-
     public function store(InfrastructureRequest $request)
     {
         $input = $request->all();
@@ -78,7 +73,7 @@ class InfrastructureManagementController extends Controller
                 Infrastructure::create(['name' => $input['name'], 'department_id' => $input['department_id'], 'amount' => $input['amount']]);
             }
             else {
-                $input['picture'] = $this->savePicture($input);
+                $input['picture'] = $this->uploader->saveImg($input['picture']);
                 Infrastructure::create($input);
             }
             DB::commit();
@@ -146,7 +141,7 @@ class InfrastructureManagementController extends Controller
                 $updateInfrastructure->update(['name' => $input['name'], 'department_id' => $input['department_id'], 'amount' => $input['amount']]);
             }
             else {
-                $input['picture'] = $this->savePicture($input);
+                $input['picture'] = $this->uploader->saveImg($input['picture']);
                 $updateInfrastructure->update($input);
             }
             DB::commit();
@@ -195,7 +190,6 @@ class InfrastructureManagementController extends Controller
         try
         {
             $infrastructure = Infrastructure::findOrFail($id);
-            File::delete(public_path().'/templates/admin/img/picture/'.$infrastructure->picture);
             $infrastructure->update(['is_active' => config('setting.active.no_active')]);
             DB::commit();
 

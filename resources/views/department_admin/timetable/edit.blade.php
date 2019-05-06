@@ -33,7 +33,7 @@
                                         <ul style=" padding: 0;">
                                             @foreach($arrayFileDecode as $value)
                                                 <li>
-                                                    <a href="{{ route('timetable.download',$value) }}">{{ $value}}</a>
+                                                    <a href="/upload/files/schedule/{{ $value }}" download title="{{ $value }}">{{ $value}}</a>
                                                 </li>
                                             @endforeach
                                         </ul>

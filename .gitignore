@@ -5,6 +5,12 @@
 /public/css
 /public/js
 /public/svg
+/public/upload/files/document/
+/public/upload/files/document_reply/
+/public/upload/files/form/
+/public/upload/files/message/
+/public/upload/files/schedule/
+/public/upload/images/
 /v8-compile-cache-0
 /storage/*.key
 /storage/files

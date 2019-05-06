@@ -45,7 +45,7 @@
                                 {!! Form::label('avatar', "Ảnh Đại Diện") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <a href="/images/avatar/{{ $user->avatar }}"><img src="/images/avatar/{{ $user->avatar }}" class="img-preview" id="img-preview"/></a>
+                                        <a href="/upload/images/{{ $user->avatar }}"><img src="/upload/images/{{ $user->avatar }}" class="img-preview" id="img-preview"/></a>
                                         {!! Form::file('avatar', ['class' => 'form-control-file', 'id' => 'avatar'])  !!}
                                     </div>
                                 </div>

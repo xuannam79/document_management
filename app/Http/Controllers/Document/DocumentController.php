@@ -57,7 +57,7 @@ class DocumentController extends Controller
     public function checkUserSeen($id)
     {
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
-        if (isset($userIdSeen['array_user_seen'])) {
+        if (isset($userIdSeen['array_user_seen']) && $userIdSeen['array_user_seen'] != "") {
             $jsonSeen = json_decode($userIdSeen['array_user_seen']);
             foreach ($jsonSeen as $value) {
                 if (Auth::user()->id != $value) {
@@ -98,28 +98,6 @@ class DocumentController extends Controller
         return view('document.show', compact('document', 'arrayFileDecode', 'replyDocument', 'arrayFileReplyDecode'));
     }
 
-    public function saveFile($input)
-    {
-        if (isset($input['file_attachment_reply'])) {
-            foreach ($input['file_attachment_reply'] as $file) {
-                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileExtension = $file->getClientOriginalExtension();
-                $newName = $fileName . '-' . time() . '.' . $fileExtension;
-                $path = public_path('files/file_attachment');
-                $file->move($path, $newName);
-                $data[] = $newName;
-            }
-            return $data;
-        }
-    }
-
-    public function downloadFileAttachment($nameFile)
-    {
-        $pathToFile = public_path('files/file_attachment/' . $nameFile);
-
-        return response()->download($pathToFile);
-    }
-
     public function reply(ReplyDocumentRequest $request, $id)
     {
         $input = $request->all();
@@ -129,8 +107,9 @@ class DocumentController extends Controller
             $input['file_attachment_reply'] = null;
             ReplyDocument::create($input);
         } else {
-            $data = $this->saveFile($input);
-            $input['file_attachment_reply'] = json_encode($data);
+            $path = 'upload/files/document_reply';
+            $arrFiles = $this->uploader->saveFileAttach($input['file_attachment_reply'],$path);
+            $input['file_attachment_reply'] = json_encode($arrFiles);
             ReplyDocument::create($input);
         }
 
