@@ -6,24 +6,25 @@ Danh sách
 <div class="container">
     <div id="cards-wrapper" class="cards-wrapper row">
         <div class="document-topBody">
-            <div class="dropdown show dropdown-search">
-                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sắp xếp theo...
-                </a>
-                
-                <div class="dropdown-menu dropdown-filter" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                </div>
-            </div>
             <div class="form-search-doc">
                 <form class="form-inline form-search">
                     <div class="form-group mx-sm-3 mb-2">
-                        <input type="password" class="form-control input-search" id="inputPassword2" placeholder="Nhập nội dung tìm kiếm...">
+                        <div  class="input-group date" data-date-format="mm-dd-yyyy">
+                            {!! Form::text('date_start', '', ['class'=>'form-control date-area', 'readonly', 'id'=>'datepicker', 'placeholder'=>'Ngày bắt đầu...']) !!}
+                            <span style="background-color: #fff;width: 2%;" class="input-group-addon"></span>
+                        </div>
+                        <div class="input-group date" data-date-format="mm-dd-yyyy">
+                            {!! Form::text('date_end', '', ['class'=>'form-control date-area', 'readonly', 'id'=>'datepicker2', 'placeholder'=>'Ngày kết thúc...']) !!}
+                            <span style="background-color: #fff;width: 2%;" class="input-group-addon"></span>
+                        </div>
+                        {!! Form::select('department', ['1'=>'don vi 1'], '', ['class'=>'form-control', 'style'=>'min-width: 9em']) !!}
+                        {!! Form::text('search', '', ['class'=>'form-control input-search', 'placeholder'=>'Nhập trích yếutìm kiếm...']) !!}
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
                 </form>
             </div>
         </div>
+        
         <div class="list-group">
             @foreach($document as $value)
                 @php

@@ -78,7 +78,9 @@
                                     <li>
                                         <i class="icon-leftbar fa fa-download"></i>&nbsp;
                                         Văn bản đến đơn vị
-                                        <span class="count-new-document">{{ $count }}</span>
+                                        @if($count > 0)
+                                            <span class="count-new-document">{{ $count }}</span>
+                                        @endif
                                     </li>
                                 </a>
                                 <a href="{{route('document-sent.index')}}">

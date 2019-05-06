@@ -18,5 +18,12 @@ class DepartmentUserSeeder extends Seeder
             'start_date' => '2019/4/3',
             'end_date' => null
         ]);
+        DB::table('department_users')->insert([
+            'department_id' => 1,
+            'user_id' => 2,
+            'position_id' => 1,
+            'start_date' => '2019/4/3',
+            'end_date' => null
+        ]);
     }
 }

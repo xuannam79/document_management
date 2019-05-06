@@ -42,7 +42,7 @@ return [
     'document' => [
         'approved' => 1,
         'pending' => 0,
-        'file_location' => '../storage/files',
+        'file_location' => 'files/file_attachment',
     ],
     'document_user' => [
         'is_unseen' => 0,

@@ -19,6 +19,17 @@ class UserSeeder extends Seeder
             'gender' => 1,
             'address' => '08 Ha Van Tinh, Da Nang',
             'phone' => '0354525110',
+            'avatar' => 'user-default.png'
+        ]);
+        DB::table('users')->insert([
+            'email' => 'phandanghaivu2@gmail.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'name' => 'Vu Phan2',
+            'birth_date' => '1997/03/28',
+            'gender' => 1,
+            'address' => '08 Ha Van Tinh, Da Nang',
+            'phone' => '0354525110',
+            'avatar' => 'user-default.png'
         ]);
     }
 }
