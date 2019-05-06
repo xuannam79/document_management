@@ -32,6 +32,9 @@
 function showMessages(id) {
     window.location.href = 'message/' + id;
 }
+function showDocument(id) {
+    window.location.href = 'document/' + id;
+}
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -112,8 +115,14 @@ $(document).ready(function () {
             scrollTop: $(target).offset().top
         }, 1000);
         event.preventDefault();
-    });
+ showMessages('{{$message->id}}')   });
     $(".pulse-button").click(function () {
+        $('html,body').stop().animate({
+            scrollTop: $('#rep-area').offset().top
+        }, 1000);
+        event.preventDefault();
+    });
+    $(".rep-bot-button").click(function () {
         $('html,body').stop().animate({
             scrollTop: $('#rep-area').offset().top
         }, 1000);
