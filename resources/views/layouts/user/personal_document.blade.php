@@ -85,8 +85,8 @@
                                 </a>
                                 <a href="{{route('document-sent.index')}}">
                                     <li>
-                                            <i class="icon-leftbar fa fa-upload"></i>&nbsp;
-                                            Văn bản đi
+                                        <i class="icon-leftbar fa fa-upload"></i>&nbsp;
+                                        Văn bản đi
                                     </li>
                                 </a>
                                 <a href="{{route('document-pending.index')}}">
