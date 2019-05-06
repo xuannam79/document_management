@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\SystemAdmin;
+namespace App\Http\Controllers\DepartmentAdmin;
 
+use App\Http\Requests\SystemAdmin\InfrastructureRequest;
+use App\Models\Department;
+use App\Models\DepartmentUser;
+use App\Models\Infrastructure;
+use App\Uploaders\Uploader;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Infrastructure;
-use App\Models\Department;
-use App\Uploaders\Uploader;
-use App\Http\Requests\SystemAdmin\InfrastructureRequest;
-use File;
 
 class InfrastructureManagementController extends Controller
 {
@@ -26,25 +27,9 @@ class InfrastructureManagementController extends Controller
         $infrastructure = Infrastructure::where('is_active',config('setting.active.is_active'))->get();
         $department = Department::pluck('name', 'id');
 
-        return view('system_admin.infrastructure.index', compact( 'infrastructure', 'department'));
+        return view('department_admin.infrastructure.index', compact( 'infrastructure', 'department'));
     }
 
-    public function changeDepartment(Request $request, $id){
-        $input = $request->all();
-        DB::beginTransaction();
-        try
-        {
-            Infrastructure::where('id', $id)->update(['department_id' => $input['department_id']]);
-            DB::commit();
-
-            return redirect()->route('infrastructure.index')->with('messageSuccess', 'Cập Nhật Thành Công');
-        }
-        catch (Exception $exception)
-        {
-            DB::rollBack();
-            return redirect()->route('infrastructure.index')->with('messageFail', 'Cập Nhật Thất Bại');
-        }
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -54,7 +39,7 @@ class InfrastructureManagementController extends Controller
     {
         $department = Department::pluck('name', 'id');
 
-        return view('system_admin.infrastructure.add', compact('department'));
+        return view('department_admin.infrastructure.add', compact('department'));
     }
 
     /**
@@ -66,13 +51,16 @@ class InfrastructureManagementController extends Controller
     public function store(InfrastructureRequest $request)
     {
         $input = $request->all();
+        $deparmentId = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
         DB::beginTransaction();
         try
         {
             if(!isset($input['picture'])){
-                Infrastructure::create(['name' => $input['name'], 'department_id' => $input['department_id'], 'amount' => $input['amount']]);
+                Infrastructure::create(['name' => $input['name'], 'department_id' => $deparmentId, 'amount' => $input['amount']]);
+
             }
             else {
+                $input['department_id'] = $deparmentId;
                 $input['picture'] = $this->uploader->saveImg($input['picture']);
                 Infrastructure::create($input);
             }
@@ -103,7 +91,7 @@ class InfrastructureManagementController extends Controller
             $department = Department::pluck('name', 'id');
             DB::commit();
 
-            return view('system_admin.infrastructure.edit', compact('infrastructure', 'department'));
+            return view('department_admin.infrastructure.edit', compact('infrastructure', 'department'));
         }
         catch (Exception $exception)
         {
@@ -133,15 +121,17 @@ class InfrastructureManagementController extends Controller
     public function update(InfrastructureRequest $request, $id)
     {
         $input = $request->all();
+        $deparmentId = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
         DB::beginTransaction();
         try
         {
             $updateInfrastructure = Infrastructure::FindOrFail($id);
             if(!isset($input['picture'])){
-                $updateInfrastructure->update(['name' => $input['name'], 'department_id' => $input['department_id'], 'amount' => $input['amount']]);
+                $updateInfrastructure->update(['name' => $input['name'], 'department_id' => $deparmentId, 'amount' => $input['amount']]);
             }
             else {
                 $input['picture'] = $this->uploader->saveImg($input['picture']);
+                $input['department_id'] = $deparmentId;
                 $updateInfrastructure->update($input);
             }
             DB::commit();
@@ -165,7 +155,7 @@ class InfrastructureManagementController extends Controller
         $infrastructure = Infrastructure::where('is_active',config('setting.active.no_active'))->get();
         $department = Department::pluck('name', 'id');
 
-        return view('system_admin.infrastructure.archive', compact( 'infrastructure', 'department'));
+        return view('department_admin.infrastructure.archive', compact( 'infrastructure', 'department'));
     }
 
     public function restore($id){
