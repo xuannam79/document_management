@@ -54,7 +54,7 @@
                                     $documentUser = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->get();
                                     $count = 0;
                                     foreach($documentUser as $value){
-                                        if(isset($value->array_user_seen)){
+                                        if(isset($value->array_user_seen) && $value->array_user_seen != ""){
                                             $check = false;
                                             $arrayUserSeenDecode = json_decode($value->array_user_seen);
                                             foreach($arrayUserSeenDecode as $ar){

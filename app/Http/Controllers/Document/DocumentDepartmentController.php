@@ -30,7 +30,7 @@ class DocumentDepartmentController extends Controller
     public function checkUserSeen($id)
     {
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
-        if (isset($userIdSeen['array_user_seen'])) {
+        if (isset($userIdSeen['array_user_seen']) && $userIdSeen['array_user_seen'] != "") {
             $jsonSeen = json_decode($userIdSeen['array_user_seen']);
             foreach ($jsonSeen as $value) {
                 if (Auth::user()->id != $value) {
