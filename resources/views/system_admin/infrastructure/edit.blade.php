@@ -22,7 +22,7 @@
                                 {!! Form::label('picture', "Ảnh Đại Diện") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <img class="img-preview" src="/templates/admin/img/picture/{{ $infrastructure->picture }}" id="img-preview"/>
+                                        <img class="img-preview" src="/upload/images/{{ $infrastructure->picture }}" id="img-preview"/>
                                         {!! Form::file('picture',['class' => 'form-control-file', 'id' => 'avatar'])  !!}
                                     </div>
                                 </div>

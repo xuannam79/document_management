@@ -31,7 +31,7 @@
                             <tr>
                                 <th scope="row">{{ $key->id }}</th>
                                 <td>{{ $key->name }}</td>
-                                <td><img src="/templates/admin/img/picture/{{ $key->picture }}" class="img-preview2"></td>
+                                <td><img src="/upload/images/{{ $key->picture }}" class="img-preview2"></td>
                                 <td>
                                     {!! Form::open(['method'=>'POST', 'route'=>['infrastructure.department',$key->id], 'id' => 'changeDepartment'.$key->id]) !!}
                                         {!! Form::select('department_id', $department, $key->department_id, ['class' => 'form-control', 'onchange' => 'changeDepartment('.$key->id.')']) !!}

@@ -10,9 +10,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Uploaders\Uploader;
 
 class Information extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index(){
         return view('information');
     }
@@ -43,19 +51,6 @@ class Information extends Controller
 
     }
 
-    public function savePicture($input){
-        if(isset($input))
-        {
-            $file = $input;
-            $fileExtension = $input->getClientOriginalExtension();
-            $newName = 'avatar-'.time().'.'.$fileExtension;
-            $path = public_path('images/avatar');
-            $input = $newName;
-            $file->move($path, $newName);
-            return $newName;
-        }
-    }
-
     public function ajaxFormEdit(){
 
         return view('ajax.information_form');
@@ -73,9 +68,9 @@ class Information extends Controller
 
     public function changeAvatar(ChangeAvatarRequest $request){
         $input = $request->avatar;
-        $input = $this->savePicture($input);
+        $input = $this->uploader->saveImg($input);
 
-        User::where('id', Auth::user()->id)->update(['avatar' =>$input]);
+        User::where('id', Auth::user()->id)->update(['avatar' => $input]);
 
         if( Auth::user()->role == config('setting.roles.system_admin'))
             return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');

@@ -7,6 +7,7 @@ use App\Models\DepartmentUser;
 use App\Models\Position;
 use App\Models\User;
 use App\Models\Department;
+use App\Uploaders\Uploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,13 @@ use File;
 
 class UserManagementController extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index()
     {
         $departmentUser = User::with('departmentUser')->where('is_active',config('setting.active.is_active'))->get();
@@ -45,7 +53,7 @@ class UserManagementController extends Controller
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $input['avatar'] = $this->savePicture($input);
+        $input['avatar'] = $this->uploader->saveImg($input['avatar']);
         $input['role'] = config('setting.position.secretary');
         User::create($input);
         $id = User::select('id')->where('email', $input['email'])->first();
@@ -118,18 +126,18 @@ class UserManagementController extends Controller
         }
     }
 
-    public function savePicture($input){
-        if(isset($input['avatar']))
-        {
-            $file = $input['avatar'];
-            $fileExtension = $input['avatar']->getClientOriginalExtension();
-            $newName = 'avatar-'.time().'.'.$fileExtension;
-            $path = public_path('images/avatar');
-            $input['avatar'] = $newName;
-            $file->move($path, $newName);
-            return $newName;
-        }
-    }
+//    public function savePicture($input){
+//        if(isset($input['avatar']))
+//        {
+//            $file = $input['avatar'];
+//            $fileExtension = $input['avatar']->getClientOriginalExtension();
+//            $newName = 'avatar-'.time().str_random(6).'.'.$fileExtension;
+//            $path = public_path('/upload/images');
+//            $input['avatar'] = $newName;
+//            $file->move($path, $newName);
+//            return $newName;
+//        }
+//    }
 
     public function show($id)
     {
@@ -180,7 +188,7 @@ class UserManagementController extends Controller
                 DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
             }
             else {
-                $input['avatar'] = $this->savePicture($input);
+                $input['avatar'] = $this->uploader->saveImg($input['avatar']);
                 User::find($id)->update($input);
                 DepartmentUser::where('user_id', $id)->update(['start_date' => Carbon::now(),'end_date' => $input['end_date']]);
             }

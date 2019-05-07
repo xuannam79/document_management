@@ -35,13 +35,13 @@
                             $path = pathinfo($value,PATHINFO_EXTENSION);
                         @endphp
                         @if($path == 'pdf')
-                            <iframe src = "/files/department_admin/timetables/{{ $value }}" style = "width: 100%; height: 500px;"> </iframe>
+                            <iframe src = "/upload/files/schedule/{{ $value }}" style = "width: 100%; height: 500px;"> </iframe>
                             <div style="text-align: center">
                                 <span class="css-timetable-pdf-span">{{ $value }}</span>
                             </div>
                         @endif
                         @if($path == 'jpg' || $path == 'png')
-                            <img src = "/files/department_admin/timetables/{{ $value }}" style = "width: 100%; height: 500px;"> </img>
+                            <img src = "/upload/files/schedule/{{ $value }}" style = "width: 100%; height: 500px;"> </img>
                             <div style="text-align: center">
                                 <span class="css-timetable-pdf-span">{{ $value }}</span>
                             </div>
@@ -53,7 +53,7 @@
                         <div class="upload__files">
                             @foreach($arrayFileDecode as $value)
                                 <div class="preview">
-                                    <a href="{{ Route('timetable.download',$value) }}" style="color:black;">
+                                    <a href="/upload/files/schedule/{{ $value }}" download style="color:black;">
                                         @php
                                             $path = pathinfo($value,PATHINFO_EXTENSION);
                                         @endphp

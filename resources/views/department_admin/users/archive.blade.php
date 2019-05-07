@@ -14,18 +14,28 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>
-                        <th width="20%">ID</th>
-                        <th width="30%">Tên đầy đủ</th>
-                        <th width="30%">Ảnh</th>
-                        <th width="20%">Hành động</th>
+                        <th width="20%">Tên đầy đủ</th>
+                        <th width="20%">Email</th>
+                        <th width="10%">Phone</th>
+                        <th width="20%">Địa Chỉ</th>
+                        <th width="5%">Trạng thái</th>
+                        <th width="10%">Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($departmentUser as $key)
                         <tr>
-                            <td>{{ $key->id }}</td>
                             <td>{{ $key->name }}</td>
-                            <td><a href="/images/avatar/{{$key->avatar}}" ><img src="/images/avatar/{{ $key->avatar }}" class="img-preview2"></a></td>
+                            <td>{{ $key->email }}</td>
+                            <td>{{ $key->phone }}</td>
+                            <td>{{ $key->address }}</td>
+                            <td class="frm-align">
+                                @if($key->is_active != 0)
+                                    <span class="badge badge-success" style="background-color: #28a745">Khả dụng</span>
+                                @else
+                                    <span class="badge badge-pill badge-warning" style="background-color: #dc3545">Không khả dụng</span>
+                                @endif
+                            </td>
                             <td style="text-align: center;vertical-align: middle;">
                                 {!!Form::open(["method" => "PUT", "route" => ["users.archive.restore", $key->id ], "id" => "restoreArchive".$key->id])!!}
                                 <a href="javascript:void(0)" class="text-success data-delete frm-margin-left-8" onclick="restoreArchivedData('restoreArchive'+{{$key->id}})" title="Khôi phục">

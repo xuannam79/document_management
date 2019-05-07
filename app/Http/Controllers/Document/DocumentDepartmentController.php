@@ -6,6 +6,7 @@ use App\Http\Requests\Document\ReplyDocumentRequest;
 use App\Models\DepartmentUser;
 use App\Models\DocumentUser;
 use App\Models\ReplyDocument;
+use App\Uploaders\Uploader;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\DB;
 
 class DocumentDepartmentController extends Controller
 {
+    protected $uploader;
+
+    public function __construct(Uploader $uploader)
+    {
+        $this->uploader = $uploader;
+    }
+
     public function index()
     {
         $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first();
@@ -74,29 +82,6 @@ class DocumentDepartmentController extends Controller
         return view('document.document_department.detail', compact('document', 'arrayFileDecode', 'replyDocument', 'arrayFileReplyDecode'));
     }
 
-    public function saveFile($input)
-    {
-        if (isset($input['file_attachment_reply'])) {
-            foreach ($input['file_attachment_reply'] as $file) {
-                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileExtension = $file->getClientOriginalExtension();
-                $newName = $fileName . '-' . time() . '.' . $fileExtension;
-                $path = public_path('files/file_attachment');
-                $file->move($path, $newName);
-                $data[] = $newName;
-            }
-
-            return $data;
-        }
-    }
-
-    public function downloadFileAttachment($nameFile)
-    {
-        $pathToFile = public_path('files/file_attachment/' . $nameFile);
-
-        return response()->download($pathToFile);
-    }
-
     public function reply(ReplyDocumentRequest $request, $id)
     {
         $input = $request->all();
@@ -106,8 +91,9 @@ class DocumentDepartmentController extends Controller
             $input['file_attachment_reply'] = null;
             ReplyDocument::create($input);
         } else {
-            $data = $this->saveFile($input);
-            $input['file_attachment_reply'] = json_encode($data);
+            $path = 'upload/files/document_reply';
+            $arrFiles = $this->uploader->saveFileAttach($input['file_attachment_reply'],$path);
+            $input['file_attachment_reply'] = json_encode($arrFiles);
             ReplyDocument::create($input);
         }
 

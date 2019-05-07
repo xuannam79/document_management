@@ -10,7 +10,7 @@
                     <h4 style="color:black">{{ $document->title }}</h4>
                     <br>
                     <div>
-                        <img src="/images/avatar/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
                         <span style="color: black;font-weight: bold">{{ $document->name }}</span>
                         <div style="float: right"><span>{{ $document->publish_date }}</span>&nbsp;
                             <button class="pulse-button" id="show" title="Phản hồi"><i class="fa fa-reply"></i></button>
@@ -26,7 +26,7 @@
                         <div>
                             @foreach($arrayFileDecode as $value)
                                 <div class="preview">
-                                    <a href="{{ Route('file-attachment.download',$value) }}" style="color:black;">
+                                    <a href="/upload/files/document/{{ $value }}" download style="color:black;">
                                         @php
                                             $path = pathinfo($value,PATHINFO_EXTENSION);
                                         @endphp
@@ -45,7 +45,7 @@
                         <div style="border: 3px solid #e5e7e9;max-width: 800px;margin-bottom: 10px;">
                             <div class="detail-head">
                                 <div style="margin: 10px;">
-                                    <img src="/images/avatar/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                                    <img src="/upload/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
                                     <span style="color: black;font-weight: bold">{{ $value->name }}</span>
                                     <div style="float: right"><span>{{ $value->created_at }}</span>&nbsp;
                                         <button class="pulse-button" title="Phản hồi"><i class="fa fa-reply"></i></button>
@@ -70,7 +70,7 @@
                                                 $path = pathinfo($value,PATHINFO_EXTENSION);
                                             @endphp
                                             <div class="preview1">
-                                                <a href="{{ Route('file-attachment.download',$value) }}" style="color:black;">
+                                                <a href="/upload/files/document_reply/{{ $value }}" download style="color:black;">
                                                     @if($path == 'docx' || $path == 'doc')
                                                         <span class="preview__name files" title="{{ $value }}"><i class="fas fa-file-word"></i> {{ $value }}</span>
                                                     @else

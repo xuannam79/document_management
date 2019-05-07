@@ -19,4 +19,36 @@ class Uploader
             return $newName;
         }
     }
+
+    public function saveFileAttach($fileAttach , $path)
+    {
+        if (isset($fileAttach)) {
+            foreach($fileAttach as $file)
+            {
+                $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+                $fileExtension = $file->getClientOriginalExtension();
+                $newName = $fileName.'-'.time().'.'.$fileExtension;
+                $path = public_path($path);
+                $file->move($path, $newName);
+                $data[] = $newName;
+            }
+            return $data;
+        }
+    }
+
+    public function saveImg($imgFile)
+    {
+        if (isset($imgFile)) {
+            $strDefault = config('setting.str_default');
+            $tokenName = substr(str_shuffle($strDefault), 0, 16);
+            $file = $imgFile;
+            $fileExtension = $imgFile->getClientOriginalExtension();
+            $nameFile = explode('.',$imgFile->getClientOriginalName());
+            $newName = 'avatar-'.time().'-'.$tokenName.'.'.$fileExtension;
+            $path = public_path('/upload/images');
+            $imgFile = $newName;
+            $file->move($path, $newName);
+            return $newName;
+        }
+    }
 }
