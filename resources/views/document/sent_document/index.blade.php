@@ -2,6 +2,7 @@
 @section('title')
 Văn bản đi
 @endsection
+@include("common.errors")
 @section('content')
  <div class="container">
     <div id="cards-wrapper" class="cards-wrapper row">
@@ -26,6 +27,9 @@ Văn bản đi
                             @endif
                         </div>
                     @endforeach
+                    <div>
+                        {{ $documents->links() }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -50,7 +50,9 @@ Tạo mới văn bản
                     {!! Form::select("departments", [], old("departments"), ["id"=>"multiselect_to", "class"=>"form-control", "size"=>"8", "multiple"=>"multiple"]) !!}
                 </div>
                 <div class="clear"></div><br>
-                {!! Form::submit("Submit", ["class"=>"btn btn-primary"]) !!}
+                <div class="form-group row">
+                    {!! Form::submit("Gửi", ["class"=>"btn btn-primary"]) !!}
+                </div>
             {!! Form::close() !!}
         </div>
     </div>

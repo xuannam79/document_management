@@ -24,6 +24,9 @@ Văn bản đến cá nhân
                             @endif
                         </div>
                     @endforeach
+                    <div>
+                        {{ $documents->links() }}
+                    </div>
                 </div>
             </div>
         </div>
