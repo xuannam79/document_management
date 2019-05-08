@@ -35,15 +35,14 @@
                                             'data-live-search' => 'true']) !!}
                                 </div>
                                 {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
-                                <div class="form-group">
-                                    {!! Form::date('start_date', '', [
-                                            'class'=>'form-control',
-                                            'required']) !!}
+                                <div  class="input-group date" data-date-format="dd/mm/yyyy">
+                                    {!! Form::text('start_date', '', ['readonly', 'class'=>'form-control date', 'required', 'id'=>'date_start', 'data-date-format'=>'dd/mm/yyyy']) !!}
+                                    <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::label('date-end', 'Chọn ngày kết thúc') !!}
-                                <div class="form-group">
-                                    {!! Form::date('end_date', '', [
-                                            'class'=>'form-control']) !!}
+                                <div  class="input-group date" data-date-format="dd/mm/yyyy">
+                                    {!! Form::text('end_date', '', ['readonly', 'class'=>'form-control date', 'id'=>'date_end', 'data-date-format'=>'dd/mm/yyyy']) !!}
+                                    <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::submit('Thêm', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}

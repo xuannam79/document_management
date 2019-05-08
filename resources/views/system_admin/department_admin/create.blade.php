@@ -37,10 +37,9 @@
                                             'data-live-search' => 'true']) !!}
                                 </div>
                                 {!! Form::label('birth_date', "Ngày Sinh") !!}
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        {{ Form::date('birth_date', \Carbon\Carbon::now()->subYear(19), ['class' => 'form-control', 'max' => \Carbon\Carbon::now()->subYear(19)->format('Y-m-d'), 'min' => \Carbon\Carbon::now()->subYear(100)->format('Y-m-d')]) }}
-                                    </div>
+                                <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
+                                    {!! Form::text('birth_date', '', ['readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
+                                    <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::label('gender', "Giới Tính") !!}
                                 <div class="form-group row">
@@ -68,10 +67,9 @@
                                     </div>
                                 </div>
                                 {!! Form::label('start_date', "Ngày bắt đầu") !!}
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        {{ Form::date('start_date', \Carbon\Carbon::now(), ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->subYear(100)->format('Y-m-d')]) }}
-                                    </div>
+                                <div id="datepicker2" class="input-group date" data-date-format="dd/mm/yyyy">
+                                    {!! Form::text('start_date', '', ['readonly', 'class'=>'form-control']) !!}
+                                    <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::submit("Thêm", ['class' => 'btn btn-primary mt-4 pr-4 pl-4', 'id' => 'btnAddUser']) !!}
                                 {!! Form::close() !!}
