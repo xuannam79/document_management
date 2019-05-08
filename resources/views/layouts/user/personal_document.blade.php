@@ -120,7 +120,7 @@
                                     </li>
                                 </a>
                             @endif
-                            @if(auth()->user()->role == 3 && auth()->user()->delegacy == 1)
+                            @if(auth()->user()->role == config('setting.roles.user') && auth()->user()->delegacy == config('setting.delegacy.department_admin'))
                                 <a href="{{route('document-department.index')}}">
                                     <li>
                                         <i class="icon-leftbar fa fa-download"></i>&nbsp;
