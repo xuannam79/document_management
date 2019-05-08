@@ -120,6 +120,14 @@
                                     </li>
                                 </a>
                             @endif
+                            @if(auth()->user()->role == 3 && auth()->user()->delegacy == 1)
+                                <a href="{{route('document-department.index')}}">
+                                    <li>
+                                        <i class="icon-leftbar fa fa-download"></i>&nbsp;
+                                        Văn bản đến đơn vị
+                                    </li>
+                                </a>
+                            @endif
                         </ul>
                     </div>
                 </div>
