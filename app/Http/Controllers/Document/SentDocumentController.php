@@ -16,9 +16,12 @@ class SentDocumentController extends Controller
             ->join('document_department', 'documents.id', '=', 'document_department.document_id')
             ->join('departments', 'document_department.department_id', '=', 'departments.id')
             ->where('user_id', Auth::user()->id)
-            ->select('documents.*', 'departments.name', 'document_department.is_approved', 'document_department.sending_date')
+            ->select(
+                'documents.*', 'departments.name',
+                'document_department.is_approved',
+                'document_department.created_at as sending_date')
             ->orderBy('document_department.created_at', 'desc')
-            ->get();
+            ->paginate(5);
 
         return view("document.sent_document.index", compact('documents'));
     }

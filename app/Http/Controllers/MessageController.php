@@ -50,7 +50,7 @@ class MessageController extends Controller
                 foreach ($attachedFiles['attachedFiles'] as $key => $file) {
                     MessageAttachments::create([
                         'messages_id' => $messageId,
-                        'name' => $this->uploader->saveDocument($file),
+                        'name' => $this->uploader->saveDocument($file, public_path('upload/files/message')),
                     ]);
                 }
             }
@@ -88,7 +88,7 @@ class MessageController extends Controller
                 foreach ($attachedFiles['attachedFiles'] as $key => $file) {
                     MessageAttachments::create([
                         'messages_id' => $messageId,
-                        'name' => $this->uploader->saveDocument($file),
+                        'name' => $this->uploader->saveDocument($file, public_path('upload/files/message')),
                     ]);
                 }
             }

@@ -1,6 +1,6 @@
 @extends('layouts.user.master')
 @section('title')
-    Show
+    Chi tiết văn bản
 @endsection
 @section('content')
     <div class="container">
@@ -24,7 +24,7 @@
                 <div>
                     <div class="upload__files">
                         @foreach($getAttachedFile as $key => $attachedFile)
-                            <a href="/files/file_attachment/{{$attachedFile->name}}" download class="preview"><span class="preview__name" title="{{$attachedFile->name}}">{{$attachedFile->name}}</span></a>
+                            <a href="/upload/files/message/{{$attachedFile->name}}" download class="preview"><span class="preview__name" title="{{$attachedFile->name}}">{{$attachedFile->name}}</span></a>
                         @endforeach
                     </div>
                 </div>
