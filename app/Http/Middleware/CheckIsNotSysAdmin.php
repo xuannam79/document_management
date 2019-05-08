@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckDepAdmin
+class CheckIsNotSysAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,14 +17,14 @@ class CheckDepAdmin
     {
         if(auth()->check())
         {
-            if (auth()->user()->role == config('setting.roles.admin_department'))
+            if (auth()->user()->role != config('setting.roles.system_admin'))
             {
                 return $next($request);
             } else {
-                return redirect()->route('not-found');
+                return redirect()->route('admin-index');
             }
         }
 
-        return redirect()->route('login.index');
+        return redirect()->route('schedule-week.nologin');
     }
 }

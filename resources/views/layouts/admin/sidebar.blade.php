@@ -72,21 +72,6 @@
         </div>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#taisan" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-archive"></i>
-            <span>Tài sản</span>
-        </a>
-        <div id="taisan" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('infrastructure.index') }}">Danh sách tài sản</a>
-                <a class="collapse-item" href="{{ route('infrastructure.create') }}">Thêm tài sản</a>
-                <a class="collapse-item" href="{{ route('infrastructure.archive') }}">Tài sản đã xóa</a>
-            </div>
-        </div>
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->

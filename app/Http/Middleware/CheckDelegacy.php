@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckDepAdmin
+class CheckDelegacy
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class CheckDepAdmin
     {
         if(auth()->check())
         {
-            if (auth()->user()->role == config('setting.roles.admin_department'))
+            if (auth()->user()->role == config('setting.roles.admin_department') || auth()->user()->delegacy == config('setting.delegacy.department_admin'))
             {
                 return $next($request);
             } else {
