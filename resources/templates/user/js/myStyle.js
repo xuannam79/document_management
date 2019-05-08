@@ -115,7 +115,8 @@ $(document).ready(function () {
             scrollTop: $(target).offset().top
         }, 1000);
         event.preventDefault();
- showMessages('{{$message->id}}')   });
+        showMessages('{{$message->id}}')
+    });
     $(".pulse-button").click(function () {
         $('html,body').stop().animate({
             scrollTop: $('#rep-area').offset().top

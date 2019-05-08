@@ -15,12 +15,14 @@
     {{ Html::style(asset('/templates/admin/css/sb-admin-2.min.css')) }}
     {{ Html::style(asset('/templates/admin/vendor/fontawesome-free/css/css.css')) }}
     {{ Html::style(asset('/templates/admin/vendor/datatables/dataTables.bootstrap4.min.css')) }}
+    {{ Html::style(asset('/templates/admin/css/datepicker.css')) }}
+    {{ Html::style(asset('/templates/admin/css/bootstrap-select.min.css')) }}
     {{ Html::style(asset('/css/all.css')) }}
 
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
+    <div id="wrapper">  
         @include('layouts.admin.sidebar')
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -42,7 +44,7 @@
     {{ Html::script(asset('/templates/admin/vendor/datatables/dataTables.bootstrap4.min.js')) }}
     {{ Html::script(asset('/templates/admin/js/demo/datatables-demo.js')) }}
     {{ Html::script(asset('/js/all.js')) }}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-
+    {{ Html::script(asset('/templates/admin/js/bootstrap.min.js')) }}
+    {{ Html::script(asset('/templates/admin/js/bootstrap-datepicker.js')) }}
+    {{ Html::script(asset('/templates/admin/js/bootstrap-select.min.js')) }}
 </html>
