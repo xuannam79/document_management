@@ -17,14 +17,11 @@ class CheckUser
     {
         if(auth()->check())
         {
-            if (auth()->user()->role == config('setting.roles.user')
-                || auth()->user()->role == config('setting.roles.admin_department'))
+            if (auth()->user()->role == config('setting.roles.user'))
             {
-
                 return $next($request);
             } else {
-
-                return redirect()->route('admin-index');
+                return redirect()->route('not-found');
             }
         }
 

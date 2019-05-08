@@ -62,6 +62,8 @@ class Kernel extends HttpKernel
         'checkSysAdmin' => \App\Http\Middleware\CheckSysAdmin::class,
         'checkDepAdmin' => \App\Http\Middleware\CheckDepAdmin::class,
         'checkUser' => \App\Http\Middleware\CheckUser::class,
+        'checkIsNotSysAdmin' => \App\Http\Middleware\CheckIsNotSysAdmin::class,
+        'checkDelegacy' => \App\Http\Middleware\CheckDelegacy::class,
     ];
 
     /**
