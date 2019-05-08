@@ -40,6 +40,13 @@ function changePosition(id) {
     }
 }
 
+function share() {
+    const flag = confirm("Bạn có muốn chia sẻ văn bản này đến toàn nhân viên trong đơn vị không ?");
+    if (flag === true) {
+        $("#share").submit();
+    }
+}
+
 function departmentRedirect() {
     window.location.href = '/admin/department';
 }

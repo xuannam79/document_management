@@ -17,8 +17,9 @@ class CreateReplyDocumentTable extends Migration
             $table->bigIncrements('id');
             $table->integer('document_id');
             $table->integer('user_id');
-            $table->string('content_reply');
+            $table->text('content_reply');
             $table->text('file_attachment_reply')->nullable();
+            $table->boolean('is_reply_personal_document')->default(0);
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class CreateDocumentDepartmentTable extends Migration
             $table->bigIncrements('id');
             $table->integer('document_id');
             $table->integer('department_id');
+            $table->text('array_user_seen')->nullable();
             $table->timestamps();
         });
     }

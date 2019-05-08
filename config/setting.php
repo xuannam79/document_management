@@ -27,6 +27,9 @@ return [
         'no_department' => 0,
         'active' => 1,
     ],
+    'department_name' => [
+        'training_department' => 1,
+    ],
     'department_user' => [
         'active' => 1,
         'no_approved' => 0,
@@ -47,5 +50,9 @@ return [
     'document_user' => [
         'is_unseen' => 0,
         'is_seen' => 1,
+    ],
+    'reply' => [
+        'is_reply_personal_document' => 1,
+        'no_reply_personal_document' => 0,
     ],
 ];

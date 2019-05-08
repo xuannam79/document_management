@@ -16,7 +16,7 @@ class CreateTimetableTable extends Migration
         Schema::create('timetable', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->text('file_attachment')->nullable();
             $table->integer('user_id');
             $table->integer('department_id');

@@ -8,14 +8,15 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <link rel="shortcut icon" href="favicon.ico" />
-    {{ Html::style(asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')) }}
-    {{ Html::style(asset('/templates/user/css/bootstrap.min.css')) }}
-    {{ Html::style(asset('/templates/user/css/style.css')) }}
-    {{ Html::style(asset('/templates/user/css/styles.css')) }}
-    {{ Html::style(asset('/templates/user/css/datepicker.css')) }}
-    {{ Html::script(asset('/templates/user/js/jquery-3.2.1.slim.min.js')) }}
-    {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
-    {{ Html::style(asset('/css/all.css')) }}
+        {{ Html::style(asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')) }}
+        {{ Html::style(asset('/templates/user/css/bootstrap.min.css')) }}
+        {{ Html::style(asset('/templates/user/css/style.css')) }}
+        {{ Html::style(asset('/templates/user/css/styles.css')) }}
+        {{ Html::style(asset('/templates/user/css/datepicker.css')) }}
+        {{ Html::script(asset('/templates/user/js/jquery-3.2.1.slim.min.js')) }}
+        {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
+        {{ Html::style(asset('/css/all.css')) }}
+        {{ Html::style(asset('/templates/admin/vendor/fontawesome-free/css/all.min.css')) }}
     </head>
     <body class="landing-page">
         <div class="page-wrapper">
@@ -44,34 +45,42 @@
                                         'user_id' => Auth::user()->id,
                                         'is_active' => config('setting.department_user.active')
                                     ])->first();
-                                    $arrDocumentID = \App\Models\Document::where('department_id', $departmentID->department_id)->get();
-                                    foreach($arrDocumentID as $arrID){
-                                          $listIdDoc = array();
-                                          if(isset($arrID->id)){
-                                            array_push($listIdDoc, $arrID->id);
-                                          }
+                                    $arrDocumentID = \App\Models\Document::join('document_department', 'document_department.document_id', '=', 'documents.id')
+                                        ->where('document_department.department_id', $departmentID->department_id)
+                                        ->where('documents.is_approved', config('setting.document.approved'))
+                                        ->get();
+                                    if($arrDocumentID->count() > 0){
+                                        foreach($arrDocumentID as $arrID){
+                                              $listIdDoc = array();
+                                              if(isset($arrID->id)){
+                                                array_push($listIdDoc, $arrID->id);
+                                              }
+                                        }
+                                        $documentDepartment = \App\Models\DocumentDepartment::whereIn('document_id', $listIdDoc)->get();
+                                        $count = 0;
+                                        foreach($documentDepartment as $value){
+                                            if(isset($value->array_user_seen) && $value->array_user_seen != ""){
+                                                $check = false;
+                                                $arrayUserSeenDecode = json_decode($value->array_user_seen);
+                                                foreach($arrayUserSeenDecode as $ar){
+                                                    if(Auth::user()->id == $ar){
+                                                        $check = false;
+                                                    }
+                                                    else {
+                                                        $check = true;
+                                                    }
+                                                }
+                                                if($check == true){
+                                                    $count = $count + 1;
+                                                }
+                                            }
+                                            else {
+                                               $count = $documentDepartment->count();
+                                            }
+                                        }
                                     }
-                                    $documentUser = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->get();
-                                    $count = 0;
-                                    foreach($documentUser as $value){
-                                        if(isset($value->array_user_seen) && $value->array_user_seen != ""){
-                                            $check = false;
-                                            $arrayUserSeenDecode = json_decode($value->array_user_seen);
-                                            foreach($arrayUserSeenDecode as $ar){
-                                                if(Auth::user()->id == $ar){
-                                                    $check = false;
-                                                }
-                                                else {
-                                                    $check = true;
-                                                }
-                                            }
-                                            if($check == true){
-                                                $count = $count + 1;
-                                            }
-                                        }
-                                        else {
-                                           $count = $documentUser->count();
-                                        }
+                                    else {
+                                        $count = 0;
                                     }
                                 @endphp
                                 <a href="{{route('document-department.index')}}">
@@ -102,19 +111,55 @@
                                 </a>
                             @else
                                 @php
-                                    $personalUnSeenDocumentsQuantity = count(
-                                        DB::table('document_user')->where(
-                                            ['user_id' => Auth::user()->id,
-                                            'is_seen' => config('setting.document_user.is_unseen')])
-                                        ->get());
+                                    $departmentID = \App\Models\DepartmentUser::where([
+                                        'user_id' => Auth::user()->id,
+                                        'is_active' => config('setting.department_user.active')
+                                    ])->first()->department_id;
+                                    $arrDocumentID = \App\Models\Document::join('document_user', 'document_user.document_id', '=', 'documents.id')
+                                        ->where('document_user.department_id', $departmentID)
+                                        ->orWhere('document_user.user_id', Auth::user()->id)
+                                        ->get();
+                                    if($arrDocumentID->count() > 0){
+                                        foreach($arrDocumentID as $arrID){
+                                              $listIdDoc = array();
+                                              if(isset($arrID->id)){
+                                                array_push($listIdDoc, $arrID->id);
+                                              }
+                                        }
+                                        $documentDepartment = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->get();
+                                        $countPersonalUnSeenDocumentsQuantity = 0;
+                                        foreach($documentDepartment as $value){
+                                            if(isset($value->array_user_seen) && $value->array_user_seen != ""){
+                                                $check = false;
+                                                $arrayUserSeenDecode = json_decode($value->array_user_seen);
+                                                foreach($arrayUserSeenDecode as $ar){
+                                                    if(Auth::user()->id == $ar){
+                                                        $check = false;
+                                                    }
+                                                    else {
+                                                        $check = true;
+                                                    }
+                                                }
+                                                if($check == true){
+                                                    $countPersonalUnSeenDocumentsQuantity = $countPersonalUnSeenDocumentsQuantity + 1;
+                                                }
+                                            }
+                                            else {
+                                               $countPersonalUnSeenDocumentsQuantity = $documentDepartment->count();
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        $countPersonalUnSeenDocumentsQuantity = 0;
+                                    }
                                 @endphp
                                 <a href="{{route('document-personal.index')}}">
                                     <li>
                                         <i class="icon-leftbar fa fa-download"></i>&nbsp;
                                         Văn bản đến cá nhân
-                                        @if($personalUnSeenDocumentsQuantity > 0)
+                                        @if($countPersonalUnSeenDocumentsQuantity > 0)
                                             <span class="count-new-document">
-                                                {{$personalUnSeenDocumentsQuantity}}
+                                                {{$countPersonalUnSeenDocumentsQuantity}}
                                             </span>
                                         @endif
                                     </li>

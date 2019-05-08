@@ -10,16 +10,16 @@ class Uploader
             $strDefault = config('setting.str_default');
             $tokenName = substr(str_shuffle($strDefault), 0, 16);
             $file = $documentFile;
-            $fileExtension = $documentFile->getClientOriginalExtension();
-            $nameFile = explode('.',$documentFile->getClientOriginalName());
-            $newName = time() .'-'. $nameFile[0] . '.' . $fileExtension;
+            $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+            $fileExtension = $file->getClientOriginalExtension();
+            $newName = $fileName.'-'.time().'-'.$tokenName.'.'.$fileExtension;
             $documentFile = $newName;
             $file->move($path, $newName);
             return $newName;
         }
     }
 
-    public function saveFileAttach($fileAttach , $path)
+    public function saveFileAttach($fileAttach , $link)
     {
         if (isset($fileAttach)) {
             foreach($fileAttach as $file)
@@ -29,7 +29,7 @@ class Uploader
                 $fileName = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
                 $fileExtension = $file->getClientOriginalExtension();
                 $newName = $fileName.'-'.time().'-'.$tokenName.'.'.$fileExtension;
-                $path = public_path($path);
+                $path = public_path($link);
                 $file->move($path, $newName);
                 $data[] = $newName;
             }

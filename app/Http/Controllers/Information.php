@@ -9,6 +9,7 @@ use App\Http\Requests\InformationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Uploaders\Uploader;
 
@@ -37,16 +38,16 @@ class Information extends Controller
                 User::where('id', Auth::user()->id)->update(['password' => bcrypt($input['newpassword'])]);
 
                 if( Auth::user()->role == config('setting.roles.system_admin'))
-                    return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');
+                    return redirect()->route('profile.index-admin')->with('messageSuccess', 'Cập Nhật Thành Công');
                 else
-                    return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
+                    return redirect()->route('profile')->with('messageSuccess', 'Cập Nhật Thành Công');
             }
         }
         else{
             if( Auth::user()->role == config('setting.roles.system_admin'))
-                return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
+                return redirect()->route('profile.index-admin')->with('messageFail', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
             else
-                return redirect()->route('profile')->with('alert', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
+                return redirect()->route('profile')->with('messageFail', 'Cập Nhật Thất Bại, Mật Khẩu Cũ Không Đúng');
         }
 
     }
@@ -59,22 +60,55 @@ class Information extends Controller
     public function updateInfo(InformationRequest $request){
         $input = $request->all();
         User::where('id', Auth::user()->id)->update(['name' => $input['name'],'birth_date' => $input['birth_date'],'gender' => $input['gender'],'address' => $input['address'],'phone' => $input['phone']]);
-
-        if( Auth::user()->role == config('setting.roles.system_admin'))
-            return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');
-        else
-            return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
+        try {
+            if (Auth::user()->role == config('setting.roles.system_admin')) {
+                return redirect()->route('profile.index-admin')
+                    ->with('messageSuccess', 'Cập Nhật Thành Công');
+            }
+            else {
+                return redirect()->route('profile')
+                    ->with('messageSuccess', 'Cập Nhật Thành Công');
+            }
+        }
+        catch (Exception $exception)
+        {
+            if (Auth::user()->role == config('setting.roles.system_admin')) {
+                return redirect()->route('profile.index-admin')
+                    ->with('messageFail', 'Cập Nhật Thất Bại');
+            }
+            else {
+                return redirect()->route('profile')
+                    ->with('messageFail', 'Cập Nhật Thất Bại');
+            }
+        }
     }
 
     public function changeAvatar(ChangeAvatarRequest $request){
         $input = $request->avatar;
         $input = $this->uploader->saveImg($input);
 
-        User::where('id', Auth::user()->id)->update(['avatar' => $input]);
 
-        if( Auth::user()->role == config('setting.roles.system_admin'))
-            return redirect()->route('profile.index-admin')->with('alert', 'Cập Nhật Thành Công');
-        else
-            return redirect()->route('profile')->with('alert', 'Cập Nhật Thành Công');
+        try {
+            User::where('id', Auth::user()->id)->update(['avatar' => $input]);
+            if (Auth::user()->role == config('setting.roles.system_admin')) {
+                return redirect()->route('profile.index-admin')
+                    ->with('messageSuccess', 'Cập Nhật Thành Công');
+            }
+            else {
+                return redirect()->route('profile')
+                    ->with('messageSuccess', 'Cập Nhật Thành Công');
+            }
+        }
+        catch (Exception $exception)
+        {
+            if (Auth::user()->role == config('setting.roles.system_admin')) {
+                return redirect()->route('profile.index-admin')
+                    ->with('messageFail', 'Cập Nhật Thất Bại');
+            }
+            else {
+                return redirect()->route('profile')
+                    ->with('messageFail', 'Cập Nhật Thất Bại');
+            }
+        }
     }
 }

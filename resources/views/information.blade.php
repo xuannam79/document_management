@@ -6,6 +6,7 @@
     <div class="container">
         @include('common.errors')
         <div id="cards-wrapper" class="cards-wrapper" style="margin-left: 30%;width: 70%;">
+            @include('common.errors')
             <div class="css-profile" style="height: 270px">
                 <div style="margin-bottom: 2%;margin-top: 2%;position: relative">
                     <div class="left-profile">

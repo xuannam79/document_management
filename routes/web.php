@@ -46,6 +46,13 @@ Route::get('404', [
 
 Route::resource('schedule', 'ScheduleWeekController');
 
+Route::namespace ('Document')->group(function () {
+    Route::post('/document/{id}', [
+        'as' => 'reply.document',
+        'uses' => 'DocumentController@reply',
+    ]);
+});
+
 Route::group(['middleware' => 'checkSysAdmin'], function () {
     Route::prefix('admin')->group(function () {
 
@@ -124,7 +131,6 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
         'as' => 'home-page',
         'uses' => 'HomeController@index',
     ]);
-
     // tin nhắn cho cả 2 role
     Route::resource('message', 'MessageController');
     Route::post('/reply-message/{id}', [
@@ -139,6 +145,20 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
 
     Route::group(['middleware' => 'checkDelegacy'], function () {
         // Phần chỉ dành cho Department admin, không dành cho ủy quyền
+        Route::group(['middleware' => 'CheckIsTrainningDepartment'], function () {
+            Route::namespace ('DepartmentAdmin')->group(function () {
+                Route::resource('schedule-admin',
+                    'ScheduleManagementController');
+                Route::get('/schedule-archived', [
+                    'as'   => 'schedule-archived',
+                    'uses' => 'ScheduleManagementController@archive',
+                ]);
+                Route::put('/schedule-restore/{id}', [
+                    'as'   => 'schedule-restore',
+                    'uses' => 'ScheduleManagementController@restore',
+                ]);
+            });
+        });
         Route::group(['middleware' => 'checkDepAdmin'], function () {
             Route::namespace ('Document')->group(function () {
                 //dep-admin
@@ -180,7 +200,14 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
             Route::get('ajax/department/{id}', 'DocumentController@handleSelectDepartment');
             // văn bản đơn vị
             Route::resource('document-department', 'DocumentDepartmentController');
-
+            Route::post('/share-document/{id}', [
+                'uses' => 'DocumentDepartmentController@share',
+                'as' => 'share.document',
+            ]);
+            Route::post('/document-department/{id}', [
+                'as' => 'reply.document-department',
+                'uses' => 'DocumentDepartmentController@reply',
+            ]);
             //dep-admin
             Route::resource('document-sent', 'SentDocumentController');
         });
@@ -251,23 +278,16 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
     Route::group(['middleware' => 'checkUser'], function () {
         // thời khóa biểu của user - chỉ xem
         Route::resource('timetable-users', 'TimeTableController');
-
+        Route::resource('infrastructure-user', 'InfrastructureController');
         // biểu mẫu của user - chỉ xem
         Route::resource('users-forms', 'FormsController');
 
         Route::namespace ('Document')->group(function () {
-
             //user
             Route::resource('document-personal', 'PersonalDocumentController');
-
-            Route::post('/document-department/{id}', [
-                'as' => 'reply.document-department',
-                'uses' => 'DocumentDepartmentController@reply',
-            ]);
-
-            Route::post('/document/{id}', [
-                'as' => 'reply.document',
-                'uses' => 'DocumentController@reply',
+            Route::post('/document-personal/{id}', [
+                'as' => 'reply.document-personal',
+                'uses' => 'PersonalDocumentController@reply',
             ]);
         });
     });

@@ -15,6 +15,7 @@ class ReplyDocument extends Model
         'user_id',
         'content_reply',
         'file_attachment_reply',
+        'is_reply_personal_document',
     ];
 
     public function department()

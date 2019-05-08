@@ -4,14 +4,13 @@
 @endsection
 @section('content')
     <div class="container-fluid">
-        <a href="{{ route('department.create') }}" class="btn btn-primary">Thêm</a>
         @include('common.errors')
         <br />
         <br />
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Danh sách phòng ban</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Thông Tin Cá Nhân</h6>
             </div>
             <div class="card-body">
                 <div class="css-profile" style="height: 320px">

@@ -58,7 +58,7 @@
                                 {!! Form::label('phone', "Số Điện Thoại") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {!! Form::text('phone', $user->phone, ['class' => 'form-control', 'placeholder' => "Nhập Số Điện Thoại", 'id' => 'phone', 'required' => 'required', 'pattern' => '[0][0-9]{9}',  'title' => 'số điện thoại chỉ gồm số và bắt đầu bằng số 0 , gồm 10 số.']) !!}
+                                        {!! Form::text('phone', $user->phone, ['class' => 'form-control', 'placeholder' => "Nhập Số Điện Thoại", 'id' => 'phone', 'pattern' => '[0][0-9]{9}',  'title' => 'số điện thoại chỉ gồm số và bắt đầu bằng số 0 , gồm 10 số.']) !!}
                                     </div>
                                 </div>
                                 {!! Form::label('birth_date', "Ngày Hết Hạn Tài Khoản") !!}

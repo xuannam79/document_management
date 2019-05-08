@@ -13,6 +13,7 @@ class DocumentDepartment extends Model
     protected $fillable = [
         'document_id',
         'department_id',
+        'array_user_seen',
         'is_approved',
         'sending_date',
     ];

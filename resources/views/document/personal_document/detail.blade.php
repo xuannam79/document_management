@@ -1,6 +1,6 @@
 @extends('layouts.user.personal_document')
 @section('title')
-    Văn bản đến đơn vị
+    Văn bản đến cá nhân
 @endsection
 @section('content')
     <div class="container">
@@ -15,8 +15,7 @@
                     <div>
                         <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
                         <span style="color: black;font-weight: bold">{{ $document->name }}</span>
-                        <div style="float: right">
-                            <span>{{ date('H:m:i ( d-m-Y )', strtotime($document->sending_date)) }}</span>&nbsp;
+                        <div style="float: right"><span>{{ date('H:m:i ( d-m-Y )', strtotime($document->sending_date)) }}</span>&nbsp;
                             <button class="pulse-button" id="show" title="Phản hồi"><i class="fa fa-reply"></i></button>
                         </div>
                     </div>
@@ -51,8 +50,10 @@
                                 <div style="margin: 10px;">
                                     <img src="/upload/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
                                     <span style="color: black;font-weight: bold">{{ $value->name }}</span>
-                                    <div style="float: right"><span title="{{ date('H:m:i ( d-m-Y )', strtotime($value->created_at)) }}">
-                                            {{Carbon\Carbon::createFromTimeStamp(strtotime($value->created_at))->diffForHumans()}}</span>&nbsp;
+                                    <div style="float: right">
+                                        <span title="{{ date('H:m:i ( d-m-Y )', strtotime($value->created_at)) }}">
+                                            {{Carbon\Carbon::createFromTimeStamp(strtotime($value->created_at))->diffForHumans()}}
+                                        </span>&nbsp;
                                         <button class="pulse-button" title="Phản hồi"><i class="fa fa-reply"></i></button>
                                     </div>
                                 </div>
@@ -90,14 +91,11 @@
                         </div>
                     @endforeach
                     <button type="button" class="btn btn-light rep-bot-button"><i class="fa fa-reply"></i>&nbsp;Phản hồi</button>
-                    <button type="button" class="btn btn-light color-btn-share" onclick="share()" title="Chia sẻ đến toàn bộ nhân viên trong đơn vị"><i class="fas fa-share-alt"></i>&nbsp;Chia sẽ </button>
-                    {!! Form::open(['method'=>'POST', 'route'=> ['share.document', $document->documentID], 'id' => 'share']) !!}
-                    {!! Form::close() !!}
                     <div class="reply display-none" id="rep-area">
                         <div>
                             <span class="badge"style="padding-left: 1em;float:none !important;">RE: {{ $document->document_number }}</span>
                         </div>
-                        {!! Form::open(['method'=>'POST', 'route'=>['reply.document-department', $document->documentID], 'files' => true]) !!}
+                        {!! Form::open(['method'=>'POST', 'route'=>['reply.document-personal', $document->documentID], 'files' => true]) !!}
                         {!! Form::textarea('content_reply', null, ['id' => 'content_reply', 'rows' => 5, 'cols' => 90, 'style' => 'resize:none']) !!}
                         <div class="upload">
                             <div class="upload__files">

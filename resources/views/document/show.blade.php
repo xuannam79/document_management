@@ -23,17 +23,17 @@
                     <br>
                     <div class="line"></div>
                     <div >
-                        <div>
+                        <div style="margin: 5px 10px;">
                             @foreach($arrayFileDecode as $value)
-                                <div class="preview">
-                                    <a href="/upload/files/document/{{ $value }}" download style="color:black;">
+                                <div class="preview1">
+                                    <a href="/upload/files/document/{{ $value->name }}" download style="color:black;">
                                         @php
-                                            $path = pathinfo($value,PATHINFO_EXTENSION);
+                                            $path = pathinfo($value->name,PATHINFO_EXTENSION);
                                         @endphp
                                         @if($path == 'docx' || $path == 'doc')
-                                            <span class="preview__name files" title="{{ $value }}"><i class="fas fa-file-word"></i> {{ $value }}</span>
+                                            <span class="preview__name files filesfix" title="{{ $value->name }}"><i class="fas fa-file-word"></i> {{ $value->name }}</span>
                                         @else
-                                            <span class="preview__name files" title="{{ $value }}"><i class="fas fa-file-pdf"></i> {{ $value }}</span>
+                                            <span class="preview__name files filesfix" title="{{ $value->name }}"><i class="fas fa-file-pdf"></i> {{ $value->name }}</span>
                                         @endif
                                     </a>
                                 </div>
@@ -72,9 +72,9 @@
                                             <div class="preview1">
                                                 <a href="/upload/files/document_reply/{{ $value }}" download style="color:black;">
                                                     @if($path == 'docx' || $path == 'doc')
-                                                        <span class="preview__name files" title="{{ $value }}"><i class="fas fa-file-word"></i> {{ $value }}</span>
+                                                        <span class="preview__name files filesfix" title="{{ $value }}"><i class="fas fa-file-word"></i> {{ $value }}</span>
                                                     @else
-                                                        <span class="preview__name files" title="{{ $value }}"><i class="fas fa-file-pdf"></i> {{ $value }}</span>
+                                                        <span class="preview__name files filesfix" title="{{ $value }}"><i class="fas fa-file-pdf"></i> {{ $value }}</span>
                                                     @endif
                                                 </a>
                                             </div>
