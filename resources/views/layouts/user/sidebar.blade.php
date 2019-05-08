@@ -1,7 +1,7 @@
 <div class="item item-green col-lg-4 col-6" id="left-bar">
     <div class="big-sidebar">
         <ul class="big-sidebar-ul">
-        @if(Auth::user()->role == 2)
+        @if(Auth::user()->role == config('setting.roles.admin_department'))
             <a href="{{route('document-department.index')}}"><li class="big-li"><span>Văn bản đến đơn vị</span></li></a>
             @php
             $departmentId = App\Models\DepartmentUser::select('department_id')->where('user_id', Auth::user()->id)->first();
@@ -9,7 +9,7 @@
             ->join('document_department', 'documents.id', 'document_department.document_id')
             ->where('document_department.department_id', $departmentId->department_id)->get();
             @endphp
-        @elseif(Auth::user()->role == 3)
+        @elseif(Auth::user()->role == config('setting.roles.user'))
             <a href="{{route('document-personal.index')}}"><li class="big-li"><span>Văn bản đến cá nhân</span></li></a>
             @php
             $documents = Illuminate\Support\Facades\DB::table('documents')
