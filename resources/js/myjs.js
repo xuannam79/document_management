@@ -4,7 +4,12 @@ function submitForm(id) {
         document.getElementById(id).submit();
     }
 }
-
+function submitFormDeleteHard(id) {
+    const flag = confirm("Bạn có chắc chắc chắn muốn xóa cứng không? \n Dữ liệu sẽ bị mất vĩnh viễn.");
+    if (flag === true) {
+        document.getElementById(id).submit();
+    }
+}
 function restoreArchivedData(id) {
     const flag = confirm("Bạn có muốn khôi phục dữ liệu này?");
     if (flag === true) {
@@ -39,6 +44,22 @@ function changePosition(id) {
         $("#changePosition" + id).submit();
     }
 }
+
+$(document).ready(function() {
+    //set initial state.
+    $('#no_end_date').click(function() {
+        if (!$(this).is(':checked')) {
+            document.getElementById("end_date_div").style.display = "inherit";
+            document.getElementById("end_date").disabled = false;
+            $('#no_end_date').val(0);
+        }
+        else{
+            document.getElementById("end_date_div").style.display = "none";
+            document.getElementById("end_date").disabled = true;
+            $('#no_end_date').val(1);
+        }
+    });
+});
 
 function share() {
     const flag = confirm("Bạn có muốn chia sẻ văn bản này đến toàn nhân viên trong đơn vị không ?");

@@ -142,6 +142,7 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
         'as' => 'profile',
         'uses' => 'Information@index'
     ]);
+    Route::resource('collaboration', 'CollaborationController');
 
     Route::group(['middleware' => 'checkDelegacy'], function () {
         // Phần chỉ dành cho Department admin, không dành cho ủy quyền
@@ -170,6 +171,10 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
 
                 // users
                 Route::resource('users', 'UserManagementController');
+                Route::post('/delete-user/{id}', [
+                    'uses' => 'UserManagementController@delete',
+                    'as' => 'users.delete',
+                ]);
                 Route::get('/ajax-email', [
                     'uses' => 'UserManagementController@ajaxEmail',
                     'as' => 'ajax.email',
@@ -290,5 +295,6 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
                 'uses' => 'PersonalDocumentController@reply',
             ]);
         });
+
     });
 });

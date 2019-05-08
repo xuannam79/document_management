@@ -65,9 +65,13 @@
                                 </div>
                             </div>
                             {!! Form::label('birth_date', "Ngày Hết Hạn Tài Khoản") !!}
-                            <div class="form-group row">
+                            <div style="margin-bottom: 10px">
+                                {!! Form::checkbox('no_end_date', true, true, ['id' => 'no_end_date']) !!}
+                                <span title="tích vào ô nếu không có ngày hết hạn">vô hạn</span>
+                            </div>
+                            <div class="form-group row" id="end_date_div" style="display:none">
                                 <div class="col-sm-12">
-                                    {{ Form::date('end_date', \Carbon\Carbon::now()->addDays(60), ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->addDays(60)->format('Y-m-d'), 'max' => \Carbon\Carbon::now()->addYear(100)->format('Y-m-d')]) }}
+                                    {{ Form::date('end_date', \Carbon\Carbon::now()->addDays(60), ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->addDays(60)->format('Y-m-d'), 'max' => \Carbon\Carbon::now()->addYear(100)->format('Y-m-d'), 'id' => 'end_date']) }}
                                 </div>
                             </div>
                             {!! Form::submit("Thêm", ['class' => 'btn btn-primary mt-4 pr-4 pl-4', 'id' => 'btnAddUser']) !!}
