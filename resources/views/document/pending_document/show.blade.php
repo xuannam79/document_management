@@ -26,6 +26,12 @@
                             @endforeach
                         </div>
                     </div>
+                    <h6 style="color:black">Danh sách các đơn vị nhận:</h6>
+                    <ul>
+                        @foreach($receivedDepartments as $receivedDepartment)
+                            <li>-{{$receivedDepartment->name}}</li>
+                        @endforeach
+                    </ul>
                     {!! Form::open(["method"=>"PATCH", "route"=>["document-pending.update",$document->id]]) !!}
                         {!! Form::button("<i class='fa fa-check'></i>&nbsp;Phê duyệt", ["class"=>"btn btn-primary rep-bot-button", "type" => "submit"]) !!}
                     {!! Form::close() !!}

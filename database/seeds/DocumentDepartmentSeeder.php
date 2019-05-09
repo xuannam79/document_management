@@ -16,7 +16,6 @@ class DocumentDepartmentSeeder extends Seeder
             'document_id' => 1,
             'department_id' => 1,
             'sending_date' => Carbon::now(),
-            'is_approved' => 1,
         ]);
     }
 }

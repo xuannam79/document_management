@@ -11,13 +11,13 @@ Văn bản đang chờ duyệt
                 <div class="all-document list-group">
                     @foreach($documents as $document)
                     <div class="list-group-item ">
-                        <a href="{{ route('document-pending.show',$document->document_department_id) }}" title = "{{$document->content}}" >
+                        <a href="{{ route('document-pending.show',$document->id) }}" title = "{{$document->content}}" >
                         <span class="name" style="max-width: 135px !important;color: black;">{{$document->document_number}}</span>
                             <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                 <span class="" style="color: black;">{{$document->title}}</span><br/>
                                 <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
                             </span>
-                            <span class="badge">{{Carbon\Carbon::createFromTimeStamp(strtotime($document->sending_date))->diffForHumans()}}</span>
+                            <span class="badge">{{Carbon\Carbon::createFromTimeStamp(strtotime($document->created_at))->diffForHumans()}}</span>
                         </a>
                         <span class="name userchinh">Người gửi</span>
                         <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{$document->name}}</a></span>

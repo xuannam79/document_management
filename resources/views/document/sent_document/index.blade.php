@@ -13,12 +13,12 @@ Văn bản đi
                     @foreach($documents as $document)
                         <div class="list-group-item ">
                             <a href="#" title="{{$document->content}}" >
-                            <span class="name" style="max-width: 135px !important;color: black;">Đơn vị nhận: {{$document->name}}</span>
+                            <span class="name" style="max-width: 135px !important;color: black;">Số công văn: {{$document->document_number}}</span>
                                 <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
-                                    <span class="" style="color: black;">{{$document->title}}</span><br/>
+                                    <span class="" style="color: black;">Tiêu đề: {{$document->title}}</span><br/>
                                     <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
                                 </span>
-                                <span class="badge">{{Carbon\Carbon::createFromTimeStamp(strtotime($document->sending_date))->diffForHumans()}}</span>
+                                <span class="badge">{{Carbon\Carbon::createFromTimeStamp(strtotime($document->created_at))->diffForHumans()}}</span>
                             </a>
                             @if($document->is_approved == config('setting.document.approved'))
                                 <span class="approved">Đã phê duyệt</span>
