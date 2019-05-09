@@ -123,6 +123,7 @@ class DocumentController extends Controller
         try {
             $documentData = $request->except('departments', 'attachedFiles', 'search', '_token');
             $documentData['user_id'] = Auth::user()->id;
+            $documentData['is_approved'] = config('setting.document.pending');
             $departments = $request->only('departments');
             $attachedFiles = $request->only('attachedFiles');
             $documentId = Document::insertGetId($documentData);
@@ -131,7 +132,6 @@ class DocumentController extends Controller
                     'document_id' => $documentId,
                     'department_id' => $department,
                     'sending_date' => Carbon::now(),
-                    'is_approved' => config('setting.document.pending'),
                 ]);
             }
             foreach ($attachedFiles["attachedFiles"] as $key => $file) {

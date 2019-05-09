@@ -31,13 +31,13 @@
                                         'position_id' => config('setting.position.admin_department'),
                                         'user_id' => Auth::user()->id,
                                         'is_active' => config('setting.department_user.active') ])->first()->department_id;
+                                    //count number document not yet be approved
                                     $pendingDocumentsQuantity = count(DB::table('documents')
-                                        ->join('document_department', 'documents.id', '=', 'document_department.document_id')
                                         ->join('users', 'users.id', '=', 'documents.user_id')
                                         ->where([
                                             'documents.department_id' => $currentDepartmentId,
-                                            'document_department.is_approved' => config('setting.department_user.no_approved')])
-                                        ->select('documents.*', 'users.name', 'document_department.sending_date')->get()
+                                            'is_approved' => config('setting.department_user.no_approved')])
+                                        ->select('documents.*')->get()
                                     );
                                     //count number document not yet seen
                                     $departmentID = \App\Models\DepartmentUser::where([
