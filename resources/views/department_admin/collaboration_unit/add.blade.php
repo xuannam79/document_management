@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg-12 col-ml-12">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Thêm đơn vị liên kết</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Thêm Đơn Vị Liên Kết</h6>
             </div>
             @include('common.errors')
             <div class="row" style="text-align: left;">

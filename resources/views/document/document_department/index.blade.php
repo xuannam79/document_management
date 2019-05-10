@@ -31,7 +31,7 @@ Văn bản đến đơn vị
                             <span class="" style="color: black;">{{ $value->title }}</span></br>
                                     <span class="text-muted"><span style="color: black;">Trích yếu nội dung: {{ $value->content }}</span></span>
                         </span>
-                                <span class="badge">{{ $value->publish_date }}</span>
+                                <span class="badge">{{ date('d-m-Y', strtotime($value->publish_date)) }}</span>
                             </a>
                             <span class="name userchinh">Người gửi</span>
                             <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>

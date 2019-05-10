@@ -1303,7 +1303,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
 .cards-section .cards-wrapper {
     max-width: 860px;
     margin-left: auto;
-    margin-right: -9%;
 }
 
 .cards-section .item {
@@ -1350,7 +1349,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
     top: 0;
     left: 0;
     z-index: 1;
-/*    background-image: url("../images/empty.gif");*/
+    /*    background-image: url("../images/empty.gif");*/
     /* for IE8 */
 }
 
@@ -1471,7 +1470,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
 
 #left-bar {
     float: left;
-    margin-left: 5%;
     min-width: 5em;
     width: 25%;
 }

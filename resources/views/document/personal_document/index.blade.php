@@ -17,7 +17,7 @@ Văn bản đến cá nhân
                                     <span class="" style="color: black;">{{$document->title}}</span><br/>
                                     <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
                                 </span>
-                                <span class="badge">{{Carbon\Carbon::createFromTimeStamp(strtotime($document->created_at))->diffForHumans()}}</span>
+                                <span class="badge">{{ date('d-m-Y', strtotime($document->created_at)) }}</span>
                             </a>
                             @if($document->is_seen == config('setting.document_user.is_unseen'))
                                 <span class="userchinh3">Mới</span>
