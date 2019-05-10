@@ -12,9 +12,10 @@
         @elseif(Auth::user()->role == config('setting.roles.user'))
             <a href="{{route('document-personal.index')}}"><li class="big-li"><span>Văn bản đến cá nhân</span></li></a>
             @php
-            $documents = Illuminate\Support\Facades\DB::table('documents')
-            ->join('document_user', 'documents.id', 'document_user.document_id')
-            ->where('document_user.user_id', Auth::user()->id)->get();
+                $departmentId = App\Models\DepartmentUser::select('department_id')->where('user_id', Auth::user()->id)->first();
+                $documents = Illuminate\Support\Facades\DB::table('documents')
+                ->join('document_user', 'documents.id', 'document_user.document_id')
+                ->where('document_user.department_id', $departmentId->department_id)->get();
             @endphp
         @endif
             <li>

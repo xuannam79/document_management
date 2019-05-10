@@ -5,8 +5,8 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        @include('common.errors')
         <div class="col-lg-12 col-ml-12">
+            @include('common.errors')
             <div class="card-header py-3" style="margin-bottom: 5px;">
                 <h6 class="m-0 font-weight-bold text-primary">Danh Sách Thành Viên</h6>
             </div>

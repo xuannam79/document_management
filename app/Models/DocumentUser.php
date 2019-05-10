@@ -12,7 +12,9 @@ class DocumentUser extends Model
 
     protected $fillable = [
         'document_id',
+        'department_id',
         'user_id',
+        'array_user_seen',
         'is_seen',
     ];
 

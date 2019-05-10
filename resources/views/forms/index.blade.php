@@ -28,8 +28,8 @@
                 @foreach($form as $value)
                     <div class="list-group-item" >
                         <a href="{{ route('users-forms.show',$value->id) }}" title="{{ $value->name }}" >
-                            <span style="float: left;color: black;width: 80%">{{ $value->name }}</span>
-                            <span class="badge">{{ $value->created_at }}</span>
+                            <span style="text-align: left;float: left;color: black;width: 80%">{{ $value->name }}</span>
+                            <span class="badge">{{ date('d-m-Y', strtotime($value->created_at)) }}</span>
                         </a>
                     </div>
                 @endforeach

@@ -30,7 +30,7 @@ Tạo mới văn bản
                 </div>
                 <div class="form-group">
                     {!! Form::label("attachedFiles", "File đính kèm", []) !!}
-                    {!! Form::file("attachedFiles[]", ["class"=>"form-control-file", "multiple", "id"=>"attachedFiles", "style"=>"width: 50%;margin-left: 33%"]) !!}
+                    {!! Form::file("attachedFiles[]", ["class"=>"form-control-file", "multiple", "id"=>"attachedFiles", "style"=>"width: 50%;margin-left: 33%", 'required']) !!}
                 </div>
                 <div class="form-group" style="width: 35%;margin-left: 2%">
                     {!! Form::text("search", "", ["class"=>"form-control live-search-box", "placeholder"=>" Tìm kiếm đơn vị... "]) !!}

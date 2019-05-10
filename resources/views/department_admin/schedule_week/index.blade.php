@@ -6,11 +6,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 col-ml-12">
+                @include('common.errors')
                 <div class="card-header py-3" style="margin-bottom: 5px;">
                     <h6 class="m-0 font-weight-bold text-primary">Danh Sách Lịch Tuần Của Trường</h6>
                 </div>
                 <a href="{{ route('schedule-admin.create') }}" class="btn btn-primary" style="float:left;}">Thêm</a>
-                @include('common.errors')
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>

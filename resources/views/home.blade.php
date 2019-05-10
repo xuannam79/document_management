@@ -75,6 +75,18 @@
                         <a class="link" href="{{ route('collaboration-unit.index') }}"><span></span></a>
                     </div>
                 </div>
+                <div class="item item-orange col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="title">Quản lý tài sản</h3>
+                        <p class="intro">
+                            Quản lý tài sản của đơn vị
+                        </p>
+                        <a class="link" href="{{ route('infrastructure.index') }}"><span></span></a>
+                    </div>
+                </div>
                 @if (auth()->user()->role == config('setting.roles.admin_department'))
                     {{-- Danh sách cán bộ, nhân viên --}}
                     <div class="item item-orange item-2 col-lg-4 col-6">
@@ -102,6 +114,24 @@
                             <a class="link" href="{{ route('delegacy.index') }}"><span></span></a>
                         </div>
                     </div>
+                    {{-- Lịch tuần --}}
+                    @php
+                        $departmentId = \App\Models\DepartmentUser::where('user_id', auth()->user()->id)->first()->department_id;
+                    @endphp
+                    @if ( $departmentId == config('setting.department_name.training_department'))
+                        <div class="item item-red col-lg-4 col-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <i class="icon fa fa-calendar"></i>
+                                </div>
+                                <h3 class="title">Lịch tuần trường</h3>
+                                <p class="intro">
+                                    Quản lý lịch tuần của trường
+                                </p>
+                                <a class="link" href="{{ route('schedule-admin.index') }}"><span></span></a>
+                            </div>
+                        </div>
+                    @endif
                 @endif
             @endif
             @if (auth()->user()->role == config('setting.roles.user'))
@@ -130,6 +160,32 @@
                             <a class="link" href="{{route('users-forms.index')}}"><span></span></a>
                         </div>
                     </div>
+                    {{-- Lịch tuần --}}
+                    <div class="item item-red col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-calendar"></i>
+                            </div>
+                            <h3 class="title">Lịch tuần trường</h3>
+                            <p class="intro">
+                                Xem thời khóa biểu của tuần
+                            </p>
+                            <a class="link" href="{{ route('schedule.index') }}"><span></span></a>
+                        </div>
+                    </div>
+                    {{-- Tài sản--}}
+                    <div class="item item-orange col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fas fa-briefcase"></i>
+                            </div>
+                            <h3 class="title">Tài sản</h3>
+                            <p class="intro">
+                                Xem tài sản của đơn vị
+                            </p>
+                            <a class="link" href="{{ route('infrastructure-user.index') }}"><span></span></a>
+                        </div>
+                    </div>
                 @endif
             @endif
             {{-- Tin nhắn --}}
@@ -143,19 +199,6 @@
                         Soạn và xem tin nhắn
                     </p>
                     <a class="link" href="{{route('message.index')}}"><span></span></a>
-                </div>
-            </div>
-            {{-- Lịch tuần --}}
-            <div class="item item-red col-lg-4 col-6">
-                <div class="item-inner">
-                    <div class="icon-holder">
-                        <i class="icon fa fa-calendar"></i>
-                    </div>
-                    <h3 class="title">Lịch tuần trường</h3>
-                    <p class="intro">
-                        Xem thời khóa biểu của tuần
-                    </p>
-                    <a class="link" href="{{ route('schedule.index') }}"><span></span></a>
                 </div>
             </div>
         </div>

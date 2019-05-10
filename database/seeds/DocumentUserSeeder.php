@@ -11,11 +11,5 @@ class DocumentUserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('document_user')->insert([
-            'document_id' => 1,
-            'user_id' => 1,
-            'array_user_seen' => null,
-            'is_seen' => 1,
-        ]);
     }
 }

@@ -11,9 +11,8 @@ Văn bản đến đơn vị
                 <div class="all-document list-group">
                     @foreach($document as $value)
                         @php
-                            $id = \App\Models\DocumentUser::where('document_id',$value->documentID)->first();
-                            $id_reply = \App\Models\ReplyDocument::where('document_id',$value->documentID)
-                                ->first();
+                            $id = \App\Models\DocumentDepartment::where('document_id', $value->documentID)->first();
+                            $id_reply = \App\Models\ReplyDocument::where('document_id',$value->documentID)->first();
                             $arrId = json_decode($id->array_user_seen);
                             $checkNew = false;
                             if(isset($arrId)){
@@ -28,17 +27,20 @@ Văn bản đến đơn vị
                             <a href="{{ route('document-department.show',$value->documentID) }}" title="{{ $value->content }}" >
                                 <span class="name" style="max-width: 135px !important;color: black;">{{ $value->name_department }}</span>
                                 <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
-                            <span class="" style="color: black;">{{ $value->title }}</span></br>
+                                    <span class="" style="color: black;">{{ $value->title }}</span></br>
                                     <span class="text-muted"><span style="color: black;">Trích yếu nội dung: {{ $value->content }}</span></span>
-                        </span>
-                                <span class="badge">{{ date('d-m-Y', strtotime($value->publish_date)) }}</span>
+                                </span>
+                                <span class="badge" title="{{ date('H:m:i ( d-m-Y )', strtotime($value->sending_date)) }}">
+                                    {{Carbon\Carbon::createFromTimeStamp(strtotime($value->sending_date))->diffForHumans()}}
+                                </span>
                             </a>
                             <span class="name userchinh">Người gửi</span>
                             <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>
+                            <span class ="name type_document"><span href="" style="color:#f7f7f7;">{{ $value->name_type_document }}</span></span>
                             @if($checkNew == true)
                                 <span class="userchinh2">đã xem</span>
                             @else
-                                <span class="userchinh3">New</span>
+                                <span class="userchinh3">Mới</span>
                             @endif
                         </div>
                     @endforeach

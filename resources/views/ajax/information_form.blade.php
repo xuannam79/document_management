@@ -25,7 +25,7 @@
     {!! Form::text('address', Auth::user()->address, ['class' => 'form-control css-profile-input', 'placeholder' => "Nhập Địa Chỉ", 'id' => 'address', 'required' => 'required', 'pattern' => config('setting.patter_address'),  'title' => 'địa chỉ bao gồm chữ và số']) !!}
     <br />
     <i class="fa fa-phone icon-margin-right" style="width: 15px;"></i>
-    {!! Form::text('phone', Auth::user()->phone, ['class' => 'form-control css-profile-input', 'placeholder' => "Nhập Số Điện Thoại", 'id' => 'phone', 'required' => 'required', 'pattern' => '[0][0-9]{9}',  'title' => 'số điện thoại chỉ gồm số và bắt đầu bằng số 0 , gồm 10 số.']) !!}
+    {!! Form::text('phone', Auth::user()->phone, ['class' => 'form-control css-profile-input', 'placeholder' => "Nhập Số Điện Thoại", 'id' => 'phone', 'pattern' => '[0][0-9]{9}',  'title' => 'số điện thoại chỉ gồm số và bắt đầu bằng số 0 , gồm 10 số.']) !!}
     <br />
 </p>
 <div class="button-profile">
