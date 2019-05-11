@@ -15,7 +15,7 @@
                                         'method'=>'POST',
                                         'route'=>'department-user.store'
                                         ]) !!}
-                                {!! Form::label('nameAdminDepartment', 'Chọn trưởng đơn vị') !!}
+                                {!! Form::label('nameAdminDepartment', 'Chọn nhân sự - cán bộ') !!}
                                 <div class="form-group">
                                     {!! Form::select('user_id', $searchAdmin, null,
                                             ['class' => 'selectpicker form-control',

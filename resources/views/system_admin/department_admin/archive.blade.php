@@ -44,8 +44,8 @@
                         <tr>
                             <td class="frm-align">{{ $depUser->department_user_id }}</td>
                             <td class="frm-align">{{ $depUser->username }}</td>
-                            <td class="frm-align">{{ $depUser->department_name }}</td>
-                            <td class="frm-align">{{ $depUser->position_name }}</td>
+                            <td class="frm-align">{{ $depUser->depname }}</td>
+                            <td class="frm-align">{{ $depUser->posname }}</td>
                             <td class="frm-align">{{ $depUser->start_date }}</td>
                             @if ($depUser->end_date === null)
                                 <td class="frm-align">Chưa xác định</td>

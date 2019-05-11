@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    <a href="{{ route('department-admin.create') }}" class="btn btn-primary">Thêm</a>
+    <a href="{{ route('create-department-admin.create') }}" class="btn btn-primary">Thêm</a>
     @include('common.errors')
     <br />
     <br />

@@ -21,7 +21,11 @@
                                 @if(!isset(Auth::user()->avatar))
                                     <img src="http://placehold.it/380x500" style="width: 150px" alt="" class="img-rounded img-responsive" />
                                 @else
-                                    <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                    @if (Auth::user()->avatar == 'user-default.png')
+                                        <a href="/templates/user/images/{{Auth::user()->avatar}}"><img src="/templates/user/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                    @else
+                                        <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                    @endif
                                 @endif
                                 <div class="file btn btn-lg btn-primary">Thay Đổi
                                     {!! Form::file('avatar',['id' => 'picture']) !!}

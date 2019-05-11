@@ -51,7 +51,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('create-department-admin.create') }}">Tạo mới trưởng đơn vị</a>
                 <a class="collapse-item" href="{{ route('department-admin.index') }}">Danh sách trưởng đơn vị</a>
-                <a class="collapse-item" href="{{ route('department-admin.create') }}">Ủy nhiệm trưởng đơn vị</a>
                 <a class="collapse-item" href="{{ route('department-admin-archived') }}">Trưởng đơn vị đã xóa</a>
             </div>
         </div>
@@ -67,7 +66,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('department-user.index') }}">Danh sách</a>
                 <a class="collapse-item" href="{{ route('department-user.create') }}">Chuyển đổi nhân sự</a>
-                <a class="collapse-item" href="{{ route('department-user-archived') }}">Nhân sự đã hết hạn</a>
             </div>
         </div>
     </li>

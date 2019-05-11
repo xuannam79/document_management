@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    <a href="{{ route('department-user.create') }}" class="btn btn-primary">Thêm</a>
+    <a href="{{ route('department-user.create') }}" class="btn btn-primary">Chuyển đổi nhân sự</a>
     @include('common.errors')
     <br />
     <br />
@@ -58,11 +58,6 @@
                                 <a href="{{ route('department-user.edit', $depUser->department_user_id) }}" class="text-warning frm-margin-right-8">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                {!!Form::open(['method'=>'DELETE', 'id'=>'delete-depUser'.$depUser->department_user_id, 'route'=>['department-user.destroy', $depUser->department_user_id], 'style'=>'display:inline'])!!}
-                                <a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8" onclick='submitForm("delete-depUser" + {{$depUser->department_user_id}});'>
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                                {!!Form::close()!!}
                             </td>
                         </tr>
                         @endforeach

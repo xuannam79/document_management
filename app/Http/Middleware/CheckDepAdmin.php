@@ -17,7 +17,8 @@ class CheckDepAdmin
     {
         if(auth()->check())
         {
-            if (auth()->user()->role == config('setting.roles.admin_department'))
+            if (auth()->user()->role == config('setting.roles.admin_department')
+                && auth()->user()->is_active == config('setting.active.is_active'))
             {
                 return $next($request);
             } else {

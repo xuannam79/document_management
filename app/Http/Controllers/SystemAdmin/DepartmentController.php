@@ -50,24 +50,23 @@ class DepartmentController extends Controller
 
             $input = $request->only('name');
             $input['is_active'] = config('setting.active.is_active');
-
             $getAllDepartments = Department::all();
             $inputRequest = trim(str_replace('-', '', str_slug($input['name'])));
             foreach ($getAllDepartments as $department) {
                 $departmentName = trim(str_replace('-', '', str_slug($department->name)));
                 if ($inputRequest == $departmentName) {
 
-                    return redirect()->route('department.create')->with('alert', 'Tên phòng ban bạn nhập đã bị trùng! Vui lòng nhập tên phòng ban khác!');
+                    return redirect()->route('department.create')->with('messageFail', 'Tên phòng ban bạn nhập đã bị trùng! Vui lòng nhập tên phòng ban khác!');
                 }
             } 
             Department::create($input);
             DB::commit();
 
-            return redirect(route('department.index'))->with('alert', 'Thêm thành công');
+            return redirect(route('department.index'))->with('messageSuccess', 'Thêm thành công');
         } catch (Exception $e) {
             DB::rollBack();
 
-            return redirect(route('department.create'))->with('alert', 'Thêm thất bại');
+            return redirect(route('department.create'))->with('messageFail', 'Thêm thất bại');
         }
     }
 
@@ -110,16 +109,16 @@ class DepartmentController extends Controller
 
             if ($result) {
 
-                return redirect(route('department.index'))->with('alert', 'Sửa thành công');
+                return redirect(route('department.index'))->with('messageSuccess', 'Sửa thành công');
             } else{
 
-                return redirect(route('department.index'))->with('alert', 'Dữ liệu không được sửa đổi');
+                return redirect(route('department.index'))->with('messageFail', 'Dữ liệu không được sửa đổi');
             }
 
 
         } catch (Exception $e) {
 
-            return redirect(route('department.edit'))->with('alert', 'Sửa thất bại');
+            return redirect(route('department.edit'))->with('messageFail', 'Sửa thất bại');
         }
     }
 
@@ -132,20 +131,27 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         try {
+            $countMemberOfDepartment = DB::table('department_users')
+                ->join('users', 'department_users.department_id', '=', 'users.id')
+                ->where('users.id', '=', $id, 'and', 'users.is_active', '=', config('setting.active.is_active'))
+                ->count();
+            if ($countMemberOfDepartment) {
+                return redirect(route('department.index'))->with('messageFail', 'Phòng ban này hiện vẫn còn thành viên, không thể xóa');
+            }
             $dataActive = config('setting.active.no_active');
             $result = Department::whereId($id)->update(['is_active' => $dataActive]);
 
             if ($result) {
 
-                return redirect(route('department.index'))->with('alert', 'Xóa thành công');
+                return redirect(route('department.index'))->with('messageSuccess', 'Xóa thành công');
             } else {
 
-                return redirect(route('department.index'))->with('alert', 'Xóa thất bại');
+                return redirect(route('department.index'))->with('messageFail', 'Xóa thất bại');
             }
 
         } catch (Exception $e) {
 
-            return redirect(route('department.index'))->with('alert', 'Xóa thất bại');
+            return redirect(route('department.index'))->with('messageFail', 'Xóa thất bại');
         }
     }   
 
@@ -161,18 +167,17 @@ class DepartmentController extends Controller
         try {
             $active = config('setting.active.is_active');
             $result = Department::whereId($id)->update(['is_active' => $active]);
-
             if ($result) {
 
-                return redirect(route('department-archived'))->with('alert', 'Khôi phục thành công');
+                return redirect(route('department-archived'))->with('messageSuccess', 'Khôi phục thành công');
             } else {
 
-                return redirect(route('department-archived'))->with('alert', 'Không tìm thấy id');
+                return redirect(route('department-archived'))->with('messageFail', 'Không tìm thấy id');
             }
 
         } catch (Exception $e) {
 
-            return redirect(route('department-archived'))->with('alert', 'Khôi phục thất bại');
+            return redirect(route('department-archived'))->with('messageFail', 'Khôi phục thất bại');
         }
     }
 }

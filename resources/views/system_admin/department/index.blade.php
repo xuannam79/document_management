@@ -4,8 +4,8 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    <a href="{{ route('department.create') }}" class="btn btn-primary">Thêm</a>
     @include('common.errors')
+    <a href="{{ route('department.create') }}" class="btn btn-primary">Thêm</a>
     <br />
     <br />
     <!-- DataTales Example -->
@@ -39,7 +39,7 @@
                         <tr>
                             <td class="frm-align">{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
-                            <td class="frm-align">{{ $department->created_at }}</td>
+                            <td class="frm-align">{{ date('d-m-Y h:m:s', strtotime($department->created_at)) }}</td>
                             <td class="frm-align"><span class="badge badge-pill badge-success">Khả dụng</span></td>
                             <td class="frm-align">
                                 <a href="{{ route('department.edit', $department->id) }}" class="text-warning frm-margin-right-8">
