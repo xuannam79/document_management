@@ -2,7 +2,6 @@
 @section('title')
 Văn bản đến cá nhân
 @endsection
-@include("common.errors")
 @section('content')
  <div class="container">
     <div id="cards-wrapper" class="cards-wrapper row">
@@ -10,6 +9,7 @@ Văn bản đến cá nhân
             <div id="sec1">
                 <h4 class="h4-first">Văn bản đến cá nhân</h4>
                 @include('layouts.user.search', ['currentPage'=>'personalDocument'])
+                @include("common.errors")
                 <div class="all-document list-group">
                     @foreach($document as $value)
                         @php
