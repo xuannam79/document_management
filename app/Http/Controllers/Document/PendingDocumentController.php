@@ -18,7 +18,7 @@ class PendingDocumentController extends Controller
         $currentDepartmentId = DepartmentUser::where([
             'position_id' => 1,
             'user_id' => Auth::user()->id,
-            'is_active' => config('setting.department_user.active')])
+            ])
             ->first()->department_id;
         $documents = DB::table('documents')
             ->join('users', 'users.id', '=', 'documents.user_id')

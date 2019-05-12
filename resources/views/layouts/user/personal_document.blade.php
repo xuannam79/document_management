@@ -43,7 +43,6 @@
                                     //count number document not yet seen
                                     $departmentID = \App\Models\DepartmentUser::where([
                                         'user_id' => Auth::user()->id,
-                                        )
                                     ])->first();
                                     $arrDocumentID = \App\Models\Document::join('document_department', 'document_department.document_id', '=', 'documents.id')
                                         ->where('document_department.department_id', $departmentID->department_id)
@@ -113,7 +112,6 @@
                                 @php
                                     $departmentID = \App\Models\DepartmentUser::where([
                                         'user_id' => Auth::user()->id,
-                                        )
                                     ])->first()->department_id;
                                     $arrDocumentID = \App\Models\Document::join('document_user', 'document_user.document_id', '=', 'documents.id')
                                         ->where('document_user.department_id', $departmentID)
