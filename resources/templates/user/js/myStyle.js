@@ -32,8 +32,8 @@
 function showMessages(id) {
     window.location.href = 'message/' + id;
 }
-function showDocument(id) {
-    window.location.href = 'document/' + id;
+function showDocumentDepartment(id) {
+    window.location.href = 'document-department/' + id;
 }
 $(function () {
     $("#datepicker").datepicker({

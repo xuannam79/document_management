@@ -8,6 +8,7 @@ Văn bản đến đơn vị
         <div class="list-document-detail">
             <div id="sec1">
                 <h4 class="h4-first">Văn bản đến đơn vị</h4>
+                @include('layouts.user.search', ['currentPage'=>'documentDepartment'])
                 <div class="all-document list-group">
                     @foreach($document as $value)
                         @php
@@ -23,7 +24,7 @@ Văn bản đến đơn vị
                             }
                             }
                         @endphp
-                        <div class="list-group-item {{ ($checkNew == true)? '':'newDoc'}} @if(isset($id_reply->user_id)) {{($id_reply->user_id == Auth::user()->id)?'replied':''}}@endif" >
+                        <div onclick="showDocumentDepartment('{{$value->documentID}}')" class="list-group-item  {{ ($checkNew == true)? '':'newDoc'}} @if(isset($id_reply->user_id)) {{($id_reply->user_id == Auth::user()->id)?'replied':''}}@endif" >
                             <a href="{{ route('document-department.show',$value->documentID) }}" title="{{ $value->content }}" >
                                 <span class="name" style="max-width: 135px !important;color: black;">{{ $value->name_department }}</span>
                                 <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">

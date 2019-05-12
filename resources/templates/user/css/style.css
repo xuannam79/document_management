@@ -1621,7 +1621,11 @@ span.name {
 }
 
 .form-search {
-    float: right;
+    float: left;
+}
+
+.form-control.date-area {
+    background: #fff;
 }
 
 .create-doc {
