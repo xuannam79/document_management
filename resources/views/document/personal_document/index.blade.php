@@ -9,6 +9,7 @@ Văn bản đến cá nhân
         <div class="list-document-detail">
             <div id="sec1">
                 <h4 class="h4-first">Văn bản đến cá nhân</h4>
+                @include('layouts.user.search', ['currentPage'=>'personalDocument'])
                 <div class="all-document list-group">
                     @foreach($document as $value)
                         @php

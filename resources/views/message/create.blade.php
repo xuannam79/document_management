@@ -25,7 +25,7 @@ Tạo tin nhắn mới
                     {!! Form::file("attachedFiles[]", ["class"=>"form-control-file", "multiple", "style"=>"width: 50%;margin-left: 33%"]) !!}
                 </div>
                 <div class="clear"></div><br>
-                {!! Form::submit("Submit", ["class"=>"btn btn-primary"]) !!}
+                {!! Form::submit("Gửi", ["class"=>"btn btn-primary", 'style'=>'float:left']) !!}
             {!! Form::close() !!}
         </div>
     </div>

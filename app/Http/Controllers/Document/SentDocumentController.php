@@ -13,7 +13,7 @@ class SentDocumentController extends Controller
     {
         Carbon::setLocale('vi');
         $documents = DB::table('documents')
-            ->join('document_types', 'document_types.id', '=', 'documents.document_type_id')
+            ->join('document_types', 'document_types.id', 'documents.document_type_id')
             ->where('user_id', Auth::user()->id)
             ->orderBy('documents.created_at', 'desc')
             ->select('documents.*', 'document_types.name as document_type')
