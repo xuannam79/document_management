@@ -14,7 +14,7 @@ Tạo tin nhắn mới
                 </div>
                 <div class="form-group" style="width: 45%;float:left">
                     {!! Form::label("receiver", "Người nhận", []) !!}
-                    {!! Form::select("receiver", $users, old("receiver"), ["class"=>"form-control"]) !!}
+                    {!! Form::select("receiver", $users, old("receiver"), ['data-live-search'=>'true', "class"=>"form-control selectpicker"]) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label("content", "Nội dung tin nhắn", []) !!}

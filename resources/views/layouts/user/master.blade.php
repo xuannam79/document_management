@@ -17,8 +17,10 @@
         {{ Html::script(asset('/templates/user/js/popper.min.js')) }}
         {{ Html::style(asset('/css/all.css')) }}
         {{ Html::style(asset('templates/admin/vendor/fontawesome-free/css/all.min.css')) }}
-        {{ Html::style(asset('/templates/user/css/bootstrap.css')) }}
+        {{-- {{ Html::style(asset('/templates/user/css/bootstrap.css')) }} --}}
         {{ Html::style(asset('/templates/user/css/dataTables.bootstrap4.min.css')) }}
+        {{ Html::style(asset('/templates/user/css/bootstrapselect.min.css')) }}
+        {{ Html::style(asset('/templates/user/css/bootstrap-select-163.min.css')) }}
     </head>
     <body class="landing-page">
         <div class="page-wrapper">
@@ -41,8 +43,10 @@
         {{ Html::style(asset('/templates/user/css/bootstrap-select.min.css')) }}
         {{ Html::script(asset('/templates/user/js/jquery.dataTables.min.js')) }}
         {{ Html::script(asset('/templates/user/js/dataTables.bootstrap4.min.js')) }}
-        {{ Html::script(asset('/templates/user/js/bootstrap-select.min.js')) }}
         {{ Html::script(asset('/templates/user/datatable-js/vi.js')) }}
+        {{ Html::script(asset('/templates/user/js/jquery.min.js')) }}
+        {{ Html::script(asset('/templates/user/js/bootstrap-select-332.min.js')) }}
+        {{ Html::script(asset('/templates/user/js/bootstrap-select.min.js')) }}
     </body>
 </html>
 

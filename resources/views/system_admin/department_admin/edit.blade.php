@@ -31,7 +31,7 @@
                                    {!! Form::text('department_id', $searchDepartment['department']['name'], ['class' => 'form-control', 'readonly']) !!}
                                 </div>
                                 {!! Form::label('birth_date', "Ngày Sinh") !!}
-                                <div id="birth_date" class="input-group date" data-date-format="dd/mm/yyyy">
+                                <div class="input-group date birthday" data-date-format="dd/mm/yyyy">
                                     {!! Form::text('birth_date', $depUsers->birth_date, ['readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
                                     <span class="input-group-addon"></span>
                                 </div>

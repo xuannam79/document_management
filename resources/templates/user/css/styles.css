@@ -1493,3 +1493,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
     width: 100%;
     transition: width 0.3s;
 }
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+    border:none;
+}

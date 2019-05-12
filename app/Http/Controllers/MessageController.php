@@ -32,7 +32,7 @@ class MessageController extends Controller
     }
     public function create()
     {
-        $users = User::where('id', '!=', Auth::user()->id)->pluck('name', 'id');
+        $users = User::where([['id', '!=', Auth::user()->id], ['role', '!=', 1]])->pluck('name', 'id');
         return view('message.create', compact('users'));
     }
 

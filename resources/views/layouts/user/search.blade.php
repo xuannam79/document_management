@@ -1,4 +1,5 @@
 <div class="document-topBody">
+    @include('common.errors')
     <div class="form-search-doc">
         @if($currentPage == "documentDepartment")
             @php
@@ -21,7 +22,7 @@
                     <span style="background-color: #fff;width: 2%;" class="input-group-addon"></span>
                 </div>
                 @if($currentPage == "documentDepartment" || $currentPage == "personalDocument")
-                {!! Form::select('department', $departments, '', ['class'=>'form-control', 'style'=>'min-width: 13em']) !!}
+                {!! Form::select('department', $departments, '', ['class'=>'form-control', 'style'=>'min-width: 13em;max-width:13em']) !!}
                 @endif
                 {!! Form::hidden('page', $currentPage) !!}
                 {!! Form::text('search', '', ['class'=>'form-control input-search', 'placeholder'=>'Nhập trích yếu tìm kiếm...']) !!}

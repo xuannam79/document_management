@@ -2104,3 +2104,7 @@ video {
 .small-ul a:hover {
     color: #222;
 }
+
+.caret {
+    display: none !important;
+}

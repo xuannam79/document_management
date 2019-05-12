@@ -48,7 +48,7 @@
                             @if ($depUser->date_start == null)
                                 <td class="frm-align"></td>
                             @else
-                                <td class="frm-align">{{ $depUser->date_start }}</td>
+                                <td class="frm-align">{{Carbon\Carbon::createFromTimeStamp(strtotime($depUser->date_start))->format('d-m-Y H:i:m')}}</td>
                             @endif
                             <td class="frm-align"><span class="badge badge-pill badge-success">Khả dụng</span></td>
                             <td class="frm-align">

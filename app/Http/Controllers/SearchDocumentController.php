@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SearchDocumentController extends Controller
 {
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
         if($request['page'] === 'documentDepartment') {
             $date_start = Carbon::parse($request->date_start)->format('Y-m-d');
