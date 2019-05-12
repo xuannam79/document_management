@@ -12,13 +12,13 @@ Văn bản đi
                 <div class="all-document list-group">
                     @foreach($documents as $document)
                         <div class="list-group-item ">
-                            <a href="#" title="{{$document->content}}" >
-                            <span class="name" style="max-width: 135px !important;color: black;">Số công văn: {{$document->document_number}}</span>
-                                <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
-                                    <span class="" style="color: black;">Tiêu đề: {{$document->title}}</span><br/>
-                                    <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
-                                </span>
-                            <span class="badge">{{ date('d-m-Y', strtotime($document->created_at)) }}</span>
+                        <a href="{{ route('document-sent.show', $document->id) }}" title="{{$document->content}}" >
+                                <span class="name" style="max-width: 135px !important;color: black;">Số công văn: {{$document->document_number}}</span>
+                                    <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
+                                        <span class="" style="color: black;">Tiêu đề: {{$document->title}}</span><br/>
+                                        <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
+                                    </span>
+                                <span class="badge">{{ date('H:m:i ( d-m-Y )', strtotime($document->created_at)) }}</span>
                             </a>
                             @if($document->is_approved == config('setting.document.approved'))
                                 <span class="approved">Đã phê duyệt</span>

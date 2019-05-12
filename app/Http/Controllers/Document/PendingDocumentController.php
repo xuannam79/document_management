@@ -24,7 +24,7 @@ class PendingDocumentController extends Controller
             ->join('users', 'users.id', '=', 'documents.user_id')
             ->where(['documents.department_id' => $currentDepartmentId, 'is_approved' => config('setting.department_user.no_approved')])
             ->select('documents.*', 'users.name')
-            ->orderBy('documents.created_at', 'desc')
+            ->orderBy('documents.publish_date', 'desc')
             ->paginate(5);
 
         return view("document.pending_document.index", compact('documents'));
@@ -40,7 +40,7 @@ class PendingDocumentController extends Controller
             ->where('documents.id', $id)
             ->first();
         $receivedDepartments = DB::table('document_department')
-            ->join('departments', 'departments.id', '=', 'document_department.document_id')
+            ->join('departments', 'departments.id', '=', 'document_department.department_id')
             ->where('document_id', $document->id)
             ->select('departments.name')
             ->get();

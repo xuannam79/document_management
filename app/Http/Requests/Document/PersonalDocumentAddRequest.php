@@ -4,7 +4,7 @@ namespace App\Http\Requests\Document;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DocumentAddRequest extends FormRequest
+class PersonalDocumentAddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,8 @@ class DocumentAddRequest extends FormRequest
             'document_number' => 'required|max:255|unique:documents',
             'document_type_id' => 'required',
             'title' => 'required|max:190',
-            'content' => 'required|max:400',
             'publish_date' => 'required',
-            'departments' => 'required',
+            'content' => 'required|max:500',
         ];
     }
 
@@ -42,10 +41,9 @@ class DocumentAddRequest extends FormRequest
             'title.required' => 'Vui lòng nhập tiêu đề',
             'title.max' => 'Chỉ được nhập tối đa 190 ký tự',
             'document_type_id.required' => 'Vui lòng chọn loại văn bản',
+            'publish_date.required' => 'Vui lòng chọn ngày ban hành',
             'content.required' => 'Vui lòng nhập trích yếu nội dung',
             'content.max' => 'Chỉ được nhập tối đa 400 ký tự',
-            'publish_date.required' => 'Vui lòng chọn ngày ban hành',
-            'departments.required' => 'Vui lòng chọn các đơn vị nhận văn bản',
         ];
     }
 }

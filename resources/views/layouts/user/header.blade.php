@@ -22,12 +22,13 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         @if (auth()->user()->role == config('setting.roles.admin_department'))
-                            <a class="dropdown-item" href="{{route('document-personal.index')}}">Tạo mới văn bản</a>
+                            <a class="dropdown-item" href="{{route('document.create')}}">Tạo mới văn bản</a>
                             <a class="dropdown-item" href="{{route('document-department.index')}}">Văn bản đến đơn vị</a>
                             <a class="dropdown-item" href="{{route('document-pending.index')}}">Văn bản đang chờ duyệt</a>
                             <a class="dropdown-item" href="{{route('document-sent.index')}}">Văn bản đã gửi</a>
+                        @else
+                            <a class="dropdown-item" href="{{route('document-personal.index')}}">Văn bản đến cá nhân</a>
                         @endif
-                        <a class="dropdown-item" href="{{route('document-personal.index')}}">Văn bản đến cá nhân</a>
                     </div>
                 </li>
                 @if (auth()->user()->role == config('setting.roles.admin_department'))
@@ -52,13 +53,10 @@
                     </li>
                 @endif
                 <li class="nav-item cool-link">
-                    <a class="nav-link" href="/">Kế hoạch tuần </a>
+                    <a class="nav-link" href="{{ route('schedule-admin.index') }}">Lịch tuần trường</a>
                 </li>
                 <li class="nav-item cool-link">
-                    <a class="nav-link" href="/">Kế hoạch công tác</a>
-                </li>
-                <li class="nav-item cool-link">
-                    <a class="nav-link" href="/">Hồ sơ văn bản</a>
+                    <a class="nav-link" href="{{ route('timetable.index') }}">Thời khóa biểu</a>
                 </li>
                 @php
                     $idDepartment = \App\Models\DepartmentUser::where('user_id', Auth::user()->id)->first();
@@ -72,6 +70,7 @@
                     <a class="nav-link dropdown-toggle {{ ($count>0)?"css-form-approval":"" }}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Biểu mẫu
                     </a>
+
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         @if (auth()->user()->role == config('setting.roles.user'))
                             <a class="dropdown-item" href="{{route('users-forms.index')}}">Danh sách biểu mẫu</a>
@@ -85,6 +84,13 @@
                             </a>
                         @endif
                     </div>
+                </li>
+                <li class="nav-item cool-link">
+                    @if (auth()->user()->role == config('setting.roles.user'))
+                    <a class="nav-link" href="{{ route('infrastructure-user.index') }}">Tài sản</a>
+                    @else
+                    <a class="nav-link" href="{{ route('infrastructure.index') }}">Tài sản</a>
+                    @endif
                 </li>
             </ul>
             <ul class="navbar-nav position-login">

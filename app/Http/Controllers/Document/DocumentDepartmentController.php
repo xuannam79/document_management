@@ -34,7 +34,7 @@ class DocumentDepartmentController extends Controller
             ->join('document_department', 'document_department.document_id', '=', 'documents.id')
             ->where(['document_department.department_id' => $departmentID['department_id'], 'documents.is_approved' => config('setting.document.approved')])
             ->select('documents.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department', 'document_department.*')
-            ->orderBy('documents.id', 'desc')
+            ->orderBy('documents.publish_date', 'desc')
             ->get();
 
         return view("document.document_department.index", compact('document'));
@@ -107,9 +107,9 @@ class DocumentDepartmentController extends Controller
         $countDocumentExists = DocumentUser::where(['document_id' => $id, 'user_id' => null])->get()->count();
         if ($countDocumentExists < 1) {
             try {
-                $departmentID           = DepartmentUser::where('user_id',
+                $departmentID = DepartmentUser::where('user_id',
                     Auth::user()->id)->first();
-                $input['document_id']   = $id;
+                $input['document_id'] = $id;
                 $input['department_id'] = $departmentID->department_id;
                 DocumentUser::create($input);
 
