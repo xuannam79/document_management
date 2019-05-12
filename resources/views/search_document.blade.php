@@ -10,6 +10,12 @@ Tìm kiếm
                 <div class="all-document list-group">
                     @if (isset($documentsDepartment))
                         @if(count($documentsDepartment)!=0)
+                            <div class="alert alert-primary alert-dismissible fade show col col-8 message" role="alert">
+                                <h5>Tìm thấy <strong>{{count($documentsDepartment)}}</strong> kết quả !</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>    
                             @foreach($documentsDepartment as $key => $document)
                             @php
                                 $id = \App\Models\DocumentDepartment::where('document_id', $document->id)->first();
@@ -24,12 +30,7 @@ Tìm kiếm
                                 }
                                 }
                             @endphp
-                            <div class="alert alert-primary alert-dismissible fade show col col-8 message" role="alert">
-                                <h5>Tìm thấy <strong>{{count($documentsDepartment)}}</strong> kết quả !</span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                            
                             <div class="list-group-item" onclick="showDocumentDepartment('{{$document->id}}')">
                             <a href="" title="{{$document->content}}" >
                                 <span class="name" style="max-width: 135px !important;color: black;">{{$document->department_name}}</span>
