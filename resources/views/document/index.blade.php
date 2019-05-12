@@ -1,6 +1,6 @@
 @extends('layouts.user.master')
 @section('title')
-Danh sách
+Danh sách văn bản đơn vị
 @endsection
 @section('content')
 <div class="container">

@@ -55,4 +55,9 @@ return [
         'is_reply_personal_document' => 1,
         'no_reply_personal_document' => 0,
     ],
+    'approval' => [
+        'is_approved' => 1,
+        'no_approved' => 0,
+        'cancel_approved' => 2,
+    ]
 ];

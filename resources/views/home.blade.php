@@ -87,6 +87,18 @@
                         <a class="link" href="{{ route('infrastructure.index') }}"><span></span></a>
                     </div>
                 </div>
+                <div class="item item-red col-lg-4 col-6">
+                    <div class="item-inner">
+                        <div class="icon-holder">
+                            <i class="icon fa fa-calendar"></i>
+                        </div>
+                        <h3 class="title">Lịch tuần trường</h3>
+                        <p class="intro">
+                            Xem thời khóa biểu của tuần
+                        </p>
+                        <a class="link" href="{{ route('schedule.index') }}"><span></span></a>
+                    </div>
+                </div>
                 @if (auth()->user()->role == config('setting.roles.admin_department'))
                     {{-- Danh sách cán bộ, nhân viên --}}
                     <div class="item item-orange item-2 col-lg-4 col-6">
@@ -158,6 +170,19 @@
                                 Xem biểu mẫu có sẵn
                             </p>
                             <a class="link" href="{{route('users-forms.index')}}"><span></span></a>
+                        </div>
+                    </div>
+                    {{-- Danh sách cán bộ, nhân viên --}}
+                    <div class="item item-orange item-2 col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-users"></i>
+                            </div>
+                            <h3 class="title">Danh sách cán bộ, nhân viên</h3>
+                            <p class="intro">
+                                Xem danh sách giảng viên, thành viên
+                            </p>
+                            <a class="link" href="{{ route('list-users.index') }}"><span></span></a>
                         </div>
                     </div>
                     {{-- Lịch tuần --}}

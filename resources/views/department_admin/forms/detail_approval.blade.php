@@ -30,8 +30,8 @@
                             @endforeach
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="acceptApproval('acceptApproval'+{{$form->id }})">Chấp Nhận</button>
-                    <button class="btn btn-danger" onclick="cancelApproval('cancelApproval'+{{ $form->id }})">Từ Chối</button>
+                    <button class="btn btn-primary" onclick="acceptApproval('acceptApproval'+{{$form->id }}, 'biểu mẫu')">Chấp Nhận</button>
+                    <button class="btn btn-danger" onclick="cancelApproval('cancelApproval'+{{ $form->id }}, 'biểu mẫu')">Từ Chối</button>
                     {!! Form::open(['method'=>'PUT', 'route'=>['forms.approval.accept',$form->id], 'id' => 'acceptApproval'.$form->id]) !!}
                     {!! Form::close() !!}
                     {!! Form::open(['method'=>'PUT', 'route'=>['forms.approval.cancel',$form->id], 'id' => 'cancelApproval'.$form->id]) !!}

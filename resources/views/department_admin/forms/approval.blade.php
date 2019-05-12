@@ -27,7 +27,7 @@
                     </form>
                 </div>
             </div>
-            <div class="list-group" style="position: relative">
+            <div class="list-group" style="position: relative;width: 95%;">
                 @foreach($form as $value)
                     <div class="list-group-item" >
                         <a href="{{ route('forms.approval.detail',$value->id) }}" title="{{ $value->name }}" >
@@ -38,10 +38,10 @@
                             <span class="badge">{{ $value->created_at }}</span>
                         </a>
                     </div>
-                    <a href="javascript:void(0)" onclick="acceptApproval('acceptApproval'+{{$value->id }})" style="position: absolute;top:2px;right: -30px"><i class="fas fa-check-circle" style="font-size: 20px;color: green" ></i></a>
+                    <a href="javascript:void(0)" onclick="acceptApproval('acceptApproval'+{{$value->id }}, 'biểu mẫu')" style="position: absolute;top:2px;right: -30px"><i class="fas fa-check-circle" style="font-size: 20px;color: green" ></i></a>
                     {!! Form::open(['method'=>'PUT', 'route'=>['forms.approval.accept',$value->id], 'id' => 'acceptApproval'.$value->id]) !!}
                     {!! Form::close() !!}
-                    <a href="javascript:void(0)" onclick="cancelApproval('cancelApproval'+{{ $value->id }})" style="position: absolute;top:28px;right: -30px"><i class="fas fa-ban" style="font-size: 20px;color:red" ></i></a>
+                    <a href="javascript:void(0)" onclick="cancelApproval('cancelApproval'+{{ $value->id }}, 'biểu mẫu')" style="position: absolute;top:28px;right: -30px"><i class="fas fa-ban" style="font-size: 20px;color:red" ></i></a>
                     {!! Form::open(['method'=>'PUT', 'route'=>['forms.approval.cancel',$value->id], 'id' => 'cancelApproval'.$value->id]) !!}
                     {!! Form::close() !!}
                 @endforeach

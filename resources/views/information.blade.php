@@ -4,7 +4,6 @@
 @endsection
 @section('content')
     <div class="container">
-        @include('common.errors')
         <div id="cards-wrapper" class="cards-wrapper" style="margin-left: 30%;width: 70%;">
             @include('common.errors')
             <div class="css-profile" style="height: 270px">
@@ -15,7 +14,11 @@
                             @if(!isset(Auth::user()->avatar))
                                 <img src="http://placehold.it/380x500" style="width: 150px" alt="" class="img-rounded img-responsive" />
                             @else
-                                <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                @if(Auth::user()->avatar == 'user-default.png')
+                                    <a href="/templates/user/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                @else
+                                    <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                @endif
                             @endif
                             <div class="file btn btn-lg btn-primary">Thay Đổi
                                 {!! Form::file('avatar',['id' => 'picture']) !!}
@@ -72,7 +75,7 @@
                     {!! Form::label('oldpassword', "Mật khẩu Cũ ") !!}
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {!! Form::password('oldpassword', ['class' => 'form-control', 'placeholder' => "Nhập Mật Khẩu", 'id' => 'password', 'required' => 'required', 'pattern' => '(?=.*\d)(?=.*[a-z]).{6,}',  'title' => 'Mật khẩu ít nhất có 6 kí tự bao gồm chữ và số']) !!}
+                            {!! Form::password('oldpassword', ['class' => 'form-control', 'placeholder' => "Nhập Mật Khẩu", 'id' => 'password', 'required' => 'required']) !!}
                         </div>
                     </div>
                     {!! Form::label('newpassword', "Mật khẩu Mới") !!}

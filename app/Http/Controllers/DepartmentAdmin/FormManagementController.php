@@ -27,7 +27,7 @@ class FormManagementController extends Controller
 
     public function index()
     {
-        $forms = Form::where('is_active', config('setting.active.is_active'))->get();
+        $forms = Form::where('is_active', config('setting.active.is_active'))->where('approved_by', '!=', config('setting.approval.no_approved'))->get();
 
         return view('department_admin.forms.index', compact( 'forms'));
     }
@@ -104,7 +104,7 @@ class FormManagementController extends Controller
         $idDepartment = DepartmentUser::where('user_id', Auth::user()->id)->first();
         $form = Form::where('is_active', config('setting.active.is_active'))
             ->where('department_id', $idDepartment->department_id)
-            ->where('approved_by', null)
+            ->where('approved_by', config('setting.approval.no_approved'))
             ->get();
 
         return view('department_admin.forms.approval', compact('form'));
@@ -137,7 +137,7 @@ class FormManagementController extends Controller
     public function cancelApproval($id){
         try
         {
-            Form::where('id',$id)->update(['approved_by' => 0]);
+        	Form::findorFail($id)->delete();
             return redirect()->route('forms.approval')->with('messageSuccess', 'Hủy Duyệt Thành Công');
         }
         catch (Exception $exception)

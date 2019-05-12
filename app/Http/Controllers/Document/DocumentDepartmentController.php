@@ -64,8 +64,9 @@ class DocumentDepartmentController extends Controller
     public function show($id)
     {
 //        check nguoi xem tin
+        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
         $jsonUserId = json_encode($this->checkUserSeen($id));
-        DocumentDepartment::where('document_id', $id)->update(['array_user_seen' => $jsonUserId]);
+        DocumentDepartment::where(['document_id' => $id, 'department_id' => $departmentID])->update(['array_user_seen' => $jsonUserId]);
 
         $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
             ->join('users', 'users.id', '=', 'documents.user_id')
@@ -114,17 +115,17 @@ class DocumentDepartmentController extends Controller
                 DocumentUser::create($input);
 
                 return redirect()->route('document-department.show', $id)
-                    ->with('messageSuccess', 'Chia sẽ thành công');
+                    ->with('messageSuccess', 'Chuyển tiếp thành công');
             } catch (Exception $e) {
                 return redirect()->route('document-department.show', $id)
                     ->with('messageFail',
-                        'Chia sẽ thất bại, vui lòng kiểm tra lại');
+                        'Chuyển tiếp thất bại, vui lòng kiểm tra lại');
             }
         }
         else{
             return redirect()->route('document-department.show', $id)
                 ->with('messageFail',
-                    'Bạn đã chia sẻ văn bản này rồi , vui lòng kiểm tra lại');
+                    'Bạn đã chuyển tiếp văn bản này rồi , vui lòng kiểm tra lại');
         }
     }
 }

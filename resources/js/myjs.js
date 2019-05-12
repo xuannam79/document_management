@@ -17,15 +17,15 @@ function restoreArchivedData(id) {
     }
 }
 
-function acceptApproval(id) {
-    const flag = confirm("bạn có chắc chắc muốn duyệt biễu mẫu này không ?");
+function acceptApproval(id , type) {
+    const flag = confirm("bạn có chắc chắc muốn duyệt "+type+" này không ?");
     if (flag === true) {
         document.getElementById(id).submit();
     }
 }
 
-function cancelApproval(id) {
-    const flag = confirm("bạn có chắc chắc muốn hủy duyệt biễu mẫu này không ?");
+function cancelApproval(id, type) {
+    const flag = confirm("bạn có chắc chắc muốn hủy duyệt "+type+" này không ?");
     if (flag === true) {
         document.getElementById(id).submit();
     }
@@ -62,7 +62,7 @@ $(document).ready(function() {
 });
 
 function share() {
-    const flag = confirm("Bạn có muốn chia sẻ văn bản này đến toàn nhân viên trong đơn vị không ?");
+    const flag = confirm("Bạn có muốn chuyển tiếp văn bản này đến toàn nhân viên trong đơn vị không ?");
     if (flag === true) {
         $("#share").submit();
     }

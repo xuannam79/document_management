@@ -10,12 +10,18 @@
         <div id="cards-wrapper" class="cards-wrapper row detail-document-body">
             <div style="margin: 10px;width: 100%;;text-align: left">
                 <div class="detail-head">
-                    <h4 style="color:black">{{ $document->title }}</h4>
+                    <h4 style="color:black;margin-bottom: 10px">{{ $document->title }}</h4>
+                    <h5 style="color:black;display:inline">Công văn số: {{ $document->document_number }}</h5>
+                    <div style="float: right"><span>Ngày ban hành: {{ date('d-m-Y', strtotime($document->publish_date)) }}</span></div>
                     <br>
-                    <div>
-                        <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                    <div style="margin-top: 35px;">
+                        @if($document->avatar == 'user-default.png')
+                            <img src="/templates/user/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @else
+                            <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @endif
                         <span style="color: black;font-weight: bold">{{ $document->name }}</span>
-                        <div style="float: right"><span>{{ date('H:m:i ( d-m-Y )', strtotime($document->sending_date)) }}</span>&nbsp;
+                        <div style="float: right">
                             <button class="pulse-button" id="show" title="Phản hồi"><i class="fa fa-reply"></i></button>
                         </div>
                     </div>
@@ -48,7 +54,11 @@
                         <div style="border: 3px solid #e5e7e9;max-width: 800px;margin-bottom: 10px;">
                             <div class="detail-head">
                                 <div style="margin: 10px;">
-                                    <img src="/upload/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                                    @if($document->avatar == 'user-default.png')
+                                        <img src="/templates/user/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                                    @else
+                                        <img src="/upload/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                                    @endif&nbsp;
                                     <span style="color: black;font-weight: bold">{{ $value->name }}</span>
                                     <div style="float: right">
                                         <span title="{{ date('H:m:i ( d-m-Y )', strtotime($value->created_at)) }}">
