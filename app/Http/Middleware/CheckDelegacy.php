@@ -17,7 +17,9 @@ class CheckDelegacy
     {
         if(auth()->check())
         {
-            if (auth()->user()->role == config('setting.roles.admin_department') || auth()->user()->delegacy == config('setting.delegacy.department_admin'))
+            if (auth()->user()->role == config('setting.roles.admin_department') 
+                || auth()->user()->delegacy == config('setting.delegacy.department_admin')
+                && auth()->user()->is_active == config('setting.active.is_active'))
             {
                 return $next($request);
             } else {

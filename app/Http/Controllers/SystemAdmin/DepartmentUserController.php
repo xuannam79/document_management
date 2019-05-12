@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SystemAdmin;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Department;
@@ -24,7 +25,7 @@ class DepartmentUserController extends Controller
                     ->join('department_users', 'users.id', '=', 'department_users.user_id')
                     ->join('departments', 'department_users.department_id', '=', 'departments.id')
                     ->join('positions', 'positions.id', '=', 'department_users.position_id')
-                    ->where('department_users.is_active', config('setting.active.is_active'))
+                    ->whereNotIn('users.id', [Auth::user()->id])
                     ->get();
 
 
@@ -38,9 +39,12 @@ class DepartmentUserController extends Controller
      */
     public function create()
     {
-        $searchAdmin = User::pluck('name', 'id');
+        $searchAdmin = DB::table('users')
+            ->join('department_users', 'users.id', '=', 'department_users.user_id')
+            ->whereNotIn('position_id', [config('setting.position.admin_department')])
+            ->pluck('users.name', 'users.id');
         $searchDepartment = Department::pluck('name' ,'id');
-        $searchPosition = Position::pluck('name' , 'id');
+        $searchPosition = Position::whereNotIn('id', [config('setting.position.admin_department')])->pluck('name', 'id');
 
         return view('system_admin.department_user.add', compact('searchAdmin', 'searchDepartment', 'searchPosition'));
     }
@@ -89,7 +93,7 @@ class DepartmentUserController extends Controller
                     ->join('positions', 'positions.id', '=', 'department_users.position_id')
                     ->where('department_users.id', $id)
                     ->first();
-        $searchAdmin = User::pluck('name', 'id');
+        $searchAdmin = User::whereNotIn('id', [Auth::user()->id])->pluck('name', 'id');
         $searchDepartment = Department::pluck('name' ,'id');
         $searchPosition = Position::pluck('name' , 'id');
 
@@ -148,38 +152,5 @@ class DepartmentUserController extends Controller
 
             return redirect(route('department-user.index'))->with('alert', 'Xóa thất bại');
         }
-    }
-
-    public function archive()
-    {
-        $depUsers = DB::table('users')
-                    ->select('department_users.id as department_user_id', 'users.id as user_id', 'start_date', 'end_date', 'users.name as username', 'departments.name as department_name', 'positions.name as position_name')
-                    ->join('department_users', 'users.id', '=', 'department_users.user_id')
-                    ->join('departments', 'department_users.department_id', '=', 'departments.id')
-                    ->join('positions', 'positions.id', '=', 'department_users.position_id')
-                    ->where('department_users.is_active', config('setting.active.no_active'))
-                    ->get();
-
-        return view('system_admin.department_user.archive', compact('depUsers'));
-    }
-
-    public function restore($id)
-    {
-        try {
-            $active = config('setting.active.is_active');
-            $result = DepartmentUser::whereId($id)->update(['is_active' => $active]);
-
-            if ($result) {
-
-                return redirect(route('department-user-archived'))->with('alert', 'Khôi phục thành công');
-            } else {
-
-                return redirect(route('department-user-archived'))->with('alert', 'Không tìm thấy');
-            }
-
-        } catch (Exception $e) {
-
-            return redirect(route('department-user-archived'))->with('alert', 'Khôi phục thất bại');
-        }
-    }    
+    }   
 }

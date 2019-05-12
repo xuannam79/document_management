@@ -10,10 +10,12 @@ use App\Models\User;
 use App\Models\Department;
 use App\Models\DepartmentUser;
 use Carbon\Carbon;
+use App\Traits\Uploader;
 use File;
 
 class CreateAnAdmin extends Controller
 {
+    use Uploader;
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +33,10 @@ class CreateAnAdmin extends Controller
      */
     public function create()
     {
-        $searchDepartment = Department::pluck('name' ,'id');
+        $searchDepartment = DB::table('departments')
+            ->whereNotIn('departments.id', 
+            DepartmentUser::where('position_id', config('setting.position.admin_department'))->pluck('department_id'))
+            ->pluck('name', 'id');
 
         return view('system_admin.department_admin.create', compact('searchDepartment'));
     }
@@ -42,20 +47,20 @@ class CreateAnAdmin extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DepartmentAdminRequest $request)
+    public function store(Request $request)
     {
         try {
         DB::beginTransaction();
         $input = $request->only('email', 'password', 'name', 'birth_date', 'gender', 'avatar', 'address', 'phone');
         $input['password'] = bcrypt($input['password']);
-        $input['avatar'] = $this->savePicture($input);
+        $input['avatar'] = $this->saveImg($input['avatar']);
         $input['role'] = config('setting.roles.admin_department');
         $idUser = User::insertGetId($input);
 
-        $inputDepUser = $request->only('department_id', 'start_date');
+        $inputDepUser = $request->only('department_id');
         $inputDepUser['user_id'] = $idUser;
         $inputDepUser['position_id'] = config('setting.position.admin_department');
-
+        $inputDepUser['start_date'] = date('Y-m-d h:m:s', strtotime($request->start_date));
         DepartmentUser::create($inputDepUser);
         
         DB::commit();
@@ -66,19 +71,6 @@ class CreateAnAdmin extends Controller
 
             return redirect(route('create-department-admin.create'))->with('alert', 'Thêm thất bại');
         }       
-    }
-
-    public function savePicture($input){
-        if(isset($input['avatar']))
-        {
-            $file = $input['avatar'];
-            $fileExtension = $input['avatar']->getClientOriginalExtension();
-            $newName = 'avatar-'.time().'.'.$fileExtension;
-            $path = public_path('images/avatar');
-            $input['avatar'] = $newName;
-            $file->move($path, $newName);
-            return $newName;
-        }
     }
 
     /**

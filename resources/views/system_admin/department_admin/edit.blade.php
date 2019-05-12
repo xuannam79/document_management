@@ -1,58 +1,76 @@
 @extends('layouts.admin.master')
 @section('title')
-    Sửa trưởng đơn vị
+    Sửa Trưởng Đơn Vị
 @endsection
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 col-ml-12">
-        @include('common.errors')
-            <div class="row">
-                <div class="col-12 mt-5">
-                    <div class="card">
-                        <div class="card-body">
-                            {!! Form::open([
-                                        'method'=>'PUT',
-                                        'route'=>['department-admin.update', $depUsers->department_user_id]
-                                        ]) !!}
-                                {!! Form::label('idAdminDepartment', 'Chọn trưởng đơn vị') !!}
-                                <div class="form-group">
-                                    {!! Form::select('user_id', $searchAdmin, $depUsers->user_id,
-                                            ['class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true']) !!}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-ml-12">
+                @include('common.errors')
+                <div class="row">
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                {!! Form::open(['method'=>'PUT',
+                                'route'=>['department-admin.update', $depUsers->id],
+                                'files' => true]) !!}
+                                {!! Form::label('email', "Email") !!}
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        {!! Form::text('email', $depUsers->email, ['class' => 'form-control', 'placeholder' => "Nhập Email", 'id' => 'email', 'required' => 'required', 'pattern' => config('setting.patter_email'),  'title' => 'Phía trước dấu @ phải có ít nhất một kí tự và phía sau dấu @ là tối đa 2 đuôi tên miền.']) !!}
+                                    </div>
                                 </div>
-
-                                {!! Form::label('idDepartment', 'Chọn phòng ban tiếp quản') !!}
-                                <div class="form-group">
-                                    {!! Form::select('department_id', $searchDepartment, $depUsers->department_id,
-                                            ['class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true']) !!}
+                                {!! Form::label('name', "Tên Thành Viên") !!}
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        {!! Form::text('name', $depUsers->name, ['class' => 'form-control', 'placeholder' => "Nhập  Tên Thành Viên", 'id' => 'name', 'required' => 'required', 'pattern' => config('setting.patter_fullname'),  'title' => 'Họ tên chỉ bao gồm chữ cái và phải tối thiểu 6 kí tự']) !!}
+                                    </div>
                                 </div>
-                                {!! Form::label('idPosition', 'Chức vụ tiếp quản') !!}
+                                {!! Form::label('department_id', "Phòng ban đang ủy quyền") !!}
                                 <div class="form-group">
-                                    {!! Form::text('position_id', $searchPosition->name, [
-                                        'class'=>'form-control',
-                                        'readonly']) !!}
+                                   {!! Form::text('department_id', $searchDepartment['department']['name'], ['class' => 'form-control', 'readonly']) !!}
                                 </div>
-                                {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
-                                <div class="form-group">
-                                    {!! Form::date('start_date', $depUsers->start_date, [
-                                            'class'=>'form-control',
-                                            'required']) !!}
+                                {!! Form::label('birth_date', "Ngày Sinh") !!}
+                                <div id="birth_date" class="input-group date" data-date-format="dd/mm/yyyy">
+                                    {!! Form::text('birth_date', $depUsers->birth_date, ['readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
+                                    <span class="input-group-addon"></span>
                                 </div>
-                                {!! Form::label('date-end', 'Chọn ngày kết thúc') !!}
-                                <div class="form-group">
-                                    {!! Form::date('end_date', $depUsers->end_date, [
-                                            'class'=>'form-control']) !!}
+                                {!! Form::label('gender', "Giới Tính") !!}
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        {!! Form::select('gender' , [config('setting.gender.male') => 'Nam',config('setting.gender.female') => 'Nữ'], $depUsers->gender, ['class' => 'form-control', 'id' => 'gender']) !!}
+                                    </div>
                                 </div>
-                                {!! Form::submit('Sửa', [
-                                    'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}
-                            {!! Form::close() !!}
+                                {!! Form::label('avatar', "Ảnh Đại Diện") !!}
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        @if ($depUsers->avatar == 'user-default.png')
+                                            <img src="/templates/user/images/{{$depUsers->avatar}}" class="img-preview" id="img-preview"/>
+                                        @else
+                                            <img src="/upload/images/{{$depUsers->avatar}}" class="img-preview" id="img-preview"/>
+                                        @endif
+                                        {!! Form::file('avatar',['class' => 'form-control-file', 'id' => 'avatar'])  !!}
+                                    </div>
+                                </div>
+                                {!! Form::label('address', "Địa Chỉ") !!}
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        {!! Form::text('address', $depUsers->address, ['class' => 'form-control', 'placeholder' => "Nhập Địa Chỉ", 'id' => 'address', 'required' => 'required', 'pattern' => config('setting.patter_address'),  'title' => 'địa chỉ bao gồm chữ và số']) !!}
+                                    </div>
+                                </div>
+                                {!! Form::label('phone', "Số Điện Thoại") !!}
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        {!! Form::text('phone', $depUsers->phone, ['class' => 'form-control', 'placeholder' => "Nhập Số Điện Thoại"]) !!}
+                                    </div>
+                                </div>
+                                {!! Form::submit("Sửa", ['class' => 'btn btn-primary mt-4 pr-4 pl-4', 'id' => 'btnAddUser']) !!}
+                                {!! Form::close() !!}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

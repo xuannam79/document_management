@@ -17,7 +17,8 @@ class CheckUser
     {
         if(auth()->check())
         {
-            if (auth()->user()->role == config('setting.roles.user'))
+            if (auth()->user()->role == config('setting.roles.user')
+                && auth()->user()->is_active == config('setting.active.is_active'))
             {
                 return $next($request);
             } else {

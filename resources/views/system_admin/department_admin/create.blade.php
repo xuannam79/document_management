@@ -1,6 +1,6 @@
 @extends('layouts.admin.master')
 @section('title')
-    Thêm Thành Viên
+    Thêm Mới Trưởng Đơn Vị
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -67,8 +67,8 @@
                                     </div>
                                 </div>
                                 {!! Form::label('start_date', "Ngày bắt đầu") !!}
-                                <div id="datepicker2" class="input-group date" data-date-format="dd/mm/yyyy">
-                                    {!! Form::text('start_date', '', ['readonly', 'class'=>'form-control']) !!}
+                                <div  class="input-group date" >
+                                    {!! Form::text('start_date', '', ['readonly', 'class'=>'form-control date', 'required', 'id'=>'date_start', 'data-date-format'=>'dd/mm/yyyy']) !!}
                                     <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::submit("Thêm", ['class' => 'btn btn-primary mt-4 pr-4 pl-4', 'id' => 'btnAddUser']) !!}
