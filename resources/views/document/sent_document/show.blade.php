@@ -1,6 +1,6 @@
 @extends('layouts.user.personal_document')
 @section('title')
-    Văn bản đang chờ duyệt
+    Văn bản đã gửi
 @endsection
 @section('content')
     <div class="container">
@@ -9,15 +9,12 @@
                 <div class="detail-head">
                     <h4 style="color:black">{{ $document->title }}</h4>
                     <h5 style="color:black">Công văn số: {{ $document->document_number }}</h5>
+                    <h6 style="color:black">Loại văn bản: {{ $document->document_type }}</h6>
+                    <h6 style="color:black">Ngày ban hành: {{ date('d-m-Y', strtotime($document->publish_date)) }}</h6>
                     <br>
-                    <div>
-                        <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
-                        <span style="color: black;font-weight: bold">{{ $document->name }}</span>
-                        <div style="float: right"><span>Ngày ban hành: {{ date('d-m-Y', strtotime($document->publish_date)) }}</span></div>
-                    </div>
                     <br>
                     <div class="content-document">
-                        <p>{{ $document->content }}</p>
+                        <p>Về việc: {{ $document->content }}</p>
                     </div>
                     <br>
                     <div>
@@ -27,15 +24,15 @@
                             @endforeach
                         </div>
                     </div>
-                    <h6 style="color:black">Danh sách các đơn vị nhận:</h6>
-                    <ul>
-                        @foreach($receivedDepartments as $receivedDepartment)
-                            <li>-{{$receivedDepartment->name}}</li>
-                        @endforeach
-                    </ul>
-                    {!! Form::open(["method"=>"PATCH", "route"=>["document-pending.update",$document->id]]) !!}
-                        {!! Form::button("<i class='fa fa-check'></i>&nbsp;Phê duyệt", ["class"=>"btn btn-primary rep-bot-button", "type" => "submit"]) !!}
-                    {!! Form::close() !!}
+                    @if(isset($receivedDepartments))
+                      <h6 style="color:black">Danh sách các đơn vị nhận:</h6>
+                      <ul>
+                          @foreach($receivedDepartments as $receivedDepartment)
+                              <li>-{{$receivedDepartment->name}}</li>
+                          @endforeach
+                      </ul>
+                    @endif
+                    <a href="">Chỉnh sửa văn bản</a>
                 </div>
             </div>
         </div>

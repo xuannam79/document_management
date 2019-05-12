@@ -11,6 +11,7 @@
             <div style="margin: 10px;width: 100%;;text-align: left">
                 <div class="detail-head">
                     <h4 style="color:black">{{ $document->title }}</h4>
+                    <h5 style="color:black">Công văn số: {{ $document->document_number }}</h5>
                     <br>
                     <div>
                         <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;

@@ -23,7 +23,8 @@ class CreateDocumentsTable extends Migration
             $table->integer('department_id');
             $table->boolean('is_approved')->default(0);
             $table->integer('user_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

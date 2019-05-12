@@ -31,7 +31,7 @@
                                     $currentDepartmentId = DB::table('department_users')->where([
                                         'position_id' => config('setting.position.admin_department'),
                                         'user_id' => Auth::user()->id,
-                                        'is_active' => config('setting.department_user.active') ])->first()->department_id;
+                                       ])->first()->department_id;
                                     //count number document not yet be approved
                                     $pendingDocumentsQuantity = count(DB::table('documents')
                                         ->join('users', 'users.id', '=', 'documents.user_id')
@@ -43,7 +43,7 @@
                                     //count number document not yet seen
                                     $departmentID = \App\Models\DepartmentUser::where([
                                         'user_id' => Auth::user()->id,
-                                        'is_active' => config('setting.department_user.active')
+                                        )
                                     ])->first();
                                     $arrDocumentID = \App\Models\Document::join('document_department', 'document_department.document_id', '=', 'documents.id')
                                         ->where('document_department.department_id', $departmentID->department_id)
@@ -113,7 +113,7 @@
                                 @php
                                     $departmentID = \App\Models\DepartmentUser::where([
                                         'user_id' => Auth::user()->id,
-                                        'is_active' => config('setting.department_user.active')
+                                        )
                                     ])->first()->department_id;
                                     $arrDocumentID = \App\Models\Document::join('document_user', 'document_user.document_id', '=', 'documents.id')
                                         ->where('document_user.department_id', $departmentID)
