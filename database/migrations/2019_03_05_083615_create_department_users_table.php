@@ -18,7 +18,7 @@ class CreateDepartmentUsersTable extends Migration
             $table->integer('department_id')->default(4);
             $table->integer('user_id');
             $table->integer('position_id')->default(4);
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->timestamps();
         });

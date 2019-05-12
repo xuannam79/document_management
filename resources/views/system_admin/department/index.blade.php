@@ -39,7 +39,13 @@
                         <tr>
                             <td class="frm-align">{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
-                            <td class="frm-align">{{ date('d-m-Y h:m:s', strtotime($department->created_at)) }}</td>
+                            @if ($department->created_at == null)
+                                <td class="frm-align">
+                                </td>
+                            @else
+                                <td class="frm-align">{{ date('d-m-Y H:m:s', strtotime($department->created_at)) }}
+                                </td>
+                            @endif
                             <td class="frm-align"><span class="badge badge-pill badge-success">Khả dụng</span></td>
                             <td class="frm-align">
                                 <a href="{{ route('department.edit', $department->id) }}" class="text-warning frm-margin-right-8">

@@ -25,7 +25,7 @@ class DepartmentAdminController extends Controller
     public function index()
     {
         $depUsers = DB::table('users')
-                    ->select('department_users.user_id as department_user_id', 'start_date', 'end_date', 'users.name as username', 'departments.name as depname', 'positions.name as posname')
+                    ->select('department_users.user_id as department_user_id', 'start_date', 'end_date', 'users.name as username', 'departments.name as depname', 'positions.name as posname', 'users.created_at as date_start')
                     ->join('department_users', 'users.id', '=', 'department_users.user_id')
                     ->join('departments', 'department_users.department_id', '=', 'departments.id')
                     ->join('positions', 'positions.id', '=', 'department_users.position_id')

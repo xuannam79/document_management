@@ -66,11 +66,6 @@
                                         {!! Form::text('phone', '', ['class' => 'form-control', 'placeholder' => "Nhập Số Điện Thoại", 'id' => 'phone', 'required' => 'required', 'pattern' => '[0][0-9]{9}',  'title' => 'số điện thoại chỉ gồm số và bắt đầu bằng số 0 , gồm 10 số.']) !!}
                                     </div>
                                 </div>
-                                {!! Form::label('start_date', "Ngày bắt đầu") !!}
-                                <div  class="input-group date" >
-                                    {!! Form::text('start_date', '', ['readonly', 'class'=>'form-control date', 'required', 'id'=>'date_start', 'data-date-format'=>'dd/mm/yyyy']) !!}
-                                    <span class="input-group-addon"></span>
-                                </div>
                                 {!! Form::submit("Thêm", ['class' => 'btn btn-primary mt-4 pr-4 pl-4', 'id' => 'btnAddUser']) !!}
                                 {!! Form::close() !!}
                             </div>
