@@ -16,7 +16,22 @@
                 <li class="nav-item cool-link">
                     <a class="nav-link" href="/">Trang chủ </a>
                 </li>
-                <li class="nav-item cool-link dropdown">
+                @php
+                    $idDepartment = \App\Models\DepartmentUser::where('user_id', Auth::user()->id)->first();
+                    $document_approval = \App\Models\Document::where(['department_id' => $idDepartment->department_id,'is_approved' =>  config('setting.approval.no_approved')])
+                    ->get();
+                    $countDocument = $document_approval->count();
+                    $checkDocument = false;
+                    if (auth()->user()->role == config('setting.roles.admin_department')){
+                        if ($countDocument > 0){
+                            $checkDocument = true;
+                        }
+                        else {
+                            $checkDocument = false;
+                        }
+                    }
+                @endphp
+                <li class="nav-item cool-link dropdown {{ ($checkDocument == true)?"css-form-approval":"" }}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Văn bản
                     </a>
@@ -24,7 +39,11 @@
                         @if (auth()->user()->role == config('setting.roles.admin_department'))
                             <a class="dropdown-item" href="{{route('document.create')}}">Tạo mới văn bản</a>
                             <a class="dropdown-item" href="{{route('document-department.index')}}">Văn bản đến đơn vị</a>
-                            <a class="dropdown-item" href="{{route('document-pending.index')}}">Văn bản đang chờ duyệt</a>
+                            <a class="dropdown-item {{ ($checkDocument == true)?"css-form-approval":"" }}" href="{{route('document-pending.index')}}">Văn bản đang chờ duyệt
+                                @if($countDocument > 0)
+                                    <span class="badge-pill badge-danger">{{ $countDocument }}</span>
+                                @endif
+                            </a>
                             <a class="dropdown-item" href="{{route('document-sent.index')}}">Văn bản đã gửi</a>
                         @else
                             <a class="dropdown-item" href="{{route('document-personal.index')}}">Văn bản đến cá nhân</a>
@@ -60,14 +79,21 @@
                 </li>
                 @php
                     $idDepartment = \App\Models\DepartmentUser::where('user_id', Auth::user()->id)->first();
-                    $form = \App\Models\Form::where('is_active', config('setting.active.is_active'))
-                    ->where('department_id', $idDepartment->department_id)
-                    ->where('approved_by', null)
+                    $form = \App\Models\Form::where(['department_id' => $idDepartment->department_id, 'approved_by' =>  config('setting.approval.no_approved'), 'is_active' => config('setting.active.is_active')])
                     ->get();
                     $count = $form->count();
+                    $checkForm = false;
+                    if (auth()->user()->role == config('setting.roles.admin_department')){
+                            if ($count > 0){
+                                $checkForm = true;
+                            }
+                            else {
+                                $checkForm = false;
+                            }
+                    }
                 @endphp
                 <li class="nav-item cool-link dropdown">
-                    <a class="nav-link dropdown-toggle {{ ($count>0)?"css-form-approval":"" }}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle {{ ($checkForm == true)?"css-form-approval":"" }}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Biểu mẫu
                     </a>
 
@@ -77,7 +103,8 @@
                         @elseif (auth()->user()->role == config('setting.roles.admin_department'))
                             <a class="dropdown-item" href="{{ route('forms.index') }}">Danh sách biểu mẫu</a>
                             <a class="dropdown-item" href="{{ route('forms.create') }}">Thêm biểu mẫu</a>
-                            <a class="dropdown-item {{ ($count>0)?"css-form-approval":"" }}" href="{{ route('forms.approval') }}">DS biểu mẫu chờ phê duyệt
+                            <a class="dropdown-item" href="{{ route('forms.archive') }}">Danh sách biểu mẫu đã bị xóa</a>
+                            <a class="dropdown-item {{ ($checkForm == true)?"css-form-approval":"" }}" href="{{ route('forms.approval') }}">DS biểu mẫu chờ phê duyệt
                                 @if($count > 0)
                                     <span class="badge-pill badge-danger">{{ $count }}</span>
                                 @endif

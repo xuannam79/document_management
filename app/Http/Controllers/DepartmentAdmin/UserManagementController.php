@@ -60,9 +60,11 @@ class UserManagementController extends Controller
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $input['avatar'] = $this->uploader->saveImg($input['avatar']);
+        if(isset($input['avatar'])){
+            $input['avatar'] = $this->uploader->saveImg($input['avatar']);
+        }
         $input['role'] = config('setting.position.secretary');
-        if($input['no_end_date'] == 1){
+        if($request->no_end_date == 1){
             $input['end_date'] = null;
         }
         DB::beginTransaction();
@@ -71,7 +73,7 @@ class UserManagementController extends Controller
             $departmentID = DepartmentUser::where('user_id',Auth::user()->id)->first();
             User::create($input);
             $id = User::select('id')->where('email', $input['email'])->first();
-            DepartmentUser::insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date'], 'department_id' => $departmentID['department_id'], 'position_id' => config('setting.position.secretary')]);
+            DepartmentUser::insert(['user_id' => $id->id, 'start_date' => Carbon::now(), 'end_date' => $input['end_date'], 'department_id' => $departmentID['department_id'], 'position_id' => config('setting.position.instructor')]);
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Thêm Thành Công');
@@ -171,7 +173,7 @@ class UserManagementController extends Controller
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        if($input['no_end_date'] == 1){
+        if($request->no_end_date == 1){
             $input['end_date'] = null;
         }
         DB::beginTransaction();

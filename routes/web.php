@@ -283,6 +283,7 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
         Route::resource('infrastructure-user', 'InfrastructureController');
         // biểu mẫu của user - chỉ xem
         Route::resource('users-forms', 'FormsController');
+        Route::resource('list-users', 'MemberController');
 
         Route::namespace ('Document')->group(function () {
             //user

@@ -72,4 +72,6 @@ class PendingDocumentController extends Controller
             return redirect(route('document-pending.index'))->with('messageFail', 'Duyệt thất bại');
         }
     }
+
+
 }

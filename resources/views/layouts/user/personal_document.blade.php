@@ -29,7 +29,6 @@
                             @if (auth()->user()->role == config('setting.roles.admin_department'))
                                 @php
                                     $currentDepartmentId = DB::table('department_users')->where([
-                                        'position_id' => config('setting.position.admin_department'),
                                         'user_id' => Auth::user()->id,
                                        ])->first()->department_id;
                                     //count number document not yet be approved
@@ -42,7 +41,7 @@
                                     );
                                     //count number document not yet seen
                                     $departmentID = \App\Models\DepartmentUser::where([
-                                        'user_id' => Auth::user()->id,
+                                        'user_id' => Auth::user()->id
                                     ])->first();
                                     $arrDocumentID = \App\Models\Document::join('document_department', 'document_department.document_id', '=', 'documents.id')
                                         ->where('document_department.department_id', $departmentID->department_id)
@@ -51,12 +50,14 @@
                                     if($arrDocumentID->count() > 0){
                                         foreach($arrDocumentID as $arrID){
                                               $listIdDoc = array();
-                                              if(isset($arrID->id)){
-                                                array_push($listIdDoc, $arrID->id);
+                                              if(isset($arrID->document_id)){
+                                                array_push($listIdDoc, $arrID->document_id);
                                               }
                                         }
-                                        $documentDepartment = \App\Models\DocumentDepartment::whereIn('document_id', $listIdDoc)->get();
+
+                                        $documentDepartment = \App\Models\DocumentDepartment::whereIn('document_id', $listIdDoc)->where('department_id', $departmentID->department_id)->get();
                                         $count = 0;
+
                                         foreach($documentDepartment as $value){
                                             if(isset($value->array_user_seen) && $value->array_user_seen != ""){
                                                 $check = false;
@@ -120,11 +121,11 @@
                                     if($arrDocumentID->count() > 0){
                                         foreach($arrDocumentID as $arrID){
                                               $listIdDoc = array();
-                                              if(isset($arrID->id)){
-                                                array_push($listIdDoc, $arrID->id);
+                                              if(isset($arrID->document_id)){
+                                                array_push($listIdDoc, $arrID->document_id);
                                               }
                                         }
-                                        $documentDepartment = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->get();
+                                        $documentDepartment = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->where('department_id', $departmentID)->get();
                                         $countPersonalUnSeenDocumentsQuantity = 0;
                                         foreach($documentDepartment as $value){
                                             if(isset($value->array_user_seen) && $value->array_user_seen != ""){

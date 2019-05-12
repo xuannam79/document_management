@@ -10,14 +10,18 @@
         <div id="cards-wrapper" class="cards-wrapper row detail-document-body">
             <div style="margin: 10px;width: 100%;;text-align: left">
                 <div class="detail-head">
-                    <h4 style="color:black">{{ $document->title }}</h4>
-                    <h5 style="color:black">Công văn số: {{ $document->document_number }}</h5>
+                    <h4 style="color:black;margin-bottom: 10px">{{ $document->title }}</h4>
+                    <h5 style="color:black;display:inline">Công văn số: {{ $document->document_number }}</h5>
+                    <div style="float: right"><span>Ngày ban hành: {{ date('d-m-Y', strtotime($document->publish_date)) }}</span></div>
                     <br>
-                    <div>
-                        <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                    <div style="margin-top: 35px;">
+                        @if($document->avatar == 'user-default.png')
+                            <img src="/templates/user/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @else
+                            <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @endif
                         <span style="color: black;font-weight: bold">{{ $document->name }}</span>
                         <div style="float: right">
-                            <span>{{ date('H:m:i ( d-m-Y )', strtotime($document->sending_date)) }}</span>&nbsp;
                             <button class="pulse-button" id="show" title="Phản hồi"><i class="fa fa-reply"></i></button>
                         </div>
                     </div>
@@ -91,7 +95,7 @@
                         </div>
                     @endforeach
                     <button type="button" class="btn btn-light rep-bot-button"><i class="fa fa-reply"></i>&nbsp;Phản hồi</button>
-                    <button type="button" class="btn btn-light color-btn-share" onclick="share()" title="Chia sẻ đến toàn bộ nhân viên trong đơn vị"><i class="fas fa-share-alt"></i>&nbsp;Chia sẽ </button>
+                    <button type="button" class="btn btn-light color-btn-share" onclick="share()" title="Chuyển tiếp văn bản đến toàn bộ nhân viên trong đơn vị"><i class="fas fa-share-alt"></i>&nbsp;Chuyển tiếp </button>
                     {!! Form::open(['method'=>'POST', 'route'=> ['share.document', $document->documentID], 'id' => 'share']) !!}
                     {!! Form::close() !!}
                     <div class="reply display-none" id="rep-area">

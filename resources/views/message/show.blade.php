@@ -9,7 +9,11 @@
                 <div class="detail-head">
                     @include("common.errors")
                     <div>
-                        <img src="/templates/img/user/{{$getMessages->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @if($getMessages->avatar == 'user-default.png')
+                            <img src="/templates/img/user/{{$getMessages->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @else
+                            <img src="/upload/images/{{$getMessages->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @endif
                         <span style="color: black;font-weight: bold">{{$getMessages->name}}</span>
                         <div style="float: right"><span>{{$getMessages->created_at}}</span>&nbsp;
                             <button class="pulse-button" id="show" title="Trả lời"><i class="fa fa-reply"></i></button>

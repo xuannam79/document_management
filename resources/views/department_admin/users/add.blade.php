@@ -18,7 +18,7 @@
                             {!! Form::label('email', "Email") !!}
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                    {!! Form::text('email', '', ['class' => 'form-control', 'placeholder' => "Nhập Email", 'id' => 'email', 'required' => 'required', 'pattern' => config('setting.patter_email'),  'title' => 'Phía trước dấu @ phải có ít nhất một kí tự và phía sau dấu @ là tối đa 2 đuôi tên miền.']) !!}
+                                    {!! Form::text('email', '', ['class' => 'form-control', 'placeholder' => "Nhập Email", 'id' => 'email', 'required' => 'required', 'pattern' => config('setting.patter_email'),  'title' => 'Phía trước dấu @ phải có ít nhất một kí tự và phía sau dấu @ là tối đa 2 đuôi tên miền.', 'maxlenght' => 15]) !!}
                                 </div>
                             </div>
                             {!! Form::label('password', "Mật Khẩu") !!}
@@ -30,7 +30,7 @@
                             {!! Form::label('name', "Tên Thành Viên") !!}
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                    {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => "Nhập  Tên Thành Viên", 'id' => 'name', 'required' => 'required', 'pattern' => config('setting.patter_fullname'),  'title' => 'Họ tên chỉ bao gồm chữ cái và phải tối thiểu 6 kí tự']) !!}
+                                    {!! Form::text('name', '', ['maxlength' => "20", 'class' => 'form-control', 'placeholder' => "Nhập  Tên Thành Viên", 'id' => 'name', 'required' => 'required', 'pattern' => config('setting.patter_fullname'),  'title' => 'Họ tên chỉ bao gồm chữ cái và phải tối thiểu 6 kí tự']) !!}
                                 </div>
                             </div>
                             {!! Form::label('birth_date', "Ngày Sinh") !!}
@@ -66,7 +66,7 @@
                             </div>
                             {!! Form::label('birth_date', "Ngày Hết Hạn Tài Khoản") !!}
                             <div style="margin-bottom: 10px">
-                                {!! Form::checkbox('no_end_date', true, true, ['id' => 'no_end_date']) !!}
+                                {!! Form::checkbox('no_end_date', 1, true, ['id' => 'no_end_date']) !!}
                                 <span title="tích vào ô nếu không có ngày hết hạn">vô hạn</span>
                             </div>
                             <div class="form-group row" id="end_date_div" style="display:none">

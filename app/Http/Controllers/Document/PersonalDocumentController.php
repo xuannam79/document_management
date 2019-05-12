@@ -130,8 +130,9 @@ class PersonalDocumentController extends Controller
     public function show($id)
     {
         //check nguoi xem tin
+        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
         $jsonUserId = json_encode($this->checkUserSeen($id));
-        DocumentUser::where('document_id', $id)->update(['array_user_seen' => $jsonUserId]);
+        DocumentUser::where(['document_id' => $id, 'department_id' => $departmentID])->update(['array_user_seen' => $jsonUserId]);
 
         $document = DB::table('documents')
             ->join('document_types', 'documents.document_type_id', '=', 'document_types.id')

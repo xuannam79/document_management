@@ -42,7 +42,7 @@
                             </td>
                             <td>{{ $form->description }}</td>
                             <td style="vertical-align: middle;">
-                                @if($form->approved_by == 1)
+                                @if($form->approved_by != 0)
                                     <span class="badge badge-success" style="background-color: #28a745">Đã duyệt</span>
                                 @else
                                     <span class="badge badge-pill badge-warning" style="color: black">Đang chờ duyệt</span>
@@ -67,6 +67,5 @@
                 </table>
             </div>
         </div>
-        <a href="{{ route('forms.archive') }}" class="btn btn-warning" style="float: right;margin-top: 10px;margin-right: 16px"><i class="fa fa-trash" style="color:white"></i></a>
     </div>
 @endsection

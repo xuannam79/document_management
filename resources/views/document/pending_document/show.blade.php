@@ -7,11 +7,15 @@
         <div id="cards-wrapper" class="cards-wrapper row detail-document-body">
             <div style="margin: 10px;width: 100%;text-align: left">
                 <div class="detail-head">
-                    <h4 style="color:black">{{ $document->title }}</h4>
+                    <h4 style="color:black; margin-bottom: 10px">{{ $document->title }}</h4>
                     <h5 style="color:black">Công văn số: {{ $document->document_number }}</h5>
                     <br>
-                    <div>
-                        <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                    <div style="margin-top: 35px;">
+                        @if($document->avatar == 'user-default.png')
+                            <img src="/templates/user/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @else
+                            <img src="/upload/images/{{$document->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                        @endif&nbsp;
                         <span style="color: black;font-weight: bold">{{ $document->name }}</span>
                         <div style="float: right"><span>Ngày ban hành: {{ date('d-m-Y', strtotime($document->publish_date)) }}</span></div>
                     </div>
@@ -33,8 +37,11 @@
                             <li>-{{$receivedDepartment->name}}</li>
                         @endforeach
                     </ul>
-                    {!! Form::open(["method"=>"PATCH", "route"=>["document-pending.update",$document->id]]) !!}
-                        {!! Form::button("<i class='fa fa-check'></i>&nbsp;Phê duyệt", ["class"=>"btn btn-primary rep-bot-button", "type" => "submit"]) !!}
+                    <button class="btn btn-primary" onclick="acceptApproval('acceptApproval'+{{$document->id }}, 'văn bản')">Chấp Nhận</button>
+                    <button class="btn btn-danger" onclick="cancelApproval('cancelApproval'+{{ $document->id }}, 'văn bản')">Từ Chối</button>
+                    {!! Form::open(['method'=>'PATCH', 'route'=>['document-pending.update',$document->id], 'id' => 'acceptApproval'.$document->id]) !!}
+                    {!! Form::close() !!}
+                    {!! Form::open(['method'=>'DELETE', 'route'=>['document-pending.destroy',$document->id], 'id' => 'cancelApproval'.$document->id]) !!}
                     {!! Form::close() !!}
                 </div>
             </div>
