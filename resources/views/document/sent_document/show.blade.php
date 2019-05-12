@@ -17,13 +17,6 @@
                         <p>Về việc: {{ $document->content }}</p>
                     </div>
                     <br>
-                    <div>
-                        <div class="upload__files">
-                            @foreach($attachedFiles as $file)
-                            <a href="/upload/files/document/{{$file->name}}" download class="preview"><span class="preview__name" title="{{$file->name}}">{{$file->name}}</span></a>
-                            @endforeach
-                        </div>
-                    </div>
                     @if(isset($receivedDepartments))
                       <h6 style="color:black">Danh sách các đơn vị nhận:</h6>
                       <ul>
@@ -32,7 +25,18 @@
                           @endforeach
                       </ul>
                     @endif
-                    <a href="">Chỉnh sửa văn bản</a>
+                    <div>
+                        <h6 style="color:black">File đính kèm:</h6>
+                        <div class="upload__files">
+                            @foreach($attachedFiles as $file)
+                            <a href="/upload/files/document/{{$file->name}}" download class="preview"><span class="preview__name" title="{{$file->name}}">{{$file->name}}</span></a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    @if($document->is_approved == config('setting.document.pending'))
+                        <a href="{{ route('document-sent.edit', $document->id) }}">Chỉnh sửa văn bản</a>
+                    @endif
                 </div>
             </div>
         </div>

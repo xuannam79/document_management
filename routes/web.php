@@ -210,7 +210,7 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
             Route::resource('document-sent', 'SentDocumentController');
             //văn bản các nhân
             Route::resource('document-personal', 'PersonalDocumentController', [
-                'only' => ['store', 'create']
+                'only' => ['store', 'create', 'edit', 'update']
             ]);
         });
 
