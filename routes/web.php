@@ -11,7 +11,10 @@
 |
  */
 Route::resource('login', 'LoginController');
-
+Route::post('/search', [
+    'as' => 'search-document',
+    'uses' => 'SearchDocumentController@search'
+]);
 Route::get('schedule-weekly', [
     'as' => 'schedule-week.nologin',
     'uses' => 'ScheduleWeekController@indexNoLogin',

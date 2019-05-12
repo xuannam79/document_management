@@ -7,8 +7,15 @@
             $departmentId = App\Models\DepartmentUser::select('department_id')->where('user_id', Auth::user()->id)->first();
             $documents = Illuminate\Support\Facades\DB::table('documents')
             ->join('document_department', 'documents.id', 'document_department.document_id')
-            ->where('document_department.department_id', $departmentId->department_id)->get();
+            ->where(['document_department.department_id'=> $departmentId->department_id, 'documents.is_approved'=>1])->get();
             @endphp
+            <li>
+                <ul class="small-ul">
+                    @foreach($documents as $key => $document)
+                    <a href="{{route('document-department.show',$document->id)}}"><li><i class="fas fa-hand-point-right"></i>&nbsp;<span>{{ $document->title }}</span></li></a>
+                    @endforeach
+                </ul>
+            </li>
         @elseif(Auth::user()->role == config('setting.roles.user'))
             <a href="{{route('document-personal.index')}}"><li class="big-li"><span>Văn bản đến cá nhân</span></li></a>
             @php
@@ -17,14 +24,15 @@
                 ->join('document_user', 'documents.id', 'document_user.document_id')
                 ->where('document_user.department_id', $departmentId->department_id)->get();
             @endphp
-        @endif
             <li>
                 <ul class="small-ul">
                     @foreach($documents as $key => $document)
-                    <a href="{{route('document.show',$document->id)}}"><li><i class="fas fa-hand-point-right"></i>&nbsp;<span>{{ $document->title }}</span></li></a>
+                    <a href="{{route('document-personal.show',$document->id)}}"><li><i class="fas fa-hand-point-right"></i>&nbsp;<span>{{ $document->title }}</span></li></a>
                     @endforeach
                 </ul>
             </li>
+        @endif
+            
         <a href="{{route('message.index')}}"><li class="big-li"><span>Tin nhắn đến</span></li></a>
         @php
             $message = App\Models\Message::where('receiver_id', Auth::user()->id)->limit(5)->get();
