@@ -58,18 +58,20 @@ class CreateAnAdmin extends Controller
         $idUser = User::insertGetId($input);
 
         $inputDepUser = $request->only('department_id');
-        $inputDepUser['user_id'] = $idUser;
-        $inputDepUser['position_id'] = config('setting.position.admin_department');
-        $inputDepUser['start_date'] = date('Y-m-d h:m:s', strtotime($request->start_date));
-        DepartmentUser::create($inputDepUser);
-        
+        if (isset($inputDepUser['department_id'])) {
+            $inputDepUser['user_id'] = $idUser;
+            $inputDepUser['position_id'] = config('setting.position.admin_department');
+            DepartmentUser::create($inputDepUser);   
+        } else {
+            return redirect(route('create-department-admin.create'))->with('messageFail', 'Tất cả phòng ban đều có trưởng đơn vị. Hãy tạo một phòng ban để ủy quyền!');
+        }
         DB::commit();
 
         return redirect()->route('department-admin.index')->with('messageSuccess', 'Thêm Thành Công');
         } catch (Exception $e) {
             DB::rollBack();
 
-            return redirect(route('create-department-admin.create'))->with('alert', 'Thêm thất bại');
+            return redirect(route('create-department-admin.create'))->with('messageFail', 'Thêm thất bại');
         }       
     }
 

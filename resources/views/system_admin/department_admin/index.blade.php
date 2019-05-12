@@ -22,8 +22,7 @@
                             <th>Họ và tên</th>
                             <th>Phòng ban</th>
                             <th>Vị trí</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
+                            <th>Ngày tạo</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
@@ -34,8 +33,7 @@
                             <th>Họ và tên</th>
                             <th>Phòng ban</th>
                             <th>Vị trí</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
+                            <th>Ngày tạo</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
@@ -47,11 +45,10 @@
                             <td class="frm-align">{{ $depUser->username }}</td>
                             <td class="frm-align">{{ $depUser->depname }}</td>
                             <td class="frm-align">{{ $depUser->posname }}</td>
-                            <td class="frm-align">{{ $depUser->start_date }}</td>
-                            @if ($depUser->end_date === null)
-                                <td class="frm-align">Chưa xác định</td>
+                            @if ($depUser->date_start == null)
+                                <td class="frm-align"></td>
                             @else
-                                <td class="frm-align">{{ $depUser->end_date }}</td>
+                                <td class="frm-align">{{ $depUser->date_start }}</td>
                             @endif
                             <td class="frm-align"><span class="badge badge-pill badge-success">Khả dụng</span></td>
                             <td class="frm-align">

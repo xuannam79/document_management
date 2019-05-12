@@ -56,18 +56,11 @@
         </div>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
+    <!-- Nav Item - Department User -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#department-user" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-users"></i>
-            <span>Nhân sự - phòng ban</span>
-        </a>
-        <div id="department-user" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('department-user.index') }}">Danh sách</a>
-                <a class="collapse-item" href="{{ route('department-user.create') }}">Chuyển đổi nhân sự</a>
-            </div>
-        </div>
+        <a class="nav-link" href="{{ route('department-user.index') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Nhân sự - phòng ban</span></a>
     </li>
 
     <!-- Divider -->
@@ -92,13 +85,6 @@
             </div>
         </div>
     </li>
-
-{{--     <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('not-found') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Single menu</span></a>
-    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

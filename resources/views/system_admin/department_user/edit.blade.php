@@ -1,6 +1,6 @@
 @extends('layouts.admin.master')
 @section('title')
-    Sửa nhân sự - phòng ban
+    Chuyển đổi nhân sự - phòng ban
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -13,37 +13,28 @@
                         <div class="card-body">
                             {!! Form::open([
                                         'method'=>'PUT',
-                                        'route'=>['department-user.update', $depUsers->department_user_id]
+                                        'route'=>['department-user.update', $depUsers->id]
                                         ]) !!}
-                                {!! Form::label('idAdminDepartment', 'Chọn trưởng đơn vị') !!}
+                                {!! Form::label('name', 'Họ và tên') !!}
                                 <div class="form-group">
-                                    {!! Form::select('user_id', $searchAdmin, $depUsers->user_id,
-                                            ['class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true']) !!}
+                                    {!! Form::text('name', $depUsers->name, ['class' => 'form-control', 'readonly']) !!}
+                                </div>
+                                {!! Form::label('currentDepartment', 'Phòng ban hiện tại') !!}
+                                <div class="form-group">
+                                    {!! Form::text('current_department', $currentDepartment['department']['name'], ['class' => 'form-control', 'readonly']) !!}
                                 </div>
 
-                                {!! Form::label('idDepartment', 'Chọn phòng ban tiếp quản') !!}
+                                {!! Form::label('department_id', 'Chọn phòng ban tiếp quản') !!}
                                 <div class="form-group">
                                     {!! Form::select('department_id', $searchDepartment, $depUsers->department_id,
                                             ['class' => 'selectpicker form-control',
                                             'data-live-search' => 'true']) !!}
                                 </div>
-                                {!! Form::label('idPosition', 'Chọn chức vụ tiếp quản') !!}
+                                {!! Form::label('position_id', 'Chọn chức vụ tiếp quản') !!}
                                 <div class="form-group">
                                     {!! Form::select('position_id', $searchPosition, $depUsers->position_id,
                                             ['class' => 'selectpicker form-control',
                                             'data-live-search' => 'true']) !!}
-                                </div>
-                                {!! Form::label('date-start', 'Chọn ngày bắt đầu tiếp quản') !!}
-                                <div class="form-group">
-                                    {!! Form::date('start_date', $depUsers->start_date, [
-                                            'class'=>'form-control',
-                                            'required']) !!}
-                                </div>
-                                {!! Form::label('date-end', 'Chọn ngày kết thúc') !!}
-                                <div class="form-group">
-                                    {!! Form::date('end_date', $depUsers->end_date, [
-                                            'class'=>'form-control']) !!}
                                 </div>
                                 {!! Form::submit('Sửa', [
                                     'class'=>'btn btn-primary mt-4 pr-4 pl-4']) !!}

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Department;
 use App\Models\DepartmentUser;
 use App\Models\Position;
+use Carbon\Carbon;
 
 class DepartmentUserController extends Controller
 {
@@ -21,11 +22,12 @@ class DepartmentUserController extends Controller
     public function index()
     {
         $depUsers = DB::table('users')
-                    ->select('department_users.id as department_user_id', 'start_date', 'end_date', 'users.name as username', 'departments.name as depname', 'positions.name as posname')
+                    ->select('department_users.user_id as department_user_id', 'start_date', 'end_date', 'users.name as username', 'departments.name as depname', 'positions.name as posname')
                     ->join('department_users', 'users.id', '=', 'department_users.user_id')
                     ->join('departments', 'department_users.department_id', '=', 'departments.id')
                     ->join('positions', 'positions.id', '=', 'department_users.position_id')
-                    ->whereNotIn('users.id', [Auth::user()->id])
+                    ->where('users.role', '!=', config('setting.roles.system_admin'))
+                    ->where('department_users.position_id', '!=', config('setting.position.admin_department'))
                     ->get();
 
 
@@ -39,14 +41,6 @@ class DepartmentUserController extends Controller
      */
     public function create()
     {
-        $searchAdmin = DB::table('users')
-            ->join('department_users', 'users.id', '=', 'department_users.user_id')
-            ->whereNotIn('position_id', [config('setting.position.admin_department')])
-            ->pluck('users.name', 'users.id');
-        $searchDepartment = Department::pluck('name' ,'id');
-        $searchPosition = Position::whereNotIn('id', [config('setting.position.admin_department')])->pluck('name', 'id');
-
-        return view('system_admin.department_user.add', compact('searchAdmin', 'searchDepartment', 'searchPosition'));
     }
 
     /**
@@ -57,14 +51,6 @@ class DepartmentUserController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $input = $request->only('user_id', 'position_id', 'department_id', 'start_date', 'end_date');
-            DepartmentUser::create($input);
-
-            return redirect(route('department-user.index'))->with('alert', 'Thêm thành công');
-        } catch (Exception $e) {
-            return redirect(route('department-user.create'))->with('alert', 'Thêm thất bại');
-        }
     }
 
     /**
@@ -86,18 +72,18 @@ class DepartmentUserController extends Controller
      */
     public function edit($id)
     {
-        $depUsers = DB::table('users')
-                    ->select('department_users.id as department_user_id', 'users.id as user_id', 'start_date', 'end_date', 'departments.id as department_id', 'positions.id as position_id')
-                    ->join('department_users', 'users.id', '=', 'department_users.user_id')
-                    ->join('departments', 'department_users.department_id', '=', 'departments.id')
-                    ->join('positions', 'positions.id', '=', 'department_users.position_id')
-                    ->where('department_users.id', $id)
-                    ->first();
-        $searchAdmin = User::whereNotIn('id', [Auth::user()->id])->pluck('name', 'id');
-        $searchDepartment = Department::pluck('name' ,'id');
-        $searchPosition = Position::pluck('name' , 'id');
+        $depUsers = User::findOrFail($id);
+        $currentDepartment = DepartmentUser::with('department')
+            ->where('user_id', $id)
+            ->first()
+            ->toArray();
+        $searchDepartment = DB::table('departments')
+            ->whereIn('departments.id', 
+            DepartmentUser::where('position_id', config('setting.position.admin_department'))->pluck('department_id'))
+            ->pluck('name', 'id');
+        $searchPosition = Position::where('id', '!=', config('setting.position.admin_department'))->pluck('name' , 'id');
 
-        return view('system_admin.department_user.edit', compact('depUsers', 'searchAdmin', 'searchDepartment', 'searchPosition'));
+        return view('system_admin.department_user.edit', compact('depUsers', 'currentDepartment', 'searchDepartment', 'searchPosition'));
     }
 
     /**
@@ -110,21 +96,22 @@ class DepartmentUserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $dataUpdate = $request->only('user_id', 'position_id', 'department_id', 'start_date', 'end_date');
-            $result = DepartmentUser::whereId($id)->update($dataUpdate);
+            $dataUpdate = $request->only('department_id', 'position_id');
+
+            $result = DepartmentUser::where('user_id', $id)->update($dataUpdate);
 
             if ($result) {
 
-                return redirect(route('department-user.edit', ['id' => $id] ))->with('alert', 'Sửa thành công');
+                return redirect(route('department-user.index', ['id' => $id] ))->with('messageSuccess', 'Sửa thành công');
             } else{
 
-                return redirect(route('department-user.edit', ['id' => $id] ))->with('alert', 'Dữ liệu không được sửa đổi');
+                return redirect(route('department-user.edit', ['id' => $id] ))->with('messageFail', 'Dữ liệu không được sửa đổi');
             }
 
 
         } catch (Exception $e) {
 
-            return redirect(route('department-user.edit', ['id' => $id]))->with('alert', 'Sửa thất bại');
+            return redirect(route('department-user.edit', ['id' => $id]))->with('messageFail', 'Sửa thất bại');
         }
     }
 
@@ -136,21 +123,5 @@ class DepartmentUserController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $dataActive = config('setting.active.no_active');
-            $result = DepartmentUser::whereId($id)->update(['is_active' => $dataActive]);
-
-            if ($result) {
-
-                return redirect(route('department-user.index'))->with('alert', 'Xóa thành công');
-            } else {
-
-                return redirect(route('department-user.index'))->with('alert', 'Xóa thất bại');
-            }
-
-        } catch (Exception $e) {
-
-            return redirect(route('department-user.index'))->with('alert', 'Xóa thất bại');
-        }
     }   
 }
