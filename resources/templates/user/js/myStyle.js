@@ -35,6 +35,15 @@ function showMessages(id) {
 function showDocumentDepartment(id) {
     window.location.href = 'document-department/' + id;
 }
+function showDocumentSent(id) {
+    window.location.href = 'document-sent/' + id;
+}
+function showDocumentPending(id) {
+    window.location.href = 'document-pending/' + id;
+}
+function showDocumentPersonal(id) {
+    window.location.href = 'document-personal/' + id;
+}
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,

@@ -17,7 +17,7 @@ Tin nhắn đến
                     <a href=""><span style="color: black;line-height: 35px;">{{$message->title}}</span></a>
                 </div>
                 <div>
-                    <span class="badge">{{$message->created_at}}</span><br>
+                    <span class="badge">{{ date('H:m:i ( d-m-Y )', strtotime($message->created_at)) }}</span><br>
                 </div>
             </div>
             @endforeach
