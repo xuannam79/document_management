@@ -33,7 +33,7 @@
                                 {!! Form::label('birth_date', "Ngày Sinh") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {{ Form::date('birth_date', $user->birth_date, ['class' => 'form-control', 'max' => \Carbon\Carbon::now()->subYear(19)->format('Y-m-d'), 'min' => \Carbon\Carbon::now()->subYear(100)->format('Y-m-d')]) }}
+                                        {{ Form::date('birth_date', date('Y-m-d',strtotime($user->birth_date)), ['class' => 'form-control', 'max' => \Carbon\Carbon::now()->subYear(19)->format('Y-m-d'), 'min' => \Carbon\Carbon::now()->subYear(100)->format('Y-m-d')]) }}
                                     </div>
                                 </div>
                                 {!! Form::label('gender', "Giới Tính") !!}
@@ -62,9 +62,16 @@
                                     </div>
                                 </div>
                                 {!! Form::label('birth_date', "Ngày Hết Hạn Tài Khoản") !!}
-                                <div class="form-group row">
+                                @if($user->end_date == null)
+                                    <div style="margin-bottom: 10px">
+                                        {!! Form::checkbox('no_end_date', true, true, ['id' => 'no_end_date']) !!}
+                                        <span title="tích vào ô nếu không có ngày hết hạn">vô hạn</span>
+                                    </div>
+                                @endif
+
+                                <div class="form-group row" id="end_date_div" style="@if($user->end_date == null) display:none @else display:inherit @endif">
                                     <div class="col-sm-12">
-                                        {{ Form::date('end_date', $department->end_date, ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->addDays(60)->format('Y-m-d'), 'max' => \Carbon\Carbon::now()->addYear(100)->format('Y-m-d')]) }}
+                                        {{ Form::date('end_date', date('Y-m-d',strtotime($department->end_date)), ['class' => 'form-control', 'min' => \Carbon\Carbon::now()->addDays(60)->format('Y-m-d'), 'max' => \Carbon\Carbon::now()->addYear(100)->format('Y-m-d'), 'disabled' => ($user->end_date == null)? true:false ,'id' => 'end_date']) }}
                                     </div>
                                 </div>
                                 {!! Form::submit("Sửa", ['class' => 'btn btn-primary mt-4 pr-4 pl-4']) !!}

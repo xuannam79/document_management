@@ -62,6 +62,9 @@ class UserManagementController extends Controller
         $input['password'] = bcrypt($input['password']);
         $input['avatar'] = $this->uploader->saveImg($input['avatar']);
         $input['role'] = config('setting.position.secretary');
+        if($input['no_end_date'] == 1){
+            $input['end_date'] = null;
+        }
         DB::beginTransaction();
         try
         {
@@ -168,6 +171,9 @@ class UserManagementController extends Controller
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+        if($input['no_end_date'] == 1){
+            $input['end_date'] = null;
+        }
         DB::beginTransaction();
         try
         {
@@ -205,6 +211,25 @@ class UserManagementController extends Controller
             $user = User::findOrFail($id);
             $user->update(['is_active' => config('setting.active.no_active')]);
             DepartmentUser::where('user_id', $id)->update(['is_active' => config('setting.active.no_active')]);
+            DB::commit();
+
+            return redirect()->route('users.index')->with('messageSuccess', 'Xóa Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->back()->with('messageFail', 'Xóa Thất Bại');
+        }
+    }
+
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        try
+        {
+            DepartmentUser::where('user_id', $id)->delete();
+            $user = User::findOrFail($id);
+            $user->delete();
             DB::commit();
 
             return redirect()->route('users.index')->with('messageSuccess', 'Xóa Thành Công');

@@ -16,10 +16,10 @@ class CreateTableFormManagementTable extends Migration
         Schema::create('form_management', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->integer('approved_by')->nullable();
-            $table->string('link')->nullable();
-            $table->string('department_id')->nullable();
+            $table->text('link')->nullable();
+            $table->integer('department_id')->nullable();
             $table->integer('is_active')->default(1);
             $table->date('sent_date')->nullable();
             $table->timestamps();
