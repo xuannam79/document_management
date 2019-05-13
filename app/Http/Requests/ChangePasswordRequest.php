@@ -36,7 +36,7 @@ class ChangePasswordRequest extends FormRequest
             'oldpassword.required' => 'Vui lòng nhập mật khẩu cũ',
             'newpassword.required' => 'Vui lòng nhập mật khẩu mới',
             'confirmpassword.required' => 'Vui lòng nhập mật khẩu mới',
-            'confirmpassword.same' => 'mật khẩu nhập lại phải giống mật khẩu mới',
+            'confirmpassword.same' => 'Mật khẩu nhập lại phải giống mật khẩu mới',
         ];
     }
 }
