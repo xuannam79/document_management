@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SystemAdmin;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\DocumentType;
 use App\Http\Requests\SystemAdmin\DocumentTypeRequest;
@@ -28,8 +29,9 @@ class DocumentTypeController extends Controller
      */
     public function create()
     {
+        $documentTypes = DocumentType::where('is_active', config('setting.active.is_active'))->get();
 
-        return view('system_admin.document_type.add');
+        return view('system_admin.document_type.add', compact('documentTypes'));
     }
 
     /**
@@ -41,15 +43,27 @@ class DocumentTypeController extends Controller
     public function store(DocumentTypeRequest $request)
     {
         try {
+            DB::beginTransaction();
             $input = $request->only('name');
             $input['is_active'] = config('setting.active.is_active');
-            DocumentType::create($input);
-        } catch (Exception $e) {
+            $getAllTypes = DocumentType::all();
+            $inputRequest = trim(str_replace('-', '', str_slug($input['name'])));
+            foreach ($getAllTypes as $types) {
+                $nameType = trim(str_replace('-', '', str_slug($types->name)));
+                if ($inputRequest == $nameType) {
 
-            return redirect(route('document-type.create'))->with('alert', 'Thêm thất bại');
+                    return redirect()->route('document-type.create')->with('messageFail', 'Loại văn bản đã bị trùng! Vui lòng loại văn bản khác!');
+                }
+            }
+            DocumentType::create($input);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect(route('document-type.create'))->with('messageFail', 'Thêm thất bại');
         }
 
-        return redirect(route('document-type.index'))->with('alert', 'Thêm thành công');
+        return redirect(route('document-type.index'))->with('messageSuccess', 'Thêm thành công');
     }
 
     /**
@@ -91,16 +105,16 @@ class DocumentTypeController extends Controller
 
             if ($result) {
 
-                return redirect(route('document-type.index'))->with('alert', 'Sửa thành công');
+                return redirect(route('document-type.index'))->with('messageSuccess', 'Sửa thành công');
             }
             else{
 
-                return redirect(route('document-type.index'))->with('alert', 'Dữ liệu không được sửa đổi');
+                return redirect(route('document-type.index'))->with('messageFail', 'Dữ liệu không được sửa đổi');
             }
 
         } catch (Exception $e) {
 
-            return redirect(route('document-type.index'))->with('alert', 'Sửa thất bại');
+            return redirect(route('document-type.index'))->with('messageFail', 'Sửa thất bại');
         }
     }
 
@@ -118,15 +132,15 @@ class DocumentTypeController extends Controller
 
             if ($result) {
 
-                return redirect(route('document-type.index'))->with('alert', 'Xóa thành công');
+                return redirect(route('document-type.index'))->with('messageSuccess', 'Xóa thành công');
             } else {
 
-                return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
+                return redirect(route('document-type.index'))->with('messageFail', 'Xóa thất bại');
             }
 
         } catch (Exception $e) {
 
-            return redirect(route('document-type.index'))->with('alert', 'Xóa thất bại');
+            return redirect(route('document-type.index'))->with('messageFail', 'Xóa thất bại');
         }
     }
 
@@ -145,15 +159,15 @@ class DocumentTypeController extends Controller
 
             if ($result) {
 
-                return redirect(route('document-type-archived'))->with('alert', 'Khôi phục thành công');
+                return redirect(route('document-type-archived'))->with('messageSuccess', 'Khôi phục thành công');
             } else {
 
-                return redirect(route('document-type-archived'))->with('alert', 'Khôi phục thất bại');
+                return redirect(route('document-type-archived'))->with('messageFail', 'Khôi phục thất bại');
             }
 
         } catch (Exception $e) {
 
-            return redirect(route('document-type-archived'))->with('alert', 'Khôi phục thất bại');
+            return redirect(route('document-type-archived'))->with('messageFail', 'Khôi phục thất bại');
         }
     }
 }

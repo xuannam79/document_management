@@ -38,17 +38,16 @@ class DelegacyController extends Controller
     public function create()
     {
         $getDepartment = DepartmentUser::with([
-            'user' => function($query) {
-                $query->whereId(Auth::user()->id);
-            }, 
+            'user',
             'department'
-        ])->first()->toArray();
+        ])->where('user_id', Auth::user()->id)
+        ->first()->toArray();
         $getIdDepartment = $getDepartment['department']['id'];
 
         $searchAdmin = DB::table('users')->join('department_users', 'users.id', '=', 'department_users.user_id')
-                        ->where('department_id', $getIdDepartment)
-                        ->whereNotIn('users.id', [Auth::user()->id])
-                        ->pluck('name', 'users.id');
+        ->where('department_id', $getIdDepartment)
+        ->where('users.id', '!=', Auth::user()->id)
+        ->pluck('name', 'users.id');
 
         return view('department_admin.delegacy.add', compact('searchAdmin', 'getDepartment'));
     }
