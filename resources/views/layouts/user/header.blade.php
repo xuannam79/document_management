@@ -1,5 +1,5 @@
 <header class="header text-center">
-    <div class="container">
+    <div class="container container-head">
         <div class="tagline">
             <p>Phân hiệu Trường Đại Học Nội Vụ Hà Nội tại tỉnh Quảng Nam</p>
         </div>
