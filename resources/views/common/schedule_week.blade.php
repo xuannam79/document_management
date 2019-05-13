@@ -1,5 +1,5 @@
 <header class="header text-center">
-    <div class="container">
+    <div class="container container-head">
         <div class="tagline" style="margin-top: 20px;font-size: 26px;">
             <p>Phân hiệu Trường Đại Học Nội Vụ Hà Nội</p>
         </div>

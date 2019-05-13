@@ -211,6 +211,19 @@
                             <a class="link" href="{{ route('infrastructure-user.index') }}"><span></span></a>
                         </div>
                     </div>
+                    {{-- Các đơn vị liên kết --}}
+                    <div class="item item-primary item-2 col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-address-book"></i>
+                            </div>
+                            <h3 class="title">Các đơn vị liên kết</h3>
+                            <p class="intro">
+                                Xem các địa chỉ/ đơn vị liên kết
+                            </p>
+                            <a class="link" href="{{ route('collaboration.index') }}"><span></span></a>
+                        </div>
+                    </div>
                 @endif
             @endif
             {{-- Tin nhắn --}}

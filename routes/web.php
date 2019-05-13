@@ -140,7 +140,6 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
         'as' => 'profile',
         'uses' => 'Information@index'
     ]);
-    Route::resource('collaboration', 'CollaborationController');
 
     Route::group(['middleware' => 'checkDelegacy'], function () {
         // Phần chỉ dành cho Department admin, không dành cho ủy quyền
@@ -288,8 +287,11 @@ Route::group(['middleware' => 'checkIsNotSysAdmin'], function () {
         Route::resource('infrastructure-user', 'InfrastructureController');
         // biểu mẫu của user - chỉ xem
         Route::resource('users-forms', 'FormsController');
+        // chỉ xem danh sách user của đơn vị
         Route::resource('list-users', 'MemberController');
-
+        // chỉ xem danh sách đơn vị liên kết của đơn vị
+        Route::resource('collaboration', 'CollaborationController');
+        
         Route::namespace ('Document')->group(function () {
             //user
             Route::resource('document-personal', 'PersonalDocumentController', [

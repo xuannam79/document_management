@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\DepartmentUser;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DepartmentUser;
+use App\Models\Infrastructure;
+use App\Models\Form;
+use App\Models\ReplyDocument;
+use App\Models\TimeTable;
+use App\Models\CollaborationUnit;
 
 class Department extends Model
 {
@@ -44,5 +49,10 @@ class Department extends Model
     public function timeTable()
     {
         return $this->hasMany(TimeTable::class);
+    }
+
+    public function collaborationUnit()
+    {
+        return $this->hasMany(CollaborationUnit::class);
     }
 }
