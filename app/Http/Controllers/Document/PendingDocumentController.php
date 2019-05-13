@@ -14,9 +14,7 @@ class PendingDocumentController extends Controller
 {
     public function index()
     {
-        Carbon::setLocale('vi');
         $currentDepartmentId = DepartmentUser::where([
-            'position_id' => 1,
             'user_id' => Auth::user()->id,
             ])
             ->first()->department_id;
