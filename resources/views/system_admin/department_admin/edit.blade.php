@@ -32,7 +32,7 @@
                                 </div>
                                 {!! Form::label('birth_date', "Ngày Sinh") !!}
                                 <div class="input-group date birthday" data-date-format="dd/mm/yyyy">
-                                    {!! Form::text('birth_date', $depUsers->birth_date, ['readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
+                                    {!! Form::text('birth_date', (new DateTime($depUsers->birth_date))->format('d/m/Y'), ['readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
                                     <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::label('gender', "Giới Tính") !!}
