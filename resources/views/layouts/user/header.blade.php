@@ -36,14 +36,16 @@
                     Văn bản
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @if (auth()->user()->role == config('setting.roles.admin_department'))
+                        @if (auth()->user()->role == config('setting.roles.admin_department') || auth()->user()->delegacy == config('setting.delegacy.department_admin'))
                             <a class="dropdown-item" href="{{route('document.create')}}">Tạo mới văn bản</a>
                             <a class="dropdown-item" href="{{route('document-department.index')}}">Văn bản đến đơn vị</a>
-                            <a class="dropdown-item {{ ($checkDocument == true)?"css-form-approval":"" }}" href="{{route('document-pending.index')}}">Văn bản đang chờ duyệt
-                                @if($countDocument > 0)
-                                    <span class="badge-pill badge-danger">{{ $countDocument }}</span>
-                                @endif
-                            </a>
+                            @if(auth()->user()->role == config('setting.roles.admin_department'))
+                                <a class="dropdown-item {{ ($checkDocument == true)?"css-form-approval":"" }}" href="{{route('document-pending.index')}}">Văn bản đang chờ duyệt
+                                    @if($countDocument > 0)
+                                        <span class="badge-pill badge-danger">{{ $countDocument }}</span>
+                                    @endif
+                                </a>
+                            @endif
                             <a class="dropdown-item" href="{{route('document-sent.index')}}">Văn bản đã gửi</a>
                         @else
                             <a class="dropdown-item" href="{{route('document-personal.index')}}">Văn bản đến cá nhân</a>
@@ -72,10 +74,18 @@
                     </li>
                 @endif
                 <li class="nav-item cool-link">
-                    <a class="nav-link" href="{{ route('schedule-admin.index') }}">Lịch tuần trường</a>
+                    @if(auth()->user()->role == config('setting.roles.admin_department') || auth()->user()->delegacy == config('setting.delegacy.department_admin'))
+                        <a class="nav-link" href="{{ route('schedule-admin.index') }}">Lịch tuần trường</a>
+                    @else
+                        <a class="nav-link" href="{{ route('schedule.index') }}">Lịch tuần trường</a>
+                    @endif
                 </li>
                 <li class="nav-item cool-link">
-                    <a class="nav-link" href="{{ route('timetable.index') }}">Thời khóa biểu</a>
+                    @if(auth()->user()->role == config('setting.roles.admin_department'))
+                        <a class="nav-link" href="{{ route('timetable.index') }}">Thời khóa biểu</a>
+                    @else
+                        <a class="nav-link" href="{{ route('timetable-users.index') }}">Thời khóa biểu</a>
+                    @endif
                 </li>
                 @php
                     $idDepartment = \App\Models\DepartmentUser::where('user_id', Auth::user()->id)->first();
@@ -98,25 +108,34 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @if (auth()->user()->role == config('setting.roles.user'))
+                        @if (auth()->user()->role == config('setting.roles.user') && auth()->user()->delegacy != config('setting.delegacy.department_admin'))
                             <a class="dropdown-item" href="{{route('users-forms.index')}}">Danh sách biểu mẫu</a>
-                        @elseif (auth()->user()->role == config('setting.roles.admin_department'))
+                        @elseif (auth()->user()->role == config('setting.roles.admin_department') || auth()->user()->delegacy == config('setting.delegacy.department_admin'))
                             <a class="dropdown-item" href="{{ route('forms.index') }}">Danh sách biểu mẫu</a>
                             <a class="dropdown-item" href="{{ route('forms.create') }}">Thêm biểu mẫu</a>
                             <a class="dropdown-item" href="{{ route('forms.archive') }}">Danh sách biểu mẫu đã bị xóa</a>
+                            @if (auth()->user()->role == config('setting.roles.admin_department'))
                             <a class="dropdown-item {{ ($checkForm == true)?"css-form-approval":"" }}" href="{{ route('forms.approval') }}">DS biểu mẫu chờ phê duyệt
                                 @if($count > 0)
                                     <span class="badge-pill badge-danger">{{ $count }}</span>
                                 @endif
                             </a>
+                            @endif
                         @endif
                     </div>
                 </li>
                 <li class="nav-item cool-link">
                     @if (auth()->user()->role == config('setting.roles.user'))
-                    <a class="nav-link" href="{{ route('infrastructure-user.index') }}">Tài sản</a>
+                        <a class="nav-link" href="{{ route('infrastructure-user.index') }}">Tài sản</a>
                     @else
-                    <a class="nav-link" href="{{ route('infrastructure.index') }}">Tài sản</a>
+                        <a class="nav-link" href="{{ route('infrastructure.index') }}">Tài sản</a>
+                    @endif
+                </li>
+                <li class="nav-item cool-link">
+                    @if (auth()->user()->role == config('setting.roles.user'))
+                        <a class="nav-link" href="{{ route('collaboration.index') }}">Các đơn vị liên kết</a>
+                    @else
+                        <a class="nav-link" href="{{ route('collaboration-unit.index') }}">Các đơn vị liên kết</a>
                     @endif
                 </li>
             </ul>
