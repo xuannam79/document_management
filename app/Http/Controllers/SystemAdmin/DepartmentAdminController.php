@@ -12,6 +12,8 @@ use App\Models\DepartmentUser;
 use App\Models\Position;
 use App\Traits\ManagingRole;
 use App\Traits\Uploader;
+use Carbon\Carbon;
+use DateTime;
 
 class DepartmentAdminController extends Controller
 {
@@ -99,7 +101,8 @@ class DepartmentAdminController extends Controller
             } else {
                 $dataUpdate['avatar'] = User::findOrFail($id)->avatar;
             }
-
+            $date = Carbon::createFromFormat('d/m/Y', $dataUpdate['birth_date']);
+            $dataUpdate['birth_date'] = Carbon::parse($date)->format('Y/m/d');
             $result = User::whereId($id)->update($dataUpdate);
 
             if ($result) {
