@@ -171,6 +171,12 @@
                                         Văn bản đến đơn vị
                                     </li>
                                 </a>
+                                <a href="{{route('document-sent.index')}}">
+                                    <li>
+                                        <i class="icon-leftbar fa fa-upload"></i>&nbsp;
+                                        Văn bản đã gửi
+                                    </li>
+                                </a>
                             @endif
                             @if(auth()->user()->delegacy == config('setting.delegacy.department_admin'))
                                 <a href="{{route('document-sent.index')}}">
