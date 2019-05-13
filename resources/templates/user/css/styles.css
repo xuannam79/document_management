@@ -1499,4 +1499,5 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
 }
 .container {
     margin-right: 4% !important;
+    width: 70%;
 }
