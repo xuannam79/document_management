@@ -13,7 +13,6 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">Tên đơn vị</th>
                         <th style="text-align: center;">Số điện thoại</th>
                         <th style="text-align: center;">Email</th>
@@ -23,7 +22,6 @@
                 <tbody>
                 @foreach($collaborationUnits as $collaborationUnit)
                     <tr>
-                        <td>{{ $collaborationUnit->id }}</td>
                         <td>{{ $collaborationUnit->name }}</td>
                         <td>{{ $collaborationUnit->phone_number }}</td>
                         <td>{{ $collaborationUnit->email }}</td>

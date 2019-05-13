@@ -100,9 +100,13 @@ class CollaborationUnitController extends Controller
      */
     public function edit($id)
     {
-        $collaborationUnit = CollaborationUnit::findOrFail($id);
+        try {
+            $collaborationUnit = CollaborationUnit::findOrFail($id);
 
-        return view('department_admin.collaboration_unit.edit', compact('collaborationUnit'));
+            return view('department_admin.collaboration_unit.edit', compact('collaborationUnit'));
+        } catch (Exception $e) {
+            return redirect(route('collaboration-unit.index'))->with('alert', 'Không tìm thấy ID');
+        }
     }
 
     /**
