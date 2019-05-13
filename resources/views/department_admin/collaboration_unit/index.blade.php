@@ -14,24 +14,22 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Tên đơn vị</th>
-                        <th>Số điện thoại</th>
-                        <th>Email</th>
-                        <th>Địa chỉ</th>
-                        <th>Mô tả</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center;">ID</th>
+                        <th style="text-align: center;">Tên đơn vị</th>
+                        <th style="text-align: center;">Số điện thoại</th>
+                        <th style="text-align: center;">Email</th>
+                        <th style="text-align: center;">Địa chỉ</th>
+                        <th style="text-align: center;">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($collaborationUnits as $collaborationUnit)
                     <tr>
+                        <td>{{ $collaborationUnit->id }}</td>
                         <td>{{ $collaborationUnit->name }}</td>
                         <td>{{ $collaborationUnit->phone_number }}</td>
                         <td>{{ $collaborationUnit->email }}</td>
                         <td>{{ $collaborationUnit->address }}</td>
-                        <td>{{ $collaborationUnit->description }}</td>
-                        <td class="frm-align"><span class="badge badge-pill badge-success">Hoạt động</span></td>
                         <td class="frm-align">
                             <a href="{{ route('collaboration-unit.edit', $collaborationUnit->id) }}" class="text-warning" style="margin-right: 8px;">
                                 <i class="fa fa-edit"></i>

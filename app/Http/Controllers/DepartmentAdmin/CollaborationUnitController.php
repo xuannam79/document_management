@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\DepartmentAdmin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SystemAdmin\CollaborationUnitEditRequest;
 use App\Http\Requests\SystemAdmin\CollaborationUnitRequest;
 use App\Models\CollaborationUnit;
+use App\Models\DepartmentUser;
+use App\Models\User;
+use App\Models\Department;
 
 class CollaborationUnitController extends Controller
 {
@@ -17,7 +22,15 @@ class CollaborationUnitController extends Controller
      */
     public function index()
     {
-        $collaborationUnits = CollaborationUnit::where("is_active", config('setting.active.is_active'))->get();
+        $getDepartment = DepartmentUser::with([
+            'user',
+            'department'
+        ])->where('user_id', Auth::user()->id)
+        ->first()->toArray();
+        $getIdDepartment = $getDepartment['department']['id'];
+
+        $collaborationUnits = CollaborationUnit::where('department_id', $getIdDepartment)
+            ->where('is_active', config('setting.active.is_active'))->get();
 
         return view("department_admin.collaboration_unit.index", compact("collaborationUnits"));
     }
@@ -41,19 +54,29 @@ class CollaborationUnitController extends Controller
     public function store(CollaborationUnitRequest $request)
     {
         try {
+            DB::beginTransaction();
+            $getDepartment = DepartmentUser::with([
+                'user',
+                'department'
+            ])->where('user_id', Auth::user()->id)
+            ->first()->toArray();
+            $getIdDepartment = $getDepartment['department']['id'];
+
             $input = $request->all();
             $input['is_active'] = config('setting.active.is_active');
+            $input['department_id'] = $getIdDepartment;
             $result = CollaborationUnit::create($input);
-
             if($result){
+                DB::commit();
 
                 return redirect(route('collaboration-unit.index'))->with('alert', 'Thêm thành công');
             } else {
-
+                DB::rollBack();
+                
                 return redirect(route('collaboration-unit.index'))->with('alert', 'Thêm thất bại, vui lòng kiểm tra lại');
             }
         } catch (Exception $e) {
-
+            DB::rollBack();
             return redirect(route('collaboration-unit.create'))->with('alert', 'Thêm thất bại');
         }
     }
@@ -92,7 +115,7 @@ class CollaborationUnitController extends Controller
     public function update(CollaborationUnitEditRequest $request, $id)
     {
         try {
-            $dataUpdate = $request->only('name');
+            $dataUpdate = $request->only('name', 'phone_number', 'email', 'address', 'description');
             $result = CollaborationUnit::whereId($id)->update($dataUpdate);
 
             if ($result) {

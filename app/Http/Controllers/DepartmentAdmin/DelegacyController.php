@@ -20,12 +20,18 @@ class DelegacyController extends Controller
     public function index()
     {
         $getDepartment = DepartmentUser::with([
-            'user' => function($query) {
-                $query->whereId(Auth::user()->id);
-            }, 
+            'user',
             'department'
-        ])->first()->toArray();
-        $getUser = User::where('delegacy', config('setting.delegacy.department_admin'))->get();
+        ])->where('user_id', Auth::user()->id)
+        ->first()->toArray();
+        $getIdDepartment = $getDepartment['department']['id'];
+
+        $getUser = DB::table('users')
+        ->select('users.id as idUser', 'users.name as nameUser')
+        ->join('department_users', 'users.id', '=', 'department_users.user_id')
+        ->where('delegacy', config('setting.delegacy.department_admin'))
+        ->where('department_id', $getIdDepartment)
+        ->get();
 
         return view('department_admin.delegacy.index', compact('getUser', 'getDepartment'));
     }

@@ -22,6 +22,12 @@ class CollaborationUnit extends Model
         'address',
         'description',
         'is_active',
+        'department_id',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 
 }

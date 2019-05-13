@@ -49,5 +49,3 @@
         {{ Html::script(asset('/templates/user/js/bootstrap-datepicker.js')) }}
     </body>
 </html>
-
-

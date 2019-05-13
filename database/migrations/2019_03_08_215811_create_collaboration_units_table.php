@@ -20,6 +20,7 @@ class CreateCollaborationUnitsTable extends Migration
             $table->string('email');
             $table->string('address');
             $table->string('description')->nullable();
+            $table->integer('department_id');
             $table->timestamps();
         });
     }

@@ -1,34 +1,38 @@
 @extends('layouts.user.master')
 @section('title')
-    Danh Sách Các Đơn Vị Liên Kết
+    Danh sách các đơn vị liên kết
 @endsection
 @section('content')
-<div class="container">
-    <div class="card-header cards-wrapper row detail-document-body" style="margin-bottom: 5px;padding-left: 25%;">
-        <h6 class="m-0 font-weight-bold text-primary">Danh Sách Các Đơn Vị Liên Kết</h6>
-    </div>
-    <div id="cards-wrapper" class="cards-wrapper row detail-document-body">
-        @foreach($collaborationUnits as $collaborationUnits)
-            <div class="card__box col-md-6 col-sm-12">
-                <div class="card" >
-                    <div class="card__content" style="max-width: 100%">
-                        <h4 class="card__title"><a href="#">{{ $collaborationUnits->name }}</a></h4>
-                        <p class="card__text"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $collaborationUnits->address }}</p>
-                        <p class="card__description">{{ $collaborationUnits->description }}</p>
-                        <div class="card__bottom">
-                            <div class="options">
-                                <span class="date">
-                                <i class="fa fa-envelope" aria-hidden="true"></i> {{ $collaborationUnits->email }}
-                                </span>
-                            </div>
-                            <div class="card__price">
-                            {{ $collaborationUnits->phone_number }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        @include('common.errors')
+        <div class="col-lg-12 col-ml-12">
+            <div class="card-header py-3" style="margin-bottom: 5px;">
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Các Đơn Vị Liên Kết</h6>
             </div>
-        @endforeach
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">ID</th>
+                        <th style="text-align: center;">Tên đơn vị</th>
+                        <th style="text-align: center;">Số điện thoại</th>
+                        <th style="text-align: center;">Email</th>
+                        <th style="text-align: center;">Địa chỉ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($collaborationUnits as $collaborationUnit)
+                    <tr>
+                        <td>{{ $collaborationUnit->id }}</td>
+                        <td>{{ $collaborationUnit->name }}</td>
+                        <td>{{ $collaborationUnit->phone_number }}</td>
+                        <td>{{ $collaborationUnit->email }}</td>
+                        <td>{{ $collaborationUnit->address }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

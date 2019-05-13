@@ -14,19 +14,21 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Họ và tên</th>
-                        <th>Phòng ban ủy quyền</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center;">ID</th>
+                        <th style="text-align: center;">Họ và tên</th>
+                        <th style="text-align: center;">Phòng ban ủy quyền</th>
+                        <th style="text-align: center;">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($getUser as $user)
                     <tr>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->idUser }}</td>
+                        <td>{{ $user->nameUser }}</td>
                         <td>{{ $getDepartment['department']['name'] }}</td>
                         <td class="frm-align">
-                            {!!Form::open(['method'=>'DELETE', 'id'=>'delete-delegacy'.$user->id, 'route'=>['delegacy.destroy', $user->id], 'style'=>'display:inline'])!!}
-                            <a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8" onclick='submitForm("delete-delegacy" + {{$user->id}});'>
+                            {!!Form::open(['method'=>'DELETE', 'id'=>'delete-delegacy'.$user->idUser, 'route'=>['delegacy.destroy', $user->idUser], 'style'=>'display:inline'])!!}
+                            <a href="javascript:void(0)" class="text-danger data-delete frm-margin-left-8" onclick='submitForm("delete-delegacy" + {{$user->idUser}});'>
                                 <i class="fa fa-trash"></i>
                             </a>
                             {!!Form::close()!!}
