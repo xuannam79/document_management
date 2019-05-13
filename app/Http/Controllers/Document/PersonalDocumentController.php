@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Document;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\Document\PersonalDocumentAddRequest;
 use App\Http\Requests\Document\ReplyDocumentRequest;
 use App\Models\DepartmentUser;
@@ -52,7 +53,8 @@ class PersonalDocumentController extends Controller
             ->join('users', 'users.id', '=', 'documents.user_id')
             ->join('departments', 'departments.id', '=', 'documents.department_id')
             ->join('document_user', 'document_user.document_id', '=', 'documents.id')
-            ->where('document_user.department_id', $departmentID)
+            ->where(['document_user.department_id' => $departmentID,
+                'documents.is_approved' => config('setting.document.approved')])
             ->orWhere('document_user.user_id', Auth::user()->id)
             ->select(
                 'document_user.created_at as sent_date',
@@ -177,6 +179,47 @@ class PersonalDocumentController extends Controller
             ReplyDocument::create($input);
         }
         return redirect()->route('document-personal.show', $id);
+    }
+
+    public function edit($id){
+        $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
+            ->join('users', 'users.id', '=', 'documents.user_id')
+            ->join('departments', 'departments.id', '=', 'documents.department_id')
+            ->where('documents.id', $id)
+            ->select('documents.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department')
+            ->first();
+        if(!isset($document))
+            return redirect()->route('document-personal.index')->with('messageFail', 'Không tìm thấy văn bản này, vui lòng kiểm tra lại');
+        $documentTypes = DocumentType::pluck('name', 'id');
+        return view('document.personal_document.edit', compact('document', 'documentTypes'));
+    }
+
+    public function update(Request $request, $id){
+        DB::beginTransaction();
+        try {
+            $departmentId = DepartmentUser::where('user_id', Auth::user()->id)->first()['department_id'];
+            $documentData = $request->except('attachedFiles', '_token', '_method');
+            $documentData['publish_date'] = Carbon::parse($documentData['publish_date'])->format('Y-m-d');
+            $document = Document::where('id', $id);
+            if(!isset($document))
+                return redirect()->route('document-personal.index')->with('messageFail', 'Không tìm thấy văn bản này, vui lòng kiểm tra lại');
+            $document->update($documentData);
+            $attachedFiles = $request->only('attachedFiles');
+            if(count($attachedFiles) > 0){
+                DocumentAttachment::where('document_id', $id)->delete();
+                foreach ($attachedFiles["attachedFiles"] as $key => $file) {
+                    DocumentAttachment::create([
+                        'document_id' => $id,
+                        'name' => $this->uploader->saveDocument($file, public_path('upload/files/document')),
+                    ]);
+                }
+            }
+            DB::commit();
+            return redirect(route('document-sent.index'))->with('messageSuccess', 'Cập nhật thành công');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect(route('document-personal.edit', $id))->with('messageFail', 'Cập nhật công văn thất bại, vui lòng kiểm tra lại');
+        }
     }
 
 }

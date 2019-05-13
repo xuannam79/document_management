@@ -8,6 +8,8 @@ use App\Models\DocumentAttachment;
 use App\Models\DocumentDepartment;
 use App\Models\DocumentUser;
 use App\Models\ReplyDocument;
+use App\Models\DocumentType;
+use App\Models\Department;
 use App\Uploaders\Uploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -126,6 +128,67 @@ class DocumentDepartmentController extends Controller
             return redirect()->route('document-department.show', $id)
                 ->with('messageFail',
                     'Bạn đã chuyển tiếp văn bản này rồi , vui lòng kiểm tra lại');
+        }
+    }
+
+    public function edit($id){
+        $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
+            ->join('users', 'users.id', '=', 'documents.user_id')
+            ->join('departments', 'departments.id', '=', 'documents.department_id')
+            ->join('document_department', 'document_department.document_id', '=', 'documents.id')
+            ->where('documents.id', $id)
+            ->select('documents.*', 'document_department.*', 'documents.id as documentID', 'document_types.name as name_type_document', 'users.*', 'departments.name as name_department')
+            ->first();
+        if(!isset($document))
+            return redirect()->route('document-personal.index')->with('messageFail', 'Không tìm thấy văn bản này, vui lòng kiểm tra lại');
+        $departmentId = DepartmentUser::where('user_id', Auth::user()->id)->first()['department_id'];
+        $documentTypes = DocumentType::pluck('name', 'id');
+        $currentReceivedDepartments = DB::table('document_department')
+            ->join('departments', 'departments.id', '=', 'document_department.department_id')
+            ->where('document_id',$id)->pluck('name' ,'department_id');
+        $currentReceivedDepartmentIds = DB::table('document_department')
+            ->join('departments', 'departments.id', '=', 'document_department.department_id')
+            ->where('document_id',$id)
+            ->pluck('department_id');
+        $receivedDepartments = Department::whereNotIn('id', $currentReceivedDepartmentIds)
+            ->where('id','!=', $departmentId)
+            ->pluck('name', 'id');
+        return view('document.document_department.edit', compact('document', 'documentTypes', 'receivedDepartments', 'currentReceivedDepartments'));
+    }
+
+    public function update(Request $request, $id){
+        DB::beginTransaction();
+        try {
+            $departmentId = DepartmentUser::where('user_id', Auth::user()->id)->first()['department_id'];
+            $documentData = $request->except('attachedFiles', '_token', '_method', 'search', 'departments');
+            $documentData['publish_date'] = Carbon::parse($documentData['publish_date'])->format('Y-m-d');
+            $document = Document::where('id', $id);
+            if(!isset($document))
+                return redirect()->route('document-personal.index')->with('messageFail', 'Không tìm thấy văn bản này, vui lòng kiểm tra lại');
+            $document->update($documentData);
+            $attachedFiles = $request->only('attachedFiles');
+            if(count($attachedFiles) > 0){
+                DocumentAttachment::where('document_id', $id)->delete();
+                foreach ($attachedFiles["attachedFiles"] as $key => $file) {
+                    DocumentAttachment::create([
+                        'document_id' => $id,
+                        'name' => $this->uploader->saveDocument($file, public_path('upload/files/document')),
+                    ]);
+                }
+            }
+            DocumentDepartment::where('document_id', $id)->delete();
+            foreach ($request['departments'] as $department) {
+                DocumentDepartment::create([
+                    'document_id' => $id,
+                    'department_id' => $department,
+                    'sending_date' => Carbon::now(),
+                ]);
+            }
+            DB::commit();
+            return redirect(route('document-sent.index'))->with('messageSuccess', 'Cập nhật thành công');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect(route('document-department.edit', $id))->with('messageFail', 'Cập nhật công văn thất bại, vui lòng kiểm tra lại');
         }
     }
 }

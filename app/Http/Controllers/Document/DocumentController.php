@@ -49,7 +49,7 @@ class DocumentController extends Controller
                 $documentData['is_approved'] = config('setting.document.pending');
             $documentData['department_id'] = $departmentId;
             $documentData['publish_date'] = Carbon::parse($documentData['publish_date'])->format('Y-m-d');
-            $departments = $request->only('departments');
+            $departments = $request['departments'];
             $attachedFiles = $request->only('attachedFiles');
             $documentId = Document::insertGetId($documentData);
             foreach ($departments as $department) {
