@@ -6,6 +6,7 @@ use App\Http\Requests\ChangeAvatarRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\DepartmentAdmin\UserManagementRequest;
 use App\Http\Requests\InformationRequest;
+use App\Http\Requests\ChangePassDepartmentRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,16 @@ class Information extends Controller
         return view('information_admin');
     }
 
+    public function changePassDepartment(ChangePassDepartmentRequest $request)
+    {
+        $newpassword = $request->newpassword;
+        $user_id = $request->user_id;
+        if(User::where('id', $user_id)->update(['password' => bcrypt($newpassword)]))
+            return redirect()->route('department-admin.edit', $user_id)->with('messageSuccess', 'Cập Nhật Thành Công');
+        else
+            return redirect()->route('department-admin.edit', $user_id)->with('messageFail', 'Cập Nhật Thất Bại');
+    }
+    
     public function changePass(ChangePasswordRequest $request){
         $input = $request->all();
         $oldPass = User::where('id',Auth::user()->id)->first();

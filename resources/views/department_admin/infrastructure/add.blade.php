@@ -18,7 +18,7 @@
                                 {!! Form::label('name', "Tên Tài Sản") !!}
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => "Nhập Tên Tài Sản", 'id' => 'name', 'required' => 'required', 'pattern' => config('setting.patter_fullname'),  'title' => 'Tên tài sản chỉ bao gồm chữ cái và phải tối thiểu 6 kí tự']) !!}
+                                        {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => "Nhập Tên Tài Sản", 'id' => 'name', 'required' => 'required', 'pattern' => config('setting.patter_fullname')]) !!}
                                     </div>
                                 </div>
                                 {!! Form::label('picture', "Ảnh Đại Diện") !!}
