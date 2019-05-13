@@ -30,6 +30,11 @@ Route::post('/information', [
     'uses' => 'Information@changePass'
 ]);
 
+Route::post('/department-changepassword', [
+    'as' => 'department-changepass',
+    'uses' => 'Information@changePassDepartment'
+]);
+
 Route::get('/ajax-infor', [
     'as' => 'ajax.information',
     'uses' => 'Information@ajaxFormEdit'

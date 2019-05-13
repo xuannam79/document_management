@@ -65,7 +65,44 @@
                                     </div>
                                 </div>
                                 {!! Form::submit("Sửa", ['class' => 'btn btn-primary mt-4 pr-4 pl-4', 'id' => 'btnAddUser']) !!}
+                                <a class="btn btn-primary" data-toggle="modal" data-target="#password_modal" style="color:#fff;margin-top:1.5rem">Đặt Lại Mật Khẩu</a>
                                 {!! Form::close() !!}
+                                {{--    modal change password --}}
+                                <div id="password_modal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Đặt Lại Mật Khẩu</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            {!! Form::open(['method'=>'POST', 'route'=>['department-changepass']]) !!}
+                                            <div class="modal-body" style="text-align: left;">
+                                                
+                                                {!! Form::hidden('user_id', $depUsers->id, []) !!}
+                                                
+                                                {!! Form::label('newpassword', "Mật khẩu Mới") !!}
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        {!! Form::password('newpassword', ['class' => 'form-control', 'placeholder' => "Nhập Mật Khẩu Mới", 'id' => 'password', 'required' => 'required', 'pattern' => '(?=.*\d)(?=.*[a-z]).{6,}',  'title' => 'Mật khẩu ít nhất có 6 kí tự bao gồm chữ và số']) !!}
+                                                    </div>
+                                                </div>
+                                                {!! Form::label('renewpassword', "Nhập Lại Mật Khẩu Mới") !!}
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        {!! Form::password('confirmpassword', ['class' => 'form-control', 'placeholder' => "Nhập Lại Mật Khẩu Mới", 'id' => 'password', 'required' => 'required', 'pattern' => '(?=.*\d)(?=.*[a-z]).{6,}',  'title' => 'Mật khẩu ít nhất có 6 kí tự bao gồm chữ và số']) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                {!! Form::submit("Lưu Thay Đổi", ['class' => 'btn btn-primary']) !!}
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            </div>
+                                            {!! Form::close() !!}
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
