@@ -36,17 +36,17 @@
         {{ Html::script(asset('/templates/user/js/stickyfill.min.js')) }}
         {{ Html::script(asset('/templates/user/js/main.js')) }}
         {{ Html::script(asset('/templates/user/js/myStyle.js')) }}
-        {{ Html::script(asset('/templates/user/js/bootstrapdatepick.min.js')) }}
-        {{ Html::script(asset('/templates/user/js/bootstrap-datepicker.js')) }}
         {{ Html::script(asset('/js/all.js')) }}
         {{ Html::script(asset('/js/app.js')) }}
         {{ Html::style(asset('/templates/user/css/bootstrap-select.min.css')) }}
-        {{ Html::script(asset('/templates/user/js/jquery.dataTables.min.js')) }}
-        {{ Html::script(asset('/templates/user/js/dataTables.bootstrap4.min.js')) }}
-        {{ Html::script(asset('/templates/user/datatable-js/vi.js')) }}
         {{ Html::script(asset('/templates/user/js/jquery.min.js')) }}
         {{ Html::script(asset('/templates/user/js/bootstrap-select-332.min.js')) }}
         {{ Html::script(asset('/templates/user/js/bootstrap-select.min.js')) }}
+        {{ Html::script(asset('/templates/user/js/jquery.dataTables.min.js')) }}
+        {{ Html::script(asset('/templates/user/js/dataTables.bootstrap4.min.js')) }}
+        {{ Html::script(asset('/templates/user/datatable-js/vi.js')) }}
+        {{ Html::script(asset('/templates/user/js/bootstrapdatepick.min.js')) }}
+        {{ Html::script(asset('/templates/user/js/bootstrap-datepicker.js')) }}
     </body>
 </html>
 
