@@ -48,23 +48,37 @@ class PersonalDocumentController extends Controller
     public function index()
     {
         $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
-        $document = DB::table('documents')
-            ->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
-            ->join('users', 'users.id', '=', 'documents.user_id')
-            ->join('departments', 'departments.id', '=', 'documents.department_id')
-            ->join('document_user', 'document_user.document_id', '=', 'documents.id')
-            ->where(['document_user.department_id' => $departmentID,
-                'documents.is_approved' => config('setting.document.approved')])
-            ->orWhere('document_user.user_id', Auth::user()->id)
-            ->select(
-                'document_user.created_at as sent_date',
-                'document_user.*', 'documents.*',
-                'documents.id as documentID',
-                'document_types.name as name_type_document',
-                'users.*', 'departments.name as name_department'
+        $documentUser = DocumentUser::where('department_id', $departmentID)->get();
+        $arrayDocumentId = array();
+        if($documentUser->count()>0){
+            foreach($documentUser as $value){
+                if(isset($value->array_user_id)){
+                    $jsonUserId = json_decode($value->array_user_id);
+                    foreach($jsonUserId as $key){
+                        if($key == Auth::user()->id){
+                            array_push($arrayDocumentId, $value->document_id);
+                        }
+                    }
+                }
+            }
+            $document = DB::table('documents')
+                ->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
+                ->join('users', 'users.id', '=', 'documents.user_id')
+                ->join('departments', 'departments.id', '=', 'documents.department_id')
+                ->join('document_user', 'document_user.document_id', '=', 'documents.id')
+                ->whereIn('document_id', $arrayDocumentId)
+                ->where('documents.is_approved', config('setting.document.approved'))
+                ->select(
+                    'document_user.created_at as sent_date',
+                    'document_user.*', 'documents.*',
+                    'documents.id as documentID',
+                    'document_types.name as name_type_document',
+                    'users.*', 'departments.name as name_department'
                 )
-            ->orderBy('documents.publish_date', 'desc')
-            ->paginate(5);
+                ->orderBy('document_user.created_at', 'desc')
+                ->paginate(5);
+
+        }
 
         return view("document.personal_document.index", compact('document'));
     }
@@ -99,6 +113,7 @@ class PersonalDocumentController extends Controller
             }
             $DepartmentUserData['document_id'] = $documentId;
             $DepartmentUserData['department_id'] = $departmentId;
+            $DepartmentUserData['array_user_id'] = json_encode($this->getListUserId($departmentId));
             DocumentUser::create($DepartmentUserData);
             DB::commit();
             return redirect(route('document-sent.index'))->with('messageSuccess', 'Gửi thành công');
@@ -111,14 +126,18 @@ class PersonalDocumentController extends Controller
     public function checkUserSeen($id)
     {
         $userIdSeen = DocumentUser::where('document_id', $id)->first();
+        $check = true;
         if (isset($userIdSeen['array_user_seen']) && $userIdSeen['array_user_seen'] != "") {
             $jsonSeen = json_decode($userIdSeen['array_user_seen']);
             foreach ($jsonSeen as $value) {
-                if (Auth::user()->id != $value) {
-                    array_push($jsonSeen, Auth::user()->id);
+                if (Auth::user()->id == $value) {
+                    $check = false;
+                    break;
                 }
             }
-
+            if ($check == true){
+                array_push($jsonSeen, Auth::user()->id);
+            }
             return $jsonSeen;
 
         } else {
@@ -126,6 +145,20 @@ class PersonalDocumentController extends Controller
             array_push($jsonSeen, Auth::user()->id);
 
             return $jsonSeen;
+        }
+    }
+
+    public function getListUserId($id)
+    {
+        $userId = DepartmentUser::where('department_id', $id)->get();
+        $jsonUserId = array();
+        $getIdAdminDepartment =  DepartmentUser::where(['department_id' => $id, 'position_id' => config('setting.position.admin_department')])->first()->user_id;
+        if (isset($userId)) {
+            foreach ($userId as $value) {
+                if($value->user_id != $getIdAdminDepartment )
+                    array_push($jsonUserId, $value->user_id);
+            }
+            return $jsonUserId;
         }
     }
 
@@ -159,7 +192,7 @@ class PersonalDocumentController extends Controller
         //array file attachment
         $arrayFileDecode = DocumentAttachment::where('document_id', $id)->get();
 
-        return view('document.personal_document.detail', compact('document', 'arrayFileDecode', 'replyDocument', 'arrayFileReplyDecode'));
+        return view('document.personal_document.detail', compact('document', 'arrayFileDecode', 'replyDocument'));
     }
 
     public function reply(ReplyDocumentRequest $request, $id)

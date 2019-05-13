@@ -17,16 +17,22 @@ Văn bản đến đơn vị
                     @endif
                     @foreach($document as $value)
                         @php
-                            $id = \App\Models\DocumentDepartment::where('document_id', $value->documentID)->first();
+                            $departmentID = \App\Models\DepartmentUser::where([
+                                        'user_id' => Auth::user()->id
+                                    ])->first()->department_id;
+                            $id = \App\Models\DocumentDepartment::where(['document_id' => $value->documentID,'department_id' => $departmentID])->first();
                             $id_reply = \App\Models\ReplyDocument::where('document_id',$value->documentID)->first();
                             $arrId = json_decode($id->array_user_seen);
                             $checkNew = false;
                             if(isset($arrId)){
-                            foreach($arrId as $arr){
-                                if(Auth::user()->id == $arr){
-                                    $checkNew = true;
+                                foreach($arrId as $arr){
+                                    if(Auth::user()->id == $arr){
+                                        $checkNew = true;
+                                    }
                                 }
                             }
+                            else {
+                                $checkNew = false;
                             }
                         @endphp
                         <div onclick="showDocumentDepartment('{{$value->documentID}}')" class="list-group-item  {{ ($checkNew == true)? '':'newDoc'}} @if(isset($id_reply->user_id)) {{($id_reply->user_id == Auth::user()->id)?'replied':''}}@endif" >

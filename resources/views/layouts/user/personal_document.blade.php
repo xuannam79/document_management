@@ -60,14 +60,12 @@
 
                                         foreach($documentDepartment as $value){
                                             if(isset($value->array_user_seen) && $value->array_user_seen != ""){
-                                                $check = false;
+                                                $check = true;
                                                 $arrayUserSeenDecode = json_decode($value->array_user_seen);
                                                 foreach($arrayUserSeenDecode as $ar){
                                                     if(Auth::user()->id == $ar){
                                                         $check = false;
-                                                    }
-                                                    else {
-                                                        $check = true;
+                                                        break;
                                                     }
                                                 }
                                                 if($check == true){
@@ -75,7 +73,7 @@
                                                 }
                                             }
                                             else {
-                                               $count = $documentDepartment->count();
+                                               $count = $count + 1;
                                             }
                                         }
                                     }
@@ -114,42 +112,48 @@
                                     $departmentID = \App\Models\DepartmentUser::where([
                                         'user_id' => Auth::user()->id,
                                     ])->first()->department_id;
-                                    $arrDocumentID = \App\Models\Document::join('document_user', 'document_user.document_id', '=', 'documents.id')
-                                        ->where('document_user.department_id', $departmentID)
-                                        ->orWhere('document_user.user_id', Auth::user()->id)
-                                        ->get();
-                                    if($arrDocumentID->count() > 0){
-                                        foreach($arrDocumentID as $arrID){
-                                              $listIdDoc = array();
-                                              if(isset($arrID->document_id)){
-                                                array_push($listIdDoc, $arrID->document_id);
-                                              }
-                                        }
-                                        $documentDepartment = \App\Models\DocumentUser::whereIn('document_id', $listIdDoc)->where('department_id', $departmentID)->get();
-                                        $countPersonalUnSeenDocumentsQuantity = 0;
-                                        foreach($documentDepartment as $value){
-                                            if(isset($value->array_user_seen) && $value->array_user_seen != ""){
-                                                $check = false;
-                                                $arrayUserSeenDecode = json_decode($value->array_user_seen);
-                                                foreach($arrayUserSeenDecode as $ar){
-                                                    if(Auth::user()->id == $ar){
-                                                        $check = false;
-                                                    }
-                                                    else {
-                                                        $check = true;
+                                    $documentUser = \App\Models\DocumentUser::where('department_id', $departmentID)->get();
+                                    $arrayDocumentId = array();
+                                    if($documentUser->count()>0){
+                                        foreach($documentUser as $value){
+                                            if(isset($value->array_user_id)){
+                                                $jsonUserId = json_decode($value->array_user_id);
+                                                foreach($jsonUserId as $key){
+                                                    if($key == Auth::user()->id){
+                                                        array_push($arrayDocumentId, $value->document_id);
                                                     }
                                                 }
-                                                if($check == true){
+                                            }
+                                        }
+                                        $getDocumentPerson =
+                                        \App\Models\DocumentUser::join('documents', 'documents.id', '=', 'document_user.document_id')
+                                        ->whereIn('document_id', $arrayDocumentId)
+                                        ->where('documents.is_approved', config('setting.document.approved'))
+                                        ->get();
+                                        $countPersonalUnSeenDocumentsQuantity = 0;
+                                        if($getDocumentPerson->count()>0){
+                                            $check = true;
+                                            foreach($getDocumentPerson as $value){
+                                                if(isset($value->array_user_seen)){
+                                                    $jsonUserSeen = json_decode($value->array_user_seen);
+                                                    foreach($jsonUserSeen as $key){
+                                                        if($key == Auth::user()->id)
+                                                        {
+                                                            $check = false;
+                                                            break;
+                                                        }
+
+                                                    }
+                                                    if($check == true){
+                                                        $countPersonalUnSeenDocumentsQuantity = $countPersonalUnSeenDocumentsQuantity + 1;
+                                                    }
+                                                }
+                                                else
+                                                {
                                                     $countPersonalUnSeenDocumentsQuantity = $countPersonalUnSeenDocumentsQuantity + 1;
                                                 }
                                             }
-                                            else {
-                                               $countPersonalUnSeenDocumentsQuantity = $documentDepartment->count();
-                                            }
                                         }
-                                    }
-                                    else {
-                                        $countPersonalUnSeenDocumentsQuantity = 0;
                                     }
                                 @endphp
                                 <a href="{{route('document-personal.index')}}">
@@ -165,18 +169,60 @@
                                 </a>
                             @endif
                             @if(auth()->user()->role == config('setting.roles.user') && auth()->user()->delegacy == config('setting.delegacy.department_admin'))
-                                <a href="{{route('document-department.index')}}">
-                                    <li>
-                                        <i class="icon-leftbar fa fa-download"></i>&nbsp;
-                                        Văn bản đến đơn vị
-                                    </li>
-                                </a>
-                                <a href="{{route('document-sent.index')}}">
-                                    <li>
-                                        <i class="icon-leftbar fa fa-upload"></i>&nbsp;
-                                        Văn bản đã gửi
-                                    </li>
-                                </a>
+                                    @php
+                                        //count number document not yet seen
+                                        $departmentID = \App\Models\DepartmentUser::where([
+                                            'user_id' => Auth::user()->id
+                                        ])->first();
+                                        $arrDocumentID = \App\Models\Document::join('document_department', 'document_department.document_id', '=', 'documents.id')
+                                            ->where('document_department.department_id', $departmentID->department_id)
+                                            ->where('documents.is_approved', config('setting.document.approved'))
+                                            ->get();
+                                        if($arrDocumentID->count() > 0){
+                                            foreach($arrDocumentID as $arrID){
+                                                  $listIdDoc = array();
+                                                  if(isset($arrID->document_id)){
+                                                    array_push($listIdDoc, $arrID->document_id);
+                                                  }
+                                            }
+
+                                            $documentDepartment = \App\Models\DocumentDepartment::whereIn('document_id', $listIdDoc)->where('department_id', $departmentID->department_id)->get();
+                                            $count = 0;
+
+                                            foreach($documentDepartment as $value){
+                                                if(isset($value->array_user_seen) && $value->array_user_seen != ""){
+                                                    $check = false;
+                                                    $arrayUserSeenDecode = json_decode($value->array_user_seen);
+                                                    foreach($arrayUserSeenDecode as $ar){
+                                                        if(Auth::user()->id == $ar){
+                                                            $check = false;
+                                                        }
+                                                        else {
+                                                            $check = true;
+                                                        }
+                                                    }
+                                                    if($check == true){
+                                                        $count = $count + 1;
+                                                    }
+                                                }
+                                                else {
+                                                   $count = $count + 1;
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            $count = 0;
+                                        }
+                                    @endphp
+                                    <a href="{{route('document-department.index')}}">
+                                        <li>
+                                            <i class="icon-leftbar fa fa-download"></i>&nbsp;
+                                            Văn bản đến đơn vị
+                                            @if($count > 0)
+                                                <span class="count-new-document">{{ $count }}</span>
+                                            @endif
+                                        </li>
+                                    </a>
                             @endif
                             @if(auth()->user()->delegacy == config('setting.delegacy.department_admin'))
                                 <a href="{{route('document-sent.index')}}">

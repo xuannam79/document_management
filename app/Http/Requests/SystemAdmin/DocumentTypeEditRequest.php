@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http\Requests\SystemAdmin;
-
 use Illuminate\Foundation\Http\FormRequest;
-
 class DocumentTypeEditRequest extends FormRequest
 {
     /**
@@ -15,7 +12,6 @@ class DocumentTypeEditRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,7 +23,6 @@ class DocumentTypeEditRequest extends FormRequest
             'name' => 'required|max:255',
         ];
     }
-
     public function messages()
     {
         return [
