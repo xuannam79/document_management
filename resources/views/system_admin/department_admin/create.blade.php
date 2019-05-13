@@ -37,8 +37,8 @@
                                             'data-live-search' => 'true']) !!}
                                 </div>
                                 {!! Form::label('birth_date', "Ngày Sinh") !!}
-                                <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
-                                    {!! Form::text('birth_date', '', ['readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
+                                <div class="input-group date birthday" data-date-format="dd/mm/yyyy">
+                                    {!! Form::text('birth_date', '', ['required' => 'required', 'readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
                                     <span class="input-group-addon"></span>
                                 </div>
                                 {!! Form::label('gender', "Giới Tính") !!}
