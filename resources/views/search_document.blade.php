@@ -15,7 +15,7 @@ Tìm kiếm
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div>    
+                            </div>
                             @foreach($documentsDepartment as $key => $document)
                             @php
                                 $id = \App\Models\DocumentDepartment::where('document_id', $document->id)->first();
@@ -30,9 +30,9 @@ Tìm kiếm
                                 }
                                 }
                             @endphp
-                            
+
                             <div class="list-group-item" onclick="showDocumentDepartment('{{$document->id}}')">
-                            <a href="" title="{{$document->content}}" >
+                            <a title="{{$document->content}}" >
                                 <span class="name" style="max-width: 135px !important;color: black;">{{$document->department_name}}</span>
                                     <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                         <span class="" style="color: black;">{{$document->title}}</span></br>
@@ -70,9 +70,9 @@ Tìm kiếm
                                 </button>
                             </div>
                             @foreach($sendDepartment as $document)
-                                
+
                                 <div class="list-group-item ">
-                                    <a href="#" title="{{$document->content}}" >
+                                    <a title="{{$document->content}}" >
                                     <span class="name" style="max-width: 135px !important;color: black;">Số công văn: {{$document->document_number}}</span>
                                         <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                             <span class="" style="color: black;">Tiêu đề: {{$document->title}}</span><br/>
@@ -107,7 +107,7 @@ Tìm kiếm
                             </div>
                             @foreach($pendingDocument as $document)
                                 <div class="list-group-item ">
-                                    <a href="{{ route('document-pending.show',$document->id) }}" title = "{{$document->content}}" >
+                                    <a title = "{{$document->content}}" >
                                     <span class="name" style="max-width: 135px !important;color: black;">{{$document->document_number}}</span>
                                         <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                             <span class="" style="color: black;">{{$document->title}}</span><br/>
@@ -151,7 +151,7 @@ Tìm kiếm
                                 }
                             @endphp
                             <div class="list-group-item {{ ($checkNew == true)? '':'newDoc'}} @if(isset($id_reply->user_id)) {{($id_reply->user_id == Auth::user()->id)?'replied':''}}@endif" >
-                                <a href="{{ route('document-personal.show',$value->id) }}" title="{{ $value->content }}" >
+                                <a title="{{ $value->content }}" >
                                     <span class="name" style="max-width: 135px !important;color: black;">{{ $value->department_name }}</span>
                                     <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                         <span class="" style="color: black;">{{ $value->title }}</span></br>
