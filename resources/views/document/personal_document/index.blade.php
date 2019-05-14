@@ -33,7 +33,7 @@ Văn bản đến cá nhân
                             <div class="list-group-item {{ ($checkNew == true)? '':'newDoc'}} @if(isset($id_reply->user_id)) {{($id_reply->user_id == Auth::user()->id)?'replied':''}}@endif" >
                                 <a href="{{ route('document-personal.show',$value->documentID) }}" title="{{ $value->content }}" >
                                     <span class="name" style="max-width: 135px !important;color: black;">{{ $value->name_department }}</span>
-                                    <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
+                                    <span class="float-left" style="width: 67%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                         <span class="" style="color: black;">{{ $value->title }}</span></br>
                                         <span class="text-muted"><span style="color: black;">Trích yếu nội dung: {{ $value->content }}</span></span>
                                     </span>
@@ -41,16 +41,14 @@ Văn bản đến cá nhân
                                         {{Carbon\Carbon::createFromTimeStamp(strtotime($value->sent_date))->diffForHumans()}}
                                     </span>
                                 </a>
-                                <div>
-                                    <span class="name userchinh">Người gửi</span>
-                                    <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>
-                                    <span class ="name type_document"><span href="" style="color:#f7f7f7;">{{ $value->name_type_document }}</span></span>
-                                    @if($checkNew == true)
-                                        <span class="userchinh2">đã xem</span>
-                                    @else
-                                        <span class="userchinh3">Mới</span>
-                                    @endif
-                                </div>
+                                <span class="name userchinh">Người gửi</span>
+                                <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>
+                                <span class ="name type_document"><span href="" style="color:#f7f7f7;">{{ $value->name_type_document }}</span></span>
+                                @if($checkNew == true)
+                                    <span class="userchinh2">đã xem</span>
+                                @else
+                                    <span class="userchinh3">Mới</span>
+                                @endif
                             </div>
                         @endforeach
                         <div>
