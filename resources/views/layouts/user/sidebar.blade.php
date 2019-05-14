@@ -7,7 +7,10 @@
             $departmentId = App\Models\DepartmentUser::select('department_id')->where('user_id', Auth::user()->id)->first();
             $documents = Illuminate\Support\Facades\DB::table('documents')
             ->join('document_department', 'documents.id', 'document_department.document_id')
-            ->where(['document_department.department_id'=> $departmentId->department_id, 'documents.is_approved'=>1])->get();
+            ->where('documents.is_approved', 1)
+            ->where('document_department.department_id', $departmentId->department_id)
+            ->select('documents.id', 'documents.title')
+            ->get();
             @endphp
             <li>
                 <ul class="small-ul">
@@ -32,7 +35,7 @@
                 </ul>
             </li>
         @endif
-            
+
         <a href="{{route('message.index')}}"><li class="big-li"><span>Tin nhắn đến</span></li></a>
         @php
             $message = App\Models\Message::where('receiver_id', Auth::user()->id)->limit(5)->get();
