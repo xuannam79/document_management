@@ -31,6 +31,6 @@ class HomeAdminController extends Controller
             }
         }
 
-        return view('home_admin', compact('schedule', 'timeTable', 'sumOfDepartments', 'sumOfUsers', 'sumOfAdminDepartments', 'sumOfInfrastructures'));
+        return view('home_admin', compact('schedule','timeTable','sumOfDepartments','sumOfUsers','sumOfAdminDepartments'));
     }
 }

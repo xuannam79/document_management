@@ -17,8 +17,8 @@ class CreateDocumentUserTable extends Migration
             $table->bigIncrements('id');
             $table->integer('document_id');
             $table->integer('department_id');
-            $table->integer('user_id')->nullable();
-            $table->text('array_user_seen')->nullable();
+            $table->longText('array_user_id')->nullable();
+            $table->longText('array_user_seen')->nullable();
             $table->timestamps();
         });
     }
