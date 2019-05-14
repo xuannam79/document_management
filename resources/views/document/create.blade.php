@@ -5,7 +5,6 @@ Tạo mới văn bản
 @section("content")
 <div class="container">
     <div id="cards-wrapper" class="cards-wrapper row">
-        <a href="{{route('document-personal.create')}}">gửi văn bản cho các các nhân trong đơn vị</a>
         <div class="create-doc">
             <h3>Gửi văn bản cho các đơn vị</h3>
             {!! Form::open(["method"=>"POST", "route"=>"document.store", "enctype"=>"multipart/form-data"]) !!}
@@ -59,6 +58,7 @@ Tạo mới văn bản
                     {!! Form::submit("Gửi", ["class"=>"btn btn-primary", "style" => "width: 15%;"]) !!}
                 </div>
             {!! Form::close() !!}
+        <a href="{{route('document-personal.create')}}" style="font-size:16px">Gửi văn bản cho các cá nhân trong đơn vị</a>
         </div>
     </div>
 </div>
