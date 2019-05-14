@@ -1,5 +1,4 @@
 <div class="document-topBody">
-    @include('common.errors')
     <div class="form-search-doc">
         @if($currentPage == "documentDepartment")
             @php
@@ -12,7 +11,7 @@
             @endphp
         @endif
         {!! Form::open(['class'=>'form-inline form-search', 'route'=>'search-document']) !!}
-            <div class="form-group mx-sm-3 mb-2" style="width: 85%">
+            <div class="form-group mx-sm-3 mb-2" style="width: 85%;margin-right:0!important">
                 <div  class="input-group date" style="width: 20%">
                     {!! Form::text('date_start', '', ['data-date-format'=>'dd-mm-yyyy', 'class'=>'form-control date-area', 'readonly', 'id'=>'datepicker', 'placeholder'=>'Ngày bắt đầu...']) !!}
                     <span style="background-color: #fff" class="input-group-addon"></span>
@@ -30,4 +29,5 @@
             <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
         {!! Form::close() !!}
     </div>
+    @include('common.errors')
 </div>
