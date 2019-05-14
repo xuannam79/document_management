@@ -36,6 +36,8 @@
     border-radius: 10px;
     margin-top: 10px;
     margin-right: 1% !important;
+    padding: 1px 4px 1px 4px;
+    max-width: 180px !important;
 }
 .userchinh2{
     float: right !important;
@@ -239,10 +241,100 @@
     text-overflow: ellipsis;
 }
 .type_document {
-    background-color: #3f9ae5;
+    background-color: red;
     border-radius: 10px;
     margin-top: 10px;
     max-width: 200px!important;
     text-align: center;
     padding: 1px 10px 1px 10px;
+}
+.user-is-read {
+    float: right;
+    margin-top: 3em;
+    max-width: 20%;
+    min-width: 20%;
+    background-color: white;
+    border: none;
+    text-align: right;
+}
+.img-user-read {
+    border-radius: 50%;
+    width: 20%;
+    height: 20%
+}
+.numberCircle {
+    border-radius: 50%;
+    behavior: url(PIE.htc);
+    /* remove if you don't care about IE8 */
+    width: 20%;
+    height: 20%;
+    padding: 4%;
+    background: whitesmoke;
+    border: 2px solid #666;
+    color: black;
+    text-align: center;
+    font: 11px Arial, sans-serif;
+    display: inline-block;
+
+}
+.message-user-seen {
+    width: 22%;
+    float: right;
+    margin-right: 1%;
+    background-color: #f5f6f7;
+    border-color: #ccd0d5;
+    border: 1px solid;
+    border-radius: 2%;
+    color: #4b4f56;
+    transition: 200ms;
+}
+.message-user-seen span a{
+    text-decoration: none;
+    transition: 200ms;
+    line-height: 30px;
+    padding: 0 10px;
+}
+.content-user-seen {
+    width: 56%;
+    float: left;
+    font-size: 12px;
+    text-align: left;
+}
+.content-user-seen .div1 {
+    font-weight: normal;
+    word-break: break-all;
+    font-family: inherit;
+}
+.content-user-seen .div2 {
+    color: #1b4b72;
+    cursor: pointer;
+    font-family: inherit;
+}
+.avatar-user-seen {
+    width: 20%;
+    height: 20%;
+    float: left;
+}
+.parent{
+    width: 100%;
+    height: 200px;
+    margin-top: 2%;
+    border: 1px solid #aaa;
+    overflow: hidden;
+}
+.child{
+    height: 100%;
+    margin-right: -15px; /* maximum width of scrollbar */
+    /*padding-right: 50px; !* maximum width of scrollbar *!*/
+    overflow-y: scroll;
+}
+.child ul li {
+    border-bottom: 1px solid black;
+    margin-left: -10%;
+    padding: 2% 0px 2% 0px;
+}
+.list-user-seen {
+    border-bottom: 1px solid black;
+    margin-left: -10%;
+    padding: 2% 0px 2% 0px;
 }

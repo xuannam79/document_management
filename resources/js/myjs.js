@@ -135,6 +135,9 @@ $(document).on('click', '#btnAddUser', function () {
 });
 
 $(document).ready(function () {
+    $("#viewListUser").click(function () {
+        $('#exampleModalCenter').modal('show')
+    });
 
     function readURLPicTure(input) {
 
@@ -205,6 +208,7 @@ $(document).on("change", "#picture", function(){
         $('#changeAvatar').submit();
     }
 });
+
 //validate form schecule_week
 $(document).on('click', '#btnAddSchedule', function () {
     var date = document.getElementById("start");

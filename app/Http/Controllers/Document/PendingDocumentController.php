@@ -71,5 +71,16 @@ class PendingDocumentController extends Controller
         }
     }
 
+    public function destroy($id){
+        try
+        {
+            Document::findorFail($id)->delete();
+            return redirect()->route('document-pending.index')->with('messageSuccess', 'Hủy Duyệt Thành Công');
+        }
+        catch (Exception $exception)
+        {
+            return redirect()->back()->with('messageFail', "Hủy Duyệt Thất Bại");
+        }
+    }
 
 }
