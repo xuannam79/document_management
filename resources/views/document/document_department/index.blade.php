@@ -46,14 +46,16 @@ Văn bản đến đơn vị
                                     {{Carbon\Carbon::createFromTimeStamp(strtotime($value->sending_date))->diffForHumans()}}
                                 </span>
                             </a>
-                            <span class="name userchinh">Người gửi</span>
-                            <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>
-                            <span class ="name type_document"><span href="" style="color:#f7f7f7;">{{ $value->name_type_document }}</span></span>
-                            @if($checkNew == true)
-                                <span class="userchinh2">đã xem</span>
-                            @else
-                                <span class="userchinh3">Mới</span>
-                            @endif
+                            <div>
+                                <span class="name userchinh">Người gửi</span>
+                                <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{ $value->name }}</a></span>
+                                <span class ="name type_document"><span href="" style="color:#f7f7f7;">{{ $value->name_type_document }}</span></span>
+                                @if($checkNew == true)
+                                    <span class="userchinh2">đã xem</span>
+                                @else
+                                    <span class="userchinh3">Mới</span>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>
