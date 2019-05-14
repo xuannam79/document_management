@@ -27,6 +27,8 @@ class SearchDocumentController extends Controller
             ->whereBetween('document_department.created_at', array($date_start, $date_end))
             ->where([['document_department.department_id', $departmentId], ['documents.content', 'LIKE','%'.$keySearch.'%']])
             ->get();
+            return view('search_document', compact('documentsDepartment'));
+
         }elseif($request['page'] === 'sendDocument'){
             $date_start = Carbon::parse($request->date_start)->format('Y-m-d');
             $date_end = Carbon::parse($request->date_end)->format('Y-m-d');
@@ -38,6 +40,8 @@ class SearchDocumentController extends Controller
             ->whereBetween('document_department.created_at', array($date_start, $date_end))
             ->where('documents.content', 'LIKE','%'.$keySearch.'%')
             ->get();
+            return view('search_document', compact('sendDepartment'));
+
         }elseif($request['page'] === 'pendingDocument'){
             $date_start = Carbon::parse($request->date_start)->format('Y-m-d');
             $date_end = Carbon::parse($request->date_end)->format('Y-m-d');
@@ -50,6 +54,8 @@ class SearchDocumentController extends Controller
             ->whereBetween('document_department.created_at', array($date_start, $date_end))
             ->where('documents.content', 'LIKE','%'.$keySearch.'%')
             ->get();
+            return view('search_document', compact('pendingDocument'));
+
         }elseif($request['page'] === 'personalDocument'){
             $date_start = Carbon::parse($request->date_start)->format('Y-m-d');
             $date_end = Carbon::parse($request->date_end)->format('Y-m-d');
@@ -66,7 +72,8 @@ class SearchDocumentController extends Controller
             ->whereBetween('document_user.created_at', array($date_start, $date_end))
             ->where([['document_user.department_id', $departmentId], ['documents.content', 'LIKE','%'.$keySearch.'%']])
             ->get();
+            return view('search_document', compact('personalDocument'));
+
         }
-        return view('search_document', compact('documentsDepartment', 'sendDepartment', 'pendingDocument', 'personalDocument'));
     }
 }
