@@ -19,14 +19,14 @@ Văn bản đang chờ duyệt
                     <div class="list-group-item" style="width: 95%;" onclick="showDocumentPending('{{$document->id}}')">
                         <a href="{{ route('document-pending.show',$document->id) }}" title = "{{$document->content}}" >
                         <span class="name" style="max-width: 135px !important;color: black;">{{$document->document_number}}</span>
-                            <span class="float-left" style="width: 60%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
+                            <span class="float-left" style="width: 57%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                 <span class="" style="color: black;">{{$document->title}}</span><br/>
                                 <span class="text-muted"><span style="color: black;">Trích yếu nội dung:&nbsp;{{$document->content}}</span></span>
                             </span>
-                            <span class="badge">{{ date('H:m:i ( d-m-Y )', strtotime($document->created_at)) }}</span>
+                            <span class="badge" style="min-width: 20%">{{ date('H:m:i ( d-m-Y )', strtotime($document->created_at)) }}</span>
                         </a>
-                        <span class="name userchinh">Người gửi</span>
-                        <span class ="name userchinh1"><a href="" style="color:#f7f7f7;">{{$document->name}}</a></span>
+                        <span class="name userchinh" style="min-width: 18%">Người gửi</span>
+                        <span class ="name userchinh1" style="min-width: 21%"><a href="" style="color:#f7f7f7;">{{$document->name}}</a></span>
                     </div>
                         <a href="javascript:void(0)" onclick="acceptApproval('acceptApproval'+{{$document->id }}, 'văn bản')" style="position: absolute;top:15px;right: 0px;"><i class="fas fa-check-circle" style="font-size: 20px;color: green" ></i></a>
                         {!! Form::open(['method'=>'PATCH', 'route'=>['document-pending.update',$document->id], 'id' => 'acceptApproval'.$document->id]) !!}
