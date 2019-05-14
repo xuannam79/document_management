@@ -33,7 +33,7 @@ Văn bản đến cá nhân
                             <div class="list-group-item {{ ($checkNew == true)? '':'newDoc'}} @if(isset($id_reply->user_id)) {{($id_reply->user_id == Auth::user()->id)?'replied':''}}@endif" >
                                 <a href="{{ route('document-personal.show',$value->documentID) }}" title="{{ $value->content }}" >
                                     <span class="name" style="max-width: 135px !important;color: black;">{{ $value->name_department }}</span>
-                                    <span class="float-left" style="width: 67%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
+                                    <span class="float-left" style="width: 65%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left !important;">
                                         <span class="" style="color: black;">{{ $value->title }}</span></br>
                                         <span class="text-muted"><span style="color: black;">Trích yếu nội dung: {{ $value->content }}</span></span>
                                     </span>
