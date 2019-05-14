@@ -12,7 +12,7 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         DB::table('departments')->insert([
-            'name' => 'Phòng Đào Tạo',
+            'name' => 'Phòng Hành Chính - Kỹ Thuật',
             'is_active' => 1,
         ]);
         DB::table('departments')->insert([
