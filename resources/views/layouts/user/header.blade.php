@@ -74,7 +74,11 @@
                     </li>
                 @endif
                 <li class="nav-item cool-link">
-                    @if(auth()->user()->role == config('setting.roles.admin_department') || auth()->user()->delegacy == config('setting.delegacy.department_admin'))
+                    @php
+                        $deparmentUsers = App\Models\DepartmentUser::where('user_id', Auth::user()->id)->first();
+                    @endphp
+                        {{-- Lịch tuần --}}
+                    @if ($deparmentUsers->position_id == config('setting.department_name.training_department') && $deparmentUsers->department_id == config('setting.department_name.training_department'))
                         <a class="nav-link" href="{{ route('schedule-admin.index') }}">Lịch tuần trường</a>
                     @else
                         <a class="nav-link" href="{{ route('schedule.index') }}">Lịch tuần trường</a>
