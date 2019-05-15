@@ -100,9 +100,9 @@
                     @endforeach
                     <button type="button" class="btn btn-light rep-bot-button"><i class="fa fa-reply"></i>&nbsp;Phản hồi</button>
                     <button type="button" class="btn btn-light color-btn-share" onclick="share()" title="Chuyển tiếp văn bản đến toàn bộ nhân viên trong đơn vị"><i class="fas fa-share-alt"></i>&nbsp;Chuyển tiếp </button>
-                    @if(isset($getArrayOfUserSeen))
+                    @if(isset($getArrayOfUserSeen) && $getArrayOfUserSeen != null)
                         @if(isset($getArrayOfUserSeen) && $getArrayOfUserSeen->count() > 3)
-                            <div class="user-is-read"  onlick="viewUserSeen()">
+                            <div class="user-is-read">
                                 <img src="/templates/user/images/{{$getArrayOfUserSeen[0]->avatar}}" title="{{$getArrayOfUserSeen[0]->name}}" alt="Avatar" class="img-user-read">
                                 <img src="/templates/user/images/{{$getArrayOfUserSeen[1]->avatar}}" title="{{$getArrayOfUserSeen[1]->name}}" alt="Avatar" class="img-user-read">
                                 <img src="/templates/user/images/{{$getArrayOfUserSeen[2]->avatar}}" title="{{$getArrayOfUserSeen[2]->name}}" alt="Avatar" class="img-user-read">
@@ -150,10 +150,10 @@
                 <div class="modal-body">
                     <ul class="nav nav-tabs" id="myTab">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" data-target="#home" title="hiển thị các đơn vị đã xem">Đơn vị</a>
+                            <a class="nav-link active" data-toggle="tab"  href="javascript:void(0)" data-target="#home" title="hiển thị các đơn vị đã xem">Đơn vị</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" data-target="#menu1" title="hiển thị người dùng đã xem">Thành viên</a>
+                            <a class="nav-link" data-toggle="tab" href="javascript:void(0)" data-target="#menu1" title="hiển thị người dùng đã xem">Thành viên</a>
                         </li>
                     </ul>
                     <div class="tab-content">

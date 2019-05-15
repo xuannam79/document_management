@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Document;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\DepartmentUser;
+use App\Models\DocumentDepartment;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +26,50 @@ class SentDocumentController extends Controller
         return view("document.sent_document.index", compact('documents'));
     }
 
+    public function getUserSeen($id){
+        $documentData = DocumentDepartment::where(['document_id'=> $id])->get();
+        $arrayMerge = array();
+        if(isset($documentData)) {
+            foreach ($documentData as $value) {
+                $jsonUser = json_decode($value->array_user_seen);
+                if (isset($jsonUser)) {
+                    $arrayMerge = array_merge($arrayMerge, $jsonUser);
+                }
+            }
+            $arrayMerge = array_unique($arrayMerge);
+            $userId = User::whereIn('id', $arrayMerge)->orderBy('name', 'asc')->get();
+            return $userId;
+        }
+        else {
+                return array();
+        }
+    }
+
+    public function getDepartmentSeen($id){
+        $documentData = DocumentDepartment::where('document_id', $id)->get();
+        $arrayDepartmentID = array();
+        if(isset($documentData)){
+            foreach ($documentData as $value){
+                if(isset($value->array_user_seen) || $value->array_user_seen != null){
+                    array_push($arrayDepartmentID, $value->department_id);
+                }
+            }
+            return $arrayDepartmentID;
+        }
+    }
+
     public function show($id){
+
+        //lay phong ban da xem
+        $listDepartmentID = $this->getDepartmentSeen($id);
+        if(isset($listDepartmentID)){
+            $nameOfDepartment = Department::whereIn('id', $listDepartmentID)->get();
+        }
+        else {
+            $nameOfDepartment = array();
+        }
+        //lay nguoi da xem tin trong phong ban
+        $getArrayOfUserSeen = $this->getUserSeen($id);
         $document = DB::table('documents')
             ->join('document_types', 'document_types.id', '=', 'documents.document_type_id')
             ->select(
@@ -43,7 +90,7 @@ class SentDocumentController extends Controller
 
         }
 
-        return view("document.sent_document.show", compact('document', 'attachedFiles', 'receivedDepartments'));
+        return view("document.sent_document.show", compact('nameOfDepartment','getArrayOfUserSeen', 'document', 'attachedFiles', 'receivedDepartments'));
     }
 
     public function edit($id){

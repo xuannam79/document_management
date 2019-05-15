@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <div id="cards-wrapper" class="cards-wrapper" style="margin-left: 30%;width: 70%;">
+        <div id="cards-wrapper" class="cards-wrapper" style="margin-left: 0%;width: 100%;">
             @include('common.errors')
             <div class="css-profile" style="height: 270px">
                 <div style="margin-bottom: 2%;margin-top: 2%;position: relative">
@@ -12,9 +12,9 @@
                         {!! Form::open(['method'=>'POST', 'route'=>['update.avatar'], 'id' => 'changeAvatar', 'files' => true]) !!}
                         <div class="profile-img" id="avatar">
                             @if(Auth::user()->avatar == 'user-default.png')
-                                <a href="/templates/user/images/{{Auth::user()->avatar}}"><img src="/templates/user/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                <a href="/templates/user/images/{{Auth::user()->avatar}}"><img src="/templates/user/images/{{Auth::user()->avatar}}" style="width: 158px;height: 200px;margin-left: 18%;" alt="" class="img-rounded img-responsive" /></a>
                             @else
-                                <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
+                                <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 158px;height: 200px;margin-left: 18%;" alt="" class="img-rounded img-responsive" /></a>
                             @endif
                             <div class="file btn btn-lg btn-primary">Thay Đổi
                                 {!! Form::file('avatar',['id' => 'picture']) !!}

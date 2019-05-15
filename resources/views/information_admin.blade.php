@@ -27,7 +27,7 @@
                                         <a href="/upload/images/{{Auth::user()->avatar}}"><img src="/upload/images/{{Auth::user()->avatar}}" style="width: 150px;height: 200px;" alt="" class="img-rounded img-responsive" /></a>
                                     @endif
                                 @endif
-                                <div class="file btn btn-lg btn-primary">Thay Đổi
+                                <div class="file btn btn-lg btn-primary" style="margin-top: -30% !important;width: 72% !important;">Thay Đổi
                                     {!! Form::file('avatar',['id' => 'picture']) !!}
                                 </div>
                             </div>

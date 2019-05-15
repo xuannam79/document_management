@@ -33,10 +33,108 @@
                             @endforeach
                         </div>
                     </div>
-
                     @if($document->is_approved == config('setting.document.pending'))
                         <a href="{{ route('document-sent.edit', $document->id) }}">Chỉnh sửa văn bản</a>
                     @endif
+                    @if(isset($getArrayOfUserSeen) && $getArrayOfUserSeen != null)
+                        @if(isset($getArrayOfUserSeen) && $getArrayOfUserSeen->count() > 3)
+                            <div class="user-is-read">
+                                <img src="/templates/user/images/{{$getArrayOfUserSeen[0]->avatar}}" title="{{$getArrayOfUserSeen[0]->name}}" alt="Avatar" class="img-user-read">
+                                <img src="/templates/user/images/{{$getArrayOfUserSeen[1]->avatar}}" title="{{$getArrayOfUserSeen[1]->name}}" alt="Avatar" class="img-user-read">
+                                <img src="/templates/user/images/{{$getArrayOfUserSeen[2]->avatar}}" title="{{$getArrayOfUserSeen[2]->name}}" alt="Avatar" class="img-user-read">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" class="numberCircle" id="viewListUser" title="và {{$getArrayOfUserSeen->count()-3}} người khác đã xem">{{ $getArrayOfUserSeen->count() - 3 }}+</a>
+                            </div>
+                        @else
+                            <a href="javascript:void(0)" class="user-is-read" data-toggle="modal" data-target="#myModal">
+                                @foreach($getArrayOfUserSeen as $value)
+                                    <img src="/templates/user/images/{{$value->avatar}}" title="{{$value->name}}" alt="Avatar" class="img-user-read">
+                                @endforeach
+                            </a>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">i
+            <div class="modal-content">
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="javascript:void(0)" data-toggle="tab" data-target="#home" title="hiển thị các đơn vị đã xem">Đơn vị</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)" data-toggle="tab" data-target="#menu1" title="hiển thị người dùng đã xem">Thành viên</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home">
+                            <div class="parent">
+                                <div class="child">
+                                    <ul>
+                                        @if(isset($nameOfDepartment))
+                                            @foreach($nameOfDepartment as $value)
+                                                <li>
+                                                    <a href=""> {{ $value->name }}
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li>
+                                                Không có đơn vị nào đã xem văn bản này.
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="menu1">
+                            <div class="parent">
+                                <div class="child">
+                                    <ul>
+                                        @if(isset($getArrayOfUserSeen))
+                                            @foreach($getArrayOfUserSeen as $value)
+                                                <li class="list-user-seen">
+                                                    <div>
+                                                        <div class="avatar-user-seen">
+                                                            @if($value->avatar == 'user-default.png')
+                                                                <img src="/templates/user/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                                                            @else
+                                                                <img src="/upload/images/{{$value->avatar}}" style="width: 35px;height: 35px;border-radius: 2em;">&nbsp;
+                                                            @endif
+                                                        </div>
+                                                        @php
+                                                            $departmentID = \App\Models\DepartmentUser::where('user_id', $value->id)->first()->department_id;
+                                                            $departmentName = \App\Models\Department::where('id', $departmentID)->first();
+                                                        @endphp
+                                                        <div class="content-user-seen">
+                                                            <div class="div1">{{ $value->name }}</div>
+                                                            <div class="div2">Đơn vị : {{ $departmentName->name }}</div>
+                                                        </div>
+                                                        @if($value->id != auth()->user()->id)
+                                                            <div class="message-user-seen">
+                                                            <span>
+                                                                <a href="">
+                                                                    <i class="fab fa-facebook-messenger" style="font-size: 14px;margin-right: 2px"></i>
+                                                                    Nhắn tin
+                                                                </a>
+                                                            </span>
+                                                            </div>
+                                                        @endif
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li class="list-user-seen" style="text-align: center">
+                                                Không có thông tin người dùng nào.
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
