@@ -1534,8 +1534,7 @@ a.list-group-item.read {
 }
 
 span.name {
-    min-width: 120px;
-    max-width: 120px;
+    min-width: 15%;
     display: inline-block;
     float: left;
     margin-right: 5%;

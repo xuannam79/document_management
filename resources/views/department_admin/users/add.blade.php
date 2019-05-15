@@ -34,10 +34,8 @@
                                 </div>
                             </div>
                             {!! Form::label('birth_date', "Ngày Sinh") !!}
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    {{ Form::date('birth_date', \Carbon\Carbon::now()->subYear(19), ['class' => 'form-control', 'max' => \Carbon\Carbon::now()->subYear(19)->format('Y-m-d'), 'min' => \Carbon\Carbon::now()->subYear(100)->format('Y-m-d')]) }}
-                                </div>
+                            <div class="input-group date birthday">
+                                {!! Form::text('birth_date', '', ['data-date-format'=>'dd/mm/yyyy','readonly', 'class'=>'form-control', 'style'=>'background:#fff']) !!}
                             </div>
                             {!! Form::label('gender', "Giới Tính") !!}
                             <div class="form-group row">

@@ -22,12 +22,8 @@ Tin nhắn đến
             </div>
             @endforeach
         @else
-            <div>
-                <strong>
-                    <ul>
-                        <li>Không có tin nhắn nào</li>
-                    </ul>
-                </strong>
+             <div class="list-group-item">
+                <span>Không có tin nhắn nào </span>
             </div>
         @endif
         </div>

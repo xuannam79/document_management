@@ -45,6 +45,11 @@ function showDocumentPersonal(id) {
     window.location.href = 'document-personal/' + id;
 }
 $(function () {
+    $("#birth_date").datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        endDate: '+0d'
+    });
     $("#publish_day").datepicker({
         autoclose: true,
         todayHighlight: true,
