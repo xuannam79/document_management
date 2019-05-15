@@ -55,6 +55,8 @@ class CreateAnAdmin extends Controller
         $input['password'] = bcrypt($input['password']);
         $input['avatar'] = $this->saveImg($input['avatar']);
         $input['role'] = config('setting.roles.admin_department');
+        $date = Carbon::createFromFormat('d/m/Y', $input['birth_date']);
+        $input['birth_date'] = Carbon::parse($date)->format('Y/m/d');
         $idUser = User::insertGetId($input);
 
         $inputDepUser = $request->only('department_id');

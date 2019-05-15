@@ -71,7 +71,9 @@ class DelegacyController extends Controller
 
             $getIdUser = $request->user_id;
             $checkAssign = User::select('delegacy')->whereId($getIdUser)->first();
-            if ($checkAssign->delegacy == config('setting.delegacy.department_admin')) {
+            if (!isset($getIdUser)) {
+                return redirect(route('delegacy.index'))->with('alert', 'Phòng ban này chưa có ai để ủy quyền');
+            } else if ($checkAssign->delegacy == config('setting.delegacy.department_admin')) {
 
                 return redirect(route('delegacy.create'))->with('alert', 'Người này đã được ủy quyền rồi!');                
             } else {
