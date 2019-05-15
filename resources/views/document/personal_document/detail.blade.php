@@ -135,7 +135,7 @@
                                 </label>
                                 {!! Form::file('file_attachment_reply[]', ['class' => 'upload__input', 'id' => 'file-input', 'multiple' => true])  !!}
                             </div>
-                            <button class="fa fa-trash close-rep-area"></button>
+                            <a class="fa fa-trash close-rep-area"></a>
                         </div>
                         {!! Form::close() !!}
                     </div>

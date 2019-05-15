@@ -1,34 +1,6 @@
-// $(document).ready(function () {
-//     $(document).on('click', '#btn-more', function () {
-//         var id = $(this).data('id');
-
-//         $("#btn-more").html("Loading....");
-//         $.ajaxSetup({
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//         });
-//         $.ajax({
-//             url: "/document-department/load-more",
-//             type: "POST",
-//             data: { id: id },
-//             cache: false,
-//             // dataType : "text",
-//             success: function (data) {
-//                 if (data != '') {
-//                     $("#btn-more").remove();
-//                     $('#sec1').append(data);
-//                 }
-//                 else {
-//                     $('#btn-more').html("No Data");
-//                 }
-//             },
-//             error: function () {
-//                 console.log('lỗi rồi');
-//             }
-//         });
-//     });
-// });
+$('.fa.fa-trash.close-rep-area').click(function () {
+    document.getElementById("content_reply").value = '';
+});
 function showMessages(id) {
     window.location.href = 'message/' + id;
 }

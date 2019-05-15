@@ -62,7 +62,6 @@
                                     <span style="color: black;font-weight: bold">{{ $value->name }}</span>
                                     <div style="float: right"><span title="{{ date('H:m:i ( d-m-Y )', strtotime($value->created_at)) }}">
                                             {{Carbon\Carbon::createFromTimeStamp(strtotime($value->created_at))->diffForHumans()}}</span>&nbsp;
-                                        <button class="pulse-button" title="Phản hồi"><i class="fa fa-reply"></i></button>
                                     </div>
                                 </div>
                                 <br>
@@ -136,7 +135,7 @@
                                 </label>
                                 {!! Form::file('file_attachment_reply[]', ['class' => 'upload__input', 'id' => 'file-input', 'multiple' => true])  !!}
                             </div>
-                            <button class="fa fa-trash close-rep-area"></button>
+                            <a class="fa fa-trash close-rep-area"></a>
                         </div>
                         {!! Form::close() !!}
                     </div>
