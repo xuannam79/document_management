@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Document;
 
 use App\Http\Controllers\Controller;
+use App\Models\DocumentDepartment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Document\PersonalDocumentAddRequest;
 use App\Http\Requests\Document\ReplyDocumentRequest;
@@ -161,12 +163,30 @@ class PersonalDocumentController extends Controller
         }
     }
 
+    public function getUserSeen($id){
+        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
+        $documentData = DocumentUser::where(['document_id'=> $id, 'department_id' => $departmentID])->first();
+        if(isset($documentData)){
+            $jsonUser = json_decode($documentData->array_user_seen);
+            if(isset($jsonUser)){
+                $userId = User::whereIn('id', $jsonUser)->orderBy('name', 'asc')->get();
+                return $userId;
+            }
+        }
+        else {
+            return array();
+        }
+    }
+
     public function show($id)
     {
         //check nguoi xem tin
         $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
         $jsonUserId = json_encode($this->checkUserSeen($id));
         DocumentUser::where(['document_id' => $id, 'department_id' => $departmentID])->update(['array_user_seen' => $jsonUserId]);
+
+        //lay nguoi da xem tin trong phong ban
+        $getArrayOfUserSeen = $this->getUserSeen($id);
 
         $document = DB::table('documents')
             ->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
@@ -191,7 +211,7 @@ class PersonalDocumentController extends Controller
         //array file attachment
         $arrayFileDecode = DocumentAttachment::where('document_id', $id)->get();
 
-        return view('document.personal_document.detail', compact('document', 'arrayFileDecode', 'replyDocument'));
+        return view('document.personal_document.detail', compact('document', 'arrayFileDecode', 'replyDocument', 'getArrayOfUserSeen'));
     }
 
     public function reply(ReplyDocumentRequest $request, $id)

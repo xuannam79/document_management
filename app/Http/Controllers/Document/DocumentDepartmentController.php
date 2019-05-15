@@ -10,6 +10,7 @@ use App\Models\DocumentUser;
 use App\Models\ReplyDocument;
 use App\Models\DocumentType;
 use App\Models\Department;
+use App\Models\User;
 use App\Uploaders\Uploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,10 +42,38 @@ class DocumentDepartmentController extends Controller
 
         return view("document.document_department.index", compact('document'));
     }
+    public function getUserSeen($id){
+        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
+        $documentData = DocumentDepartment::where(['document_id'=> $id, 'department_id' => $departmentID])->first();
+        if(isset($documentData)){
+            $jsonUser = json_decode($documentData->array_user_seen);
+            if(isset($jsonUser)){
+                $userId = User::whereIn('id', $jsonUser)->orderBy('name', 'asc')->get();
+                return $userId;
+            }
+        }
+        else {
+            return array();
+        }
+    }
 
+    public function getDepartmentSeen($id){
+        $documentData = DocumentDepartment::where('document_id', $id)->get();
+        $arrayDepartmentID = array();
+        if(isset($documentData)){
+            foreach ($documentData as $value){
+                if(isset($value->array_user_seen) || $value->array_user_seen != null){
+                    array_push($arrayDepartmentID, $value->department_id);
+                }
+            }
+            return $arrayDepartmentID;
+        }
+    }
     public function checkUserSeen($id)
     {
-        $userIdSeen = DocumentDepartment::where('document_id', $id)->first();
+        $jsonSeen = array();
+        $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
+        $userIdSeen = DocumentDepartment::where(['document_id' => $id, 'department_id' => $departmentID])->first();
         $check = true;
         if (isset($userIdSeen['array_user_seen']) && $userIdSeen['array_user_seen'] != "") {
             $jsonSeen = json_decode($userIdSeen['array_user_seen']);
@@ -60,19 +89,28 @@ class DocumentDepartmentController extends Controller
             return $jsonSeen;
 
         } else {
-            $jsonSeen = array();
                 array_push($jsonSeen, Auth::user()->id);
-
             return $jsonSeen;
         }
     }
 
     public function show($id)
     {
-//        check nguoi xem tin
+        // check nguoi xem tin
         $departmentID = DepartmentUser::where('user_id', Auth::user()->id)->first()->department_id;
         $jsonUserId = json_encode($this->checkUserSeen($id));
         DocumentDepartment::where(['document_id' => $id, 'department_id' => $departmentID])->update(['array_user_seen' => $jsonUserId]);
+        //lay phong ban da xem
+        $listDepartmentID = $this->getDepartmentSeen($id);
+        if(isset($listDepartmentID)){
+            $nameOfDepartment = Department::whereIn('id', $listDepartmentID)->get();
+        }
+        else {
+            $nameOfDepartment = array();
+        }
+        //lay nguoi da xem tin trong phong ban
+        $getArrayOfUserSeen = $this->getUserSeen($id);
+
 
         $document = DB::table('documents')->join('document_types', 'documents.document_type_id', '=', 'document_types.id')
             ->join('users', 'users.id', '=', 'documents.user_id')
@@ -89,7 +127,7 @@ class DocumentDepartmentController extends Controller
 
         $arrayFileDecode = DocumentAttachment::where('document_id', $id)->get();
 
-        return view('document.document_department.detail', compact('document', 'arrayFileDecode', 'replyDocument'));
+        return view('document.document_department.detail', compact('document', 'arrayFileDecode', 'replyDocument', 'nameOfDepartment', 'getArrayOfUserSeen'));
     }
 
     public function reply(ReplyDocumentRequest $request, $id)
