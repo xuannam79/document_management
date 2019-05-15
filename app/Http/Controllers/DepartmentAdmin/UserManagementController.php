@@ -56,6 +56,8 @@ class UserManagementController extends Controller
     public function store(UserManagementRequest $request)
     {
         $input = $request->all();
+        $date = Carbon::createFromFormat('d/m/Y', $input['birth_date']);
+        $input['birth_date'] = Carbon::parse($date)->format('Y/m/d');
         $input['password'] = bcrypt($input['password']);
         if(isset($input['avatar'])){
             $input['avatar'] = $this->uploader->saveImg($input['avatar']);
@@ -172,6 +174,8 @@ class UserManagementController extends Controller
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+        $date = Carbon::createFromFormat('d/m/Y', $input['birth_date']);
+        $input['birth_date'] = Carbon::parse($date)->format('Y/m/d');
         if($request->no_end_date == 1){
             $input['end_date'] = null;
         }

@@ -19,7 +19,7 @@ Tạo mới văn bản
                 </div>
                 <div class="form-group" style="width: 45%;float: left;margin-right: 5%;margin-left: 2%;">
                     <label for="publish_date">Ngày ban hành</label>
-                    <div id="datepicker" class="input-group date" style="border: 1px solid #ced4da;">
+                    <div id="publish_day" class="input-group date" style="border: 1px solid #ced4da;">
                         {!! Form::text("publish_date",'', ['data-date-format'=>'dd/mm/yyyy', "class"=>"form-control", "readonly", "style" => "background: #fff;border:none;"]) !!}
                         <span style="background-color: #fff;width: 7%;display:none" class="input-group-addon"></span>
                     </div>
